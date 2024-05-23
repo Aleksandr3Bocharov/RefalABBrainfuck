@@ -1,15 +1,15 @@
-// Copyright 2023 Aleksandr Bocharov
+// Copyright 2024 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2023-07-18
-// https://github.com/Aleksandr3Bocharov/Brainfuck-2
+// 2024-05-23
+// https://github.com/Aleksandr3Bocharov/Brainfuck3
 
 /* 
 
-Модуль "brainfuck2c" с реализацией на языке C функций для программы "Brainfuck 2".
-https://github.com/Aleksandr3Bocharov/Brainfuck-2
+Модуль "brainfuck3c" с реализацией на языке C функций для программы "Brainfuck 3".
+https://github.com/Aleksandr3Bocharov/Brainfuck3
 
-Модуль "brainfuck2c" использует библиотеку GTK3.
+Модуль "brainfuck3c" использует библиотеку GTK3.
 https://docs.gtk.org/gtk3/
 
 */
