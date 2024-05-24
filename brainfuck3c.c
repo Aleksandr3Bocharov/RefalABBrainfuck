@@ -6,7 +6,7 @@
 
 /* 
 
-Модуль "brainfuck3c" с реализацией на языке C функций для программы "Brainfuck 3".
+Модуль "brainfuck3c" с реализацией на языке C функций для программы "Brainfuck3".
 https://github.com/Aleksandr3Bocharov/Brainfuck3
 
 Модуль "brainfuck3c" использует библиотеку GTK3.
