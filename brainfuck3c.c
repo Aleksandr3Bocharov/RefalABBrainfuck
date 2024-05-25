@@ -5,15 +5,14 @@
 // 2024-05-23
 // https://github.com/Aleksandr3Bocharov/Brainfuck3
 
-/* 
-
-Модуль "brainfuck3c" с реализацией на языке C функций для программы "Brainfuck3".
-https://github.com/Aleksandr3Bocharov/Brainfuck3
-
-Модуль "brainfuck3c" использует библиотеку GTK3.
-https://docs.gtk.org/gtk3/
-
-*/
+//====================================================================
+// Модуль "brainfuck3c" с реализацией на языке C функций 
+// для программы "Brainfuck3".
+// https://github.com/Aleksandr3Bocharov/Brainfuck3
+//
+// Модуль "brainfuck3c" использует библиотеку GTK3.
+// https://docs.gtk.org/gtk3/
+//====================================================================
 
 #include <gtk\gtk.h>
 #include <stdio.h>
