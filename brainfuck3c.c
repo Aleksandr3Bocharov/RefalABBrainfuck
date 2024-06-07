@@ -2,15 +2,15 @@
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt
 // or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2024-05-23
-// https://github.com/Aleksandr3Bocharov/Brainfuck3
+// 2024-06-07
+// https://github.com/Aleksandr3Bocharov/r2brainfuck
 
 //====================================================================
-// Модуль "brainfuck3c" с реализацией на языке C функций 
-// для программы "Brainfuck3".
-// https://github.com/Aleksandr3Bocharov/Brainfuck3
+// Модуль "r2brainfuckc" с реализацией на языке C функций 
+// для программы "r2brainfuck".
+// https://github.com/Aleksandr3Bocharov/r2brainfuck
 //
-// Модуль "brainfuck3c" использует библиотеку GTK3.
+// Модуль "r2brainfuckc" использует библиотеку GTK3.
 // https://docs.gtk.org/gtk3/
 //====================================================================
 
