@@ -3,18 +3,18 @@
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
 * 2024-05-23
-* https://github.com/Aleksandr3Bocharov/Brainfuck3
+* https://github.com/Aleksandr3Bocharov/r2brainfuck
 
 *====================================================================
-* Brainfuck3
+* r2brainfuck
 *
-* Программа "Brainfuck3" написана на языке программирования Рефал-2.
+* Программа "r2brainfuck" написана на языке программирования Рефал-2.
 * http://www.refal.net/~belous/refal2-r.htm
 *
-* Программа "Brainfuck3" использует библиотеку GTK3.
+* Программа "r2brainfuck" использует библиотеку GTK3.
 * https://docs.gtk.org/gtk3/
 *
-* Программа "Brainfuck3" интерпретирует код на языке Brainfuck из исходного файла.
+* Программа "r2brainfuck" интерпретирует код на языке Brainfuck из исходного файла.
 *====================================================================
 
 
