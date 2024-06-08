@@ -2,231 +2,41 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-06-07
+* 2024-06-08
 * https://github.com/Aleksandr3Bocharov/r2brainfuck
 
 *====================================================================
 * r2brainfuck
 *
-* Программа "r2brainfuck" написана на языке программирования Рефал-2.
+* Программа "r2brainfuck" написана
+* на языке программирования Рефал-2.
 * http://www.refal.net/~belous/refal2-r.htm
 *
-* Программа "r2brainfuck" использует библиотеку GTK3.
+* Программа "r2brainfuck" использует
+* библиотеку расширения Рефал-2.
+* https://github.com/Aleksandr3Bocharov/r2libext
+*
+* Программа "r2brainfuck" использует 
+* библиотеку GTK3.
 * https://docs.gtk.org/gtk3/
 *
-* Программа "r2brainfuck" интерпретирует код на языке Brainfuck из исходного файла.
+* Программа "r2brainfuck" интерпретирует код
+* на языке Brainfuck из исходного файла.
 *====================================================================
 
-
-*$FROM LibraryEx
-$EXTERN Map, MapAccum, DelAccumulator, LoadFile, Inc, Dec;
-
-*$FROM brainfuck2c
-$EXTERN PutChar, GetChar, GTKInit, OpenFileDialog, MessageBox;
+            START
+            ENTRY Go
+* from r2libext
+            EXTRN Map, MapAccum, DelAccum, LoadFile
+* from r2brainfuckc
+*           EXTRN PutChar, GetChar, GTKInit, OpenFileDialog, MessageBox
+* from r2lib
+            EXTRN Prout, M1, P1
 
 * Вывод справки
-Help {
-  = <MessageBox Info 'Программа "Brainfuck 2" интерпретирует код на языке Brainfuck из исходного файла.'>
-}
+Help        = <Prout '�ணࠬ�� "r2brainfuck" ��������� ��� ' +
+            '�� �몥 Brainfuck �� ��室���� 䠩��.'>
 
-/*
+Go          = <Help>
 
-<Interpretator e.Parsing_Tree> == 
-
-e.Parsing_Tree ::= t.LeafNode*
-t.LeafNode ::= s.Leaf | (t.LeafNode*)
-s.Leaf ::= Next | Prev | Inc | Dec | Write | Read
-
-*/
-Interpretator {
-  e.Parsing_Tree,
-  <DoInterpretator e.Parsing_Tree () 0 ()>: e.Cells =
-}
-
-DoInterpretator {
-  (e.BeforeCells) s.Cell (e.AfterCells) =
-    (e.BeforeCells) s.Cell (e.AfterCells);
-  Next e.Rest_Parsing_Tree (e.BeforeCells) s.Cell () =
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells s.Cell) 0 ()>;
-  Next e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (s.NextCell e.AfterCells) =
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells s.Cell) s.NextCell (e.AfterCells)>;    
-  Prev e.Rest_Parsing_Tree () s.Cell (e.AfterCells) =
-    <DoInterpretator e.Rest_Parsing_Tree () 0 (s.Cell e.AfterCells)>;
-  Prev e.Rest_Parsing_Tree (e.BeforeCells s.PrevCell) s.Cell (e.AfterCells) =
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) s.PrevCell (s.Cell e.AfterCells)>;    
-  Inc e.Rest_Parsing_Tree (e.BeforeCells) 255 (e.AfterCells) =
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells)>;
-  Inc e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) <Inc s.Cell> (e.AfterCells)>;     							
-  Dec e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells) =
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) 255 (e.AfterCells)>;
-  Dec e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) <Dec s.Cell> (e.AfterCells)>;    
-  Write e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
-    <PutChar <Chr s.Cell>> 
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells)>;												
-  Read e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) <Ord <GetChar>> (e.AfterCells)>;						
-  (e.LeafNode) e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells) =
-    <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells)>;
-  (e.LeafNode) e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells),
-  <DoInterpretator e.LeafNode (e.BeforeCells) s.Cell (e.AfterCells)>: e.Cells =
-    <DoInterpretator (e.LeafNode) e.Rest_Parsing_Tree e.Cells>   
-}
-
-/* 
-
-<Parser e.Tokens> == e.Parsing_Tree
-
-e.Tokens ::= s.Token*
-s.Token ::= '>' | '<' | '+' | '-' | '.' | ',' | '[' | ']' 
-e.Parsing_Tree ::= t.LeafNode*
-t.LeafNode ::= s.Leaf | (t.LeafNode*)
-s.Leaf ::= Next | Prev | Inc | Dec | Write | Read
-
-*/
-Parser {
-  =
-    ;
-  '>' e.RestTokens =
-    Next <Parser e.RestTokens>;
-  '<' e.RestTokens =
-    Prev <Parser e.RestTokens>;
-  '+' e.RestTokens =
-    Inc <Parser e.RestTokens>;    
-  '-' e.RestTokens =
-    Dec <Parser e.RestTokens>; 
-  '.' e.RestTokens =
-    Write <Parser e.RestTokens>;
-  ',' e.RestTokens =
-    Read <Parser e.RestTokens>;
-  '[' e.RestTokens,
-  <Parser e.RestTokens>: e.LeafNode (e.NewRestTokens) =
-    (e.LeafNode) <Parser e.NewRestTokens>;
-  ']' e.RestTokens =
-    (e.RestTokens)      
-}
-
-/* 
-
-<Tokenizer e.Symbols> == e.Tokens | Fails e.Errors
-
-e.Symbols ::= (s.Char s.Row s.Col)* 
-s.Char ::= s.CHAR
-s.Row, s.Col ::= s.NUMBER
-e.Tokens ::= s.Token*
-s.Token ::= '>' | '<' | '+' | '-' | '.' | ',' | '[' | ']' 
-e.Errors ::= (e.ErrorMessage)+
-e.ErrorMessage ::= s.CHAR+
-
-*/
-Tokenizer {
-  e.Symbols,
-  <Br Fails11 '=' >
-  <Br Fails12 '=' >
-  <Map DoMapTokenizer e.Symbols>:
-  {
-    e.Tokens,
-    <Cp Fails11>: ,
-    <Cp Fails12>: =
-      e.Tokens
-      <Rp Fails11 '=' >
-      <Rp Fails12 '=' >
-      <Dg Fails11>
-      <Dg Fails12>;
-    e.Tokens =
-      Fails
-      <Cp Fails11>
-      <Cp Fails12>
-      <Rp Fails11 '=' >
-      <Rp Fails12 '=' >
-      <Dg Fails11>
-      <Dg Fails12>
-  }
-}
-
-DoMapTokenizer {
-  ('[' s.Row s.Col) =
-    <Rp Fails12 '=' <Cp Fails12> ('SYNTAX_ERROR(12): Отсутствует символ \']\' для символа \'[\' в строке: ' <Symb s.Row> ' и столбце: ' <Symb s.Col> '.')>
-    '[';
-  (']' s.Row s.Col),
-  <Cp Fails12>: =
-    <Rp Fails11 '=' <Cp Fails11> ('SYNTAX_ERROR(11): Непредвиденный символ \']\' в строке: ' <Symb s.Row> ' и столбце: ' <Symb s.Col> '.')>
-      ; 
-  (']' s.Row s.Col),
-  <Cp Fails12>: e.Fails12 (e.Fail12) =
-    <Rp Fails12 '=' e.Fails12>
-    ']';   
-  ('>' s.Row s.Col) = 
-    '>'; 
-  ('<' s.Row s.Col) =
-    '<'; 
-  ('+' s.Row s.Col) =
-    '+'; 
-  ('-' s.Row s.Col) =
-    '-';
-  ('.' s.Row s.Col) =
-    '.';
-  (',' s.Row s.Col) =
-    ',';
-  (s.Char s.Row s.Col) =
-}
-	
-DoMapErrors {
-  (e.ErrorMessage) =
-    e.ErrorMessage '\n'
-}
-
-DoMapLines {
-  s.Row (e.Line) =
-    <Inc s.Row>
-    <DelAccumulator <MapAccum DoMapLines-Aux (s.Row 1) e.Line>>	
-}
-
-DoMapLines-Aux {
-  (s.Row s.Col) s.Char =
-    (s.Row <Inc s.Col>)
-    (s.Char s.Row s.Col)
-}
-
-/*
-
-<bfFileName e.bfFileName> == e.bfFileName
-
-e.bfFileName ::= s.CHAR*
-
-*/
-bfFileName {
-  =
-    <MessageBox Error 'FATAL_ERROR (1): Файл с кодом на языке Brainfuck не выбран.'>
-    <Exit 1>;
-  e.bfFileName =
-    e.bfFileName
-}
-
-$ENTRY Go {
-  ,
-  <GTKInit>
-  <Help>
-  <MessageBox Info 'Открытие файла с кодом на языке Brainfuck.'>
-  <bfFileName <OpenFileDialog>>: e.bfFileName,
-  /* Загрузка строк файла в e.Lines ::= (e.Line)*;  e.Line ::= s.CHAR* */
-  <LoadFile e.bfFileName>: e.Lines,
-  /* Преобразование строк e.Lines => e.Symbols
-  e.Symbols ::= (s.Char s.Row s.Col)*; s.Char ::= s.CHAR; s.Row ::= s.NUMBER; s.Col  ::= s.NUMBER */
-  <DelAccumulator <MapAccum DoMapLines 1 e.Lines>>: e.Symbols,
-  /* Запуск лексического анализатора */
-  <Tokenizer e.Symbols>:
-  {
-    /* Если Fails, то завершение программы */
-    Fails e.Errors = 
-      <MessageBox Error 'FATAL_ERROR (99): Существует одна или несколько синтаксических ошибок.\n' <Map DoMapErrors e.Errors>>
-      <Exit 99>;
-    e.Tokens,
-    /* Запуск синтаксического анализатора */
-    <Parser e.Tokens>: e.Parsing_Tree =
-      /* Запуск интерпретатора */
-      <MessageBox Info 'Запуск интерпретатора кода на языке Brainfuck.'>
-      <Interpretator e.Parsing_Tree>
-  }
-}
+            END
