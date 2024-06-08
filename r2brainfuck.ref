@@ -34,8 +34,8 @@
             EXTRN Prout, M1, P1
 
 * ╨Т╤Л╨▓╨╛╨┤ ╤Б╨┐╤А╨░╨▓╨║╨╕
-Help        = <Prout 'Программа "r2brainfuck" интерпретирует код ' +
-            'на языке Brainfuck из исходного файла.'>
+Help        = <Prout 'The programm "r2brainfuck" interprets code ' +
+            'on the language Brainfuck from source file.'>
 
 Go          = <Help>
 
