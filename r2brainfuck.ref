@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-06-08
+* 2024-06-10
 * https://github.com/Aleksandr3Bocharov/r2brainfuck
 
 *====================================================================
@@ -31,12 +31,30 @@
 * from r2brainfuckc
 *           EXTRN PutChar, GetChar, GTKInit, OpenFileDialog, MessageBox
 * from r2lib
-            EXTRN Prout, M1, P1
+            EXTRN Prout, M1, P1, Br, Dg, Cp
 
 * Вывод справки
 Help        = <Prout 'The programm "r2brainfuck" interprets code ' +
-            'on the language Brainfuck from source file.'>
+            'on the language Brainfuck from source file.\n'>
 
-Go          = <Help>
+DoMapLines +
+    SR (EL) = <P1 SR> +
+            <DelAccum <MapAccum /DoMapLinesAux/ (SR /1/) EL>>	
+              
+DoMapLinesAux +
+    (SR SC) SS +
+            = (SR <P1 SC>) +
+            (SS SR SC)
+
+ProutLines +
+    (EL)    = <Prout EL>
+
+Go          = <Help> +
+            <Prout 'The opening of the file "Test.b" ' +
+            'with code on the Brainfuck language.\n'> +
+* Загрузка строк файла в E.Lines := (EL)*
+            <Br 'E.Lines' '=' <LoadFile /0/ 'Test.b'>> +
+* Преобразование строк (EL)* => (SS SR SC)* 
+            <DelAccum <MapAccum /DoMapLines/ /1/ <Dg 'E.Lines'>>>
 
             END
