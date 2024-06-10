@@ -46,7 +46,7 @@ DoMapLinesAux +
             = (SR <P1 SC>) +
             (SS SR SC)
 
-ProutLines +
+DoProutLine +
     (EL)    = <Prout EL>
 
 Go          = <Help> +
