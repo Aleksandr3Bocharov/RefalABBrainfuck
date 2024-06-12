@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-06-11
+* 2024-06-12
 * https://github.com/Aleksandr3Bocharov/r2brainfuck
 
 *====================================================================
@@ -31,11 +31,42 @@
 * from r2brainfuckc
 *           EXTRN PutChar, GetChar, GTKInit, OpenFileDialog, MessageBox
 * from r2lib
-            EXTRN Prout, M1, P1, Br, Dg, Cp
+            EXTRN Prout, M1, P1, Symb, Br, Dg
 
 * Вывод справки
 Help        = <Prout 'The programm "r2brainfuck" interprets code ' +
             'on the language Brainfuck from source file.\n'>
+
+* <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
+Tokenizer +
+    ES      = <TokenizerAux  +
+            <Map /DoMapTokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
+
+TokenizerAux +
+    ET ()   = ET
+    ET (EE) = 'Fails' EE
+  
+DoMapTokenizer +
+    ('[' SR SC) +
+            = <Br 'Fails12' '=' <Dg 'Fails12'> +
+            ('SYNTAX_ERROR(12): ' +
+            'Not exist symbol '']'' for symbol ''['' ' +
+            'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')> +
+            '['
+    (']' SR SC) +
+            = <DoMapTokenizerAux SR SC <Dg 'Fails12'>>
+    (S('><+-.,')S SR SC) + 
+            = SS 
+    (SS SR SC) +
+            =
+
+DoMapTokenizerAux +
+    SR SC   = <Br 'Fails11' '=' <Dg 'Fails11'> +
+            ('SYNTAX_ERROR(11): ' +
+            'Unexpected symbol '']'' ' +
+            'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')>
+    SR SC E2 (EF) +
+            = <Br 'Fails12' '=' E2> ']'
 
 DoMapLines +
     SR (EL) = <P1 SR> +
@@ -52,11 +83,13 @@ DoProutLine +
 Go          = <Help> +
             <Prout 'The opening of the file "Test.b" ' +
             'with code on the Brainfuck language.\n'> +
-* Загрузка строк файла в E.Lines := (EL)*
+* Загрузка строк файла в E.Lines := (E(O)L)*
             <Br 'E.Lines' '=' +
             <LoadFile /0/ 'Test.b'>> +
-* Преобразование E.Lines в E.Symbols := (SS SR SC)* 
+* Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
             <Br 'E.Symbols' '=' +
-            <DelAccum <MapAccum /DoMapLines/ /1/ <Dg 'E.Lines'>>>>
+            <DelAccum <MapAccum /DoMapLines/ /1/ <Dg 'E.Lines'>>>> +
+* Запуск лексического анализатора
+            <Tokenizer <Dg 'E.Symbols'>>
 
             END
