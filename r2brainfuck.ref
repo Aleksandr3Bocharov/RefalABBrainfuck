@@ -90,6 +90,6 @@ Go          = <Help> +
             <Br 'E.Symbols' '=' +
             <DelAccum <MapAccum /DoMapLines/ /1/ <Dg 'E.Lines'>>>> +
 * Запуск лексического анализатора
-            <Tokenizer <Dg 'E.Symbols'>>
+            <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
 
             END
