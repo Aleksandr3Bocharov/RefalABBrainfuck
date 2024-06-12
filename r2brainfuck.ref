@@ -40,13 +40,13 @@ Help        = <Prout 'The programm "r2brainfuck" interprets code ' +
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
     ES      = <TokenizerAux  +
-            <Map /DoMapTokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
+            <Map /DoTokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
 
 TokenizerAux +
     ET ()   = ET
     ET (EE) = 'Fails' EE
   
-DoMapTokenizer +
+DoTokenizer +
     ('[' SR SC) +
             = <Br 'Fails12' '=' <Dg 'Fails12'> +
             ('SYNTAX_ERROR(12): ' +
@@ -54,13 +54,13 @@ DoMapTokenizer +
             'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')> +
             '['
     (']' SR SC) +
-            = <DoMapTokenizerAux SR SC <Dg 'Fails12'>>
+            = <DoTokenizerAux SR SC <Dg 'Fails12'>>
     (S('><+-.,')S SR SC) + 
             = SS 
     (SS SR SC) +
             =
 
-DoMapTokenizerAux +
+DoTokenizerAux +
     SR SC   = <Br 'Fails11' '=' <Dg 'Fails11'> +
             ('SYNTAX_ERROR(11): ' +
             'Unexpected symbol '']'' ' +
@@ -68,11 +68,20 @@ DoMapTokenizerAux +
     SR SC E2 (EF) +
             = <Br 'Fails12' '=' E2> ']'
 
-DoMapLines +
+IfTokenizer +
+* Если Fails, то завершение программы
+    'Fails' EE +
+            = <Prout 'FATAL_ERROR (99): ' +'
+            'There are one or more syntax errors.'> +
+            <Map /DoProutLine/ EE>
+* Запуск синтаксического анализатора 
+    ET      = 
+
+DoRows +
     SR (EL) = <P1 SR> +
-            <DelAccum <MapAccum /DoMapLinesAux/ (SR /1/) EL>>	
+            <DelAccum <MapAccum /DoColumns/ (SR /1/) EL>>	
               
-DoMapLinesAux +
+DoColumns +
     (SR SC) SS +
             = (SR <P1 SC>) +
             (SS SR SC)
@@ -88,7 +97,7 @@ Go          = <Help> +
             <LoadFile /0/ 'Test.b'>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
             <Br 'E.Symbols' '=' +
-            <DelAccum <MapAccum /DoMapLines/ /1/ <Dg 'E.Lines'>>>> +
+            <DelAccum <MapAccum /DoRows/ /1/ <Dg 'E.Lines'>>>> +
 * Запуск лексического анализатора
             <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
 
