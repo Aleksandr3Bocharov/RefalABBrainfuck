@@ -26,6 +26,7 @@
 
             START
             ENTRY Go
+            EMPTY Next, Prev, Inc, Dec, Write, Read
 * from r2libext
             EXTRN Map, MapAccum, DelAccum, LoadFile
 * from r2brainfuckc
@@ -36,6 +37,67 @@
 * Вывод справки
 Help        = <Prout 'The programm "r2brainfuck" interprets code ' +
             'on the language Brainfuck from source file.\n'>
+
+/*
+
+<Interpretator e.Parsing_Tree> == 
+
+e.Parsing_Tree ::= t.LeafNode*
+t.LeafNode ::= s.Leaf | (t.LeafNode*)
+s.Leaf ::= Next | Prev | Inc | Dec | Write | Read
+
+*/
+Interpretator {
+    e.Parsing_Tree,
+    <DoInterpretator e.Parsing_Tree () 0 ()>: e.Cells =
+  }
+  
+  DoInterpretator {
+    (e.BeforeCells) s.Cell (e.AfterCells) =
+      (e.BeforeCells) s.Cell (e.AfterCells);
+    Next e.Rest_Parsing_Tree (e.BeforeCells) s.Cell () =
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells s.Cell) 0 ()>;
+    Next e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (s.NextCell e.AfterCells) =
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells s.Cell) s.NextCell (e.AfterCells)>;    
+    Prev e.Rest_Parsing_Tree () s.Cell (e.AfterCells) =
+      <DoInterpretator e.Rest_Parsing_Tree () 0 (s.Cell e.AfterCells)>;
+    Prev e.Rest_Parsing_Tree (e.BeforeCells s.PrevCell) s.Cell (e.AfterCells) =
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) s.PrevCell (s.Cell e.AfterCells)>;    
+    Inc e.Rest_Parsing_Tree (e.BeforeCells) 255 (e.AfterCells) =
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells)>;
+    Inc e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) <Inc s.Cell> (e.AfterCells)>;     							
+    Dec e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells) =
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) 255 (e.AfterCells)>;
+    Dec e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) <Dec s.Cell> (e.AfterCells)>;    
+    Write e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
+      <PutChar <Chr s.Cell>> 
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells)>;												
+    Read e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) <Ord <GetChar>> (e.AfterCells)>;						
+    (e.LeafNode) e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells) =
+      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells)>;
+    (e.LeafNode) e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells),
+    <DoInterpretator e.LeafNode (e.BeforeCells) s.Cell (e.AfterCells)>: e.Cells =
+      <DoInterpretator (e.LeafNode) e.Rest_Parsing_Tree e.Cells>   
+  }
+
+* <Parser E('><+-.,[]')T> == WN*
+* WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
+Parser +
+            =
+    '>' ER  = /Next/ <Parser ER>
+    '<' ER  = /Prev/ <Parser ER>
+    '+' ER  = /Inc/ <Parser ER>
+    '-' ER  = /Dec/ <Parser ER>
+    '.' ER  = /Write/ <Parser ER>
+    ',' ER  = /Read/ <Parser ER>
+    '[' ER  = <ParserAux <Parser ER>>
+    ']' ER  = (ER)      
+
+ParserAux +
+    EP (ER) = (EP) <Parser ER>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
@@ -75,7 +137,12 @@ IfTokenizer +
             'There are one or more syntax errors.'> +
             <Map /DoProutLine/ EE>
 * Запуск синтаксического анализатора 
-    ET      = 
+    ET      = <Br 'e.ParsingTree' '=' +
+            <Parser ET>> +
+* Запуск интерпретатора
+            <Prout 'The running of the interpretator ' +
+            'of the code on the Brainfuck language.\n'> 
+*            <Interpretator <Dg 'e.ParsingTree'>>
 
 DoRows +
     SR (EL) = <P1 SR> +
