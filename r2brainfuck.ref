@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-06-12
+* 2024-06-14
 * https://github.com/Aleksandr3Bocharov/r2brainfuck
 
 *====================================================================
@@ -32,56 +32,49 @@
 * from r2brainfuckc
 *           EXTRN PutChar, GetChar, GTKInit, OpenFileDialog, MessageBox
 * from r2lib
-            EXTRN Prout, M1, P1, Symb, Br, Dg
+            EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
 
 * Вывод справки
 Help        = <Prout 'The programm "r2brainfuck" interprets code ' +
             'on the language Brainfuck from source file.\n'>
 
-/*
+* <Interpretator WN*> == 
+* WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
+Interpretator +
+    EP      = <InterpretatorAux <DoInterpretator EP () /0/ ()>>
 
-<Interpretator e.Parsing_Tree> == 
+InterpretatorAux +
+    EC      =
 
-e.Parsing_Tree ::= t.LeafNode*
-t.LeafNode ::= s.Leaf | (t.LeafNode*)
-s.Leaf ::= Next | Prev | Inc | Dec | Write | Read
-
-*/
-Interpretator {
-    e.Parsing_Tree,
-    <DoInterpretator e.Parsing_Tree () 0 ()>: e.Cells =
-  }
-  
-  DoInterpretator {
-    (e.BeforeCells) s.Cell (e.AfterCells) =
-      (e.BeforeCells) s.Cell (e.AfterCells);
-    Next e.Rest_Parsing_Tree (e.BeforeCells) s.Cell () =
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells s.Cell) 0 ()>;
-    Next e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (s.NextCell e.AfterCells) =
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells s.Cell) s.NextCell (e.AfterCells)>;    
-    Prev e.Rest_Parsing_Tree () s.Cell (e.AfterCells) =
-      <DoInterpretator e.Rest_Parsing_Tree () 0 (s.Cell e.AfterCells)>;
-    Prev e.Rest_Parsing_Tree (e.BeforeCells s.PrevCell) s.Cell (e.AfterCells) =
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) s.PrevCell (s.Cell e.AfterCells)>;    
-    Inc e.Rest_Parsing_Tree (e.BeforeCells) 255 (e.AfterCells) =
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells)>;
-    Inc e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) <Inc s.Cell> (e.AfterCells)>;     							
-    Dec e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells) =
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) 255 (e.AfterCells)>;
-    Dec e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) <Dec s.Cell> (e.AfterCells)>;    
-    Write e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
-      <PutChar <Chr s.Cell>> 
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells)>;												
-    Read e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells) =
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) <Ord <GetChar>> (e.AfterCells)>;						
-    (e.LeafNode) e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells) =
-      <DoInterpretator e.Rest_Parsing_Tree (e.BeforeCells) 0 (e.AfterCells)>;
-    (e.LeafNode) e.Rest_Parsing_Tree (e.BeforeCells) s.Cell (e.AfterCells),
-    <DoInterpretator e.LeafNode (e.BeforeCells) s.Cell (e.AfterCells)>: e.Cells =
-      <DoInterpretator (e.LeafNode) e.Rest_Parsing_Tree e.Cells>   
-  }
+DoInterpretator +
+    (EB) SC (EA) +
+            = (EB) SC (EA)
+    /Next/ ER (EB) SC () +
+            = <DoInterpretator ER (EB SC) /0/ ()>
+    /Next/ ER (EB) SC (SN EA) +
+            = <DoInterpretator ER (EB SC) SN (EA)>   
+    /Prev/ ER () SC (EA) +
+            = <DoInterpretator ER () /0/ (SC EA)>
+    /Prev/ ER (EB SP) SC (EA) +
+            = <DoInterpretator ER (EB) SP (SC EA)>   
+    /Inc/ ER (EB) /255/ (EA) +
+            = <DoInterpretator (EB) /0/ (EA)>
+    /Inc/ ER (EB) SC (EA) +
+            = <DoInterpretator (EB) <P1 SC> (EA)>     							
+    /Dec/ ER (EB) /0/ (EA) +
+            = <DoInterpretator (EB) /255/ (EA)>
+    /Dec/ ER (EB) SC (EA) +
+            = <DoInterpretator (EB) <M1 SC> (EA)>   
+    /Write/ ER (EB) SC (EA) +
+            = <Prout SC> +
+            <DoInterpretator ER (EB) SC (EA)>												
+    /Read/ ER (EB) SC (EA) +
+            = <DoInterpretator ER (EB) <Numb <Card>> (EA)>					
+    (EN) ER (EB) /0/ (EA) +
+            = <DoInterpretator ER (EB) /0/ (EA)>
+    (EN) ER (EB) SC (EA) +
+            = <DoInterpretator (EN) ER +
+            <DoInterpretator EN (EB) SC (EA)>> 
 
 * <Parser E('><+-.,[]')T> == WN*
 * WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
@@ -141,8 +134,8 @@ IfTokenizer +
             <Parser ET>> +
 * Запуск интерпретатора
             <Prout 'The running of the interpretator ' +
-            'of the code on the Brainfuck language.\n'> 
-*            <Interpretator <Dg 'e.ParsingTree'>>
+            'of the code on the Brainfuck language.\n'> +
+            <Interpretator <Dg 'e.ParsingTree'>>
 
 DoRows +
     SR (EL) = <P1 SR> +
