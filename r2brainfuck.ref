@@ -44,7 +44,7 @@ Interpretator +
     EP      = <InterpretatorAux <DoInterpretator EP () /0/ ()>>
 
 InterpretatorAux +
-    EC      =
+    EC      = 
 
 DoInterpretator +
     (EB) SC (EA) +
@@ -58,13 +58,13 @@ DoInterpretator +
     /Prev/ ER (EB SP) SC (EA) +
             = <DoInterpretator ER (EB) SP (SC EA)>   
     /Inc/ ER (EB) /255/ (EA) +
-            = <DoInterpretator (EB) /0/ (EA)>
+            = <DoInterpretator ER (EB) /0/ (EA)>
     /Inc/ ER (EB) SC (EA) +
-            = <DoInterpretator (EB) <P1 SC> (EA)>     							
+            = <DoInterpretator ER (EB) <P1 SC> (EA)>     							
     /Dec/ ER (EB) /0/ (EA) +
-            = <DoInterpretator (EB) /255/ (EA)>
+            = <DoInterpretator ER (EB) /255/ (EA)>
     /Dec/ ER (EB) SC (EA) +
-            = <DoInterpretator (EB) <M1 SC> (EA)>   
+            = <DoInterpretator ER (EB) <M1 SC> (EA)>   
     /Write/ ER (EB) SC (EA) +
             = <Prout SC> +
             <DoInterpretator ER (EB) SC (EA)>												
