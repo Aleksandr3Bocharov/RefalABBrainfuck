@@ -1,4 +1,6 @@
-# r2brainfuck
+r2brainfuck
+--------------
+
 Программа "r2brainfuck" написана на языке программирования [Рефал-2](http://www.refal.net/~belous/refal2-r.htm).
 
 Программа "r2brainfuck" использует [библиотеку расширения Рефал-2](https://github.com/Aleksandr3Bocharov/r2libext).
