@@ -23,12 +23,12 @@
             START
             ENTRY Go
             EMPTY Next, Prev, Inc, Dec, Write, Read
-* from r2libext
-            EXTRN Map, MapAccum, DelAccum, LoadFile
-* from r2brainfuckc
+* from RefalABBrainfuckс
 *           EXTRN PutChar, GetChar, GTKInit, OpenFileDialog, MessageBox
-* from r2lib
+* from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
+            EXTRN Map, MapAccum, DelAccum, LoadFile
+
 
 * Вывод справки
 Help        = <Prout 'The programm "RefalABBrainfuck" ' + 
