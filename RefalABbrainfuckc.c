@@ -35,7 +35,7 @@ static void getch_(void)
         refal.upshot = 2;
     T_LINKCB *p = refal.prevr;
     const int c = getchar();
-    if (slins(p, 1) == 0)
+    if (!slins(p, 1))
         return;
     p = p->next;
     p->tag = TAGN;
