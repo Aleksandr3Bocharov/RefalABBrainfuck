@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-09-30
+* 2024-10-02
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -12,10 +12,6 @@
 * на языке программирования РефалАБ.
 * https://github.com/Aleksandr3Bocharov/RefalAB
 *
-* Программа "RefalABBrainfuck" использует 
-* библиотеку GTK3.
-* https://docs.gtk.org/gtk3/
-*
 * Программа "RefalABBrainfuck" интерпретирует 
 * код на языке Brainfuck из исходного файла.
 *====================================================================
@@ -24,7 +20,7 @@
             ENTRY Go
             EMPTY Next, Prev, Inc, Dec, Write, Read
 * from RefalABBrainfuckс
-*           EXTRN PutChar, GetChar, GTKInit, OpenFileDialog, MessageBox
+            EXTRN PutCh, GetCh
 * from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
@@ -63,10 +59,10 @@ DoInterpretator +
     /Dec/ ER (EB) SC (EA) +
             = <DoInterpretator ER (EB) <M1 SC> (EA)>   
     /Write/ ER (EB) SC (EA) +
-            = <Prout SC> +
+            = <PutCh SC> +
             <DoInterpretator ER (EB) SC (EA)>												
     /Read/ ER (EB) SC (EA) +
-            = <DoInterpretator ER (EB) <Numb <Card>> (EA)>					
+            = <DoInterpretator ER (EB) <GetCh> (EA)>					
     (EN) ER (EB) /0/ (EA) +
             = <DoInterpretator ER (EB) /0/ (EA)>
     (EN) ER (EB) SC (EA) +
