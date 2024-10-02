@@ -12,7 +12,7 @@
 #include "refal.def"
 
 // <PutCh S(N)C> ==
-static void putch_()
+static void putch_(void)
 {
     const T_LINKCB *p = refal.preva->next;
     if (p->tag == TAGN && p->next == refal.nexta)
@@ -24,12 +24,12 @@ static void putch_()
         refal.upshot = 2;
     return;
 }
-void (*putch_1)() = putch_;
+void (*putch_1)(void) = putch_;
 G_L_B char putch = '\122';
 char putch_0[] = {Z5 'P', 'U', 'T', 'C', 'H', '\005'};
 
 // <GetCh> == S(/0/../255/)C
-static void getch_()
+static void getch_(void)
 {
     if (refal.preva->next != refal.nexta)
         refal.upshot = 2;
@@ -43,6 +43,6 @@ static void getch_()
         pcoden(p, (uint8_t)c);
     return;
 }
-void (*getch_1)() = getch_;
+void (*getch_1)(void) = getch_;
 G_L_B char getch = '\122';
 char getch_0[] = {Z5 'G', 'E', 'T', 'C', 'H', '\005'};
