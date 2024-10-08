@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-10-07
+* 2024-10-08
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -53,10 +53,10 @@ DoColumns +
 
 IfTokenizer +
 * Если Fails, то завершение программы
-    'Fails' EE +
+    'Fails' VE +
             = <Prout 'FATAL_ERROR (99): ' +'
             'There are one or more syntax errors.'> +
-            <Map /DoProutLine/ EE>
+            <Map /DoProutLine/ VE>
 * Запуск синтаксического анализатора 
     ET      = <Br 'e.ParsingTree' '=' +
             <Parser ET>> +
@@ -66,7 +66,7 @@ IfTokenizer +
             <Interpretator <Dg 'e.ParsingTree'>>
 
 DoProutLine +
-    (EL)    = <Prout EL>
+    (VL)    = <Prout VL>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
@@ -75,7 +75,7 @@ Tokenizer +
 
 TokenizerAux +
     ET ()   = ET
-    ET (EE) = 'Fails' EE
+    ET (VE) = 'Fails' VE
   
 DoTokenizer +
     ('[' SR SC) +
@@ -96,7 +96,7 @@ DoTokenizerAux +
             ('SYNTAX_ERROR(11): ' +
             'Unexpected symbol '']'' ' +
             'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')>
-    SR SC E2 (EF) +
+    SR SC E2 (VF) +
             = <Br 'Fails12' '=' E2> ']'
 
 * <Parser E('><+-.,[]')T> == WN*
@@ -121,7 +121,7 @@ Interpretator +
     EP      = <InterpretatorAux <DoInterpretator EP () /0/ ()>>
 
 InterpretatorAux +
-    EC      = 
+    VC      = 
 
 DoInterpretator +
     (EB) SC (EA) +
