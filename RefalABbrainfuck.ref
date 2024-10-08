@@ -53,10 +53,10 @@ DoColumns +
 
 IfTokenizer +
 * Если Fails, то завершение программы
-    'Fails' VE +
+    'Fails' EE +
             = <Prout 'FATAL_ERROR (99): ' +'
             'There are one or more syntax errors.'> +
-            <Map /DoProutLine/ VE>
+            <Map /DoProutLine/ EE>
 * Запуск синтаксического анализатора 
     ET      = <Br 'e.ParsingTree' '=' +
             <Parser ET>> +
@@ -66,7 +66,7 @@ IfTokenizer +
             <Interpretator <Dg 'e.ParsingTree'>>
 
 DoProutLine +
-    (VL)    = <Prout VL>
+    (EL)    = <Prout EL>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
@@ -75,7 +75,7 @@ Tokenizer +
 
 TokenizerAux +
     ET ()   = ET
-    ET (VE) = 'Fails' VE
+    ET (EE) = 'Fails' EE
   
 DoTokenizer +
     ('[' SR SC) +
@@ -96,7 +96,7 @@ DoTokenizerAux +
             ('SYNTAX_ERROR(11): ' +
             'Unexpected symbol '']'' ' +
             'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')>
-    SR SC E2 (VF) +
+    SR SC E2 (EF) +
             = <Br 'Fails12' '=' E2> ']'
 
 * <Parser E('><+-.,[]')T> == WN*
@@ -121,7 +121,7 @@ Interpretator +
     EP      = <InterpretatorAux <DoInterpretator EP () /0/ ()>>
 
 InterpretatorAux +
-    VC      = 
+    EC      = 
 
 DoInterpretator +
     (EB) SC (EA) +
