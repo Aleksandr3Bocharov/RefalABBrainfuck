@@ -84,19 +84,18 @@ DoTokenizer +
             'Not exist symbol '']'' for symbol ''['' ' +
             'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')> +
             '['
-    (']' SR SC) +
-            = <DoTokenizerAux SR SC <Dg 'Fails12'>>
-    (S('><+-.,')S SR SC) + 
+    (']' E0) +
+            = <DoTokenizerAux E0 <Dg 'Fails12'>>
+    (S('><+-.,')S E0) + 
             = SS 
-    (SS SR SC) +
-            =
+    E0      =
 
 DoTokenizerAux +
     SR SC   = <Br 'Fails11' '=' <Dg 'Fails11'> +
             ('SYNTAX_ERROR(11): ' +
             'Unexpected symbol '']'' ' +
             'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')>
-    SR SC E2 (EF) +
+    SR SC E2 WF +
             = <Br 'Fails12' '=' E2> ']'
 
 * <Parser E('><+-.,[]')T> == WN*
@@ -124,8 +123,6 @@ InterpretatorAux +
     EC      = 
 
 DoInterpretator +
-    (EB) SC (EA) +
-            = (EB) SC (EA)
     /Next/ ER (EB) SC () +
             = <DoInterpretator ER (EB SC) /0/ ()>
     /Next/ ER (EB) SC (SN EA) +
@@ -134,23 +131,24 @@ DoInterpretator +
             = <DoInterpretator ER () /0/ (SC EA)>
     /Prev/ ER (EB SP) SC (EA) +
             = <DoInterpretator ER (EB) SP (SC EA)>   
-    /Inc/ ER (EB) /255/ (EA) +
-            = <DoInterpretator ER (EB) /0/ (EA)>
-    /Inc/ ER (EB) SC (EA) +
-            = <DoInterpretator ER (EB) <P1 SC> (EA)>     							
-    /Dec/ ER (EB) /0/ (EA) +
-            = <DoInterpretator ER (EB) /255/ (EA)>
-    /Dec/ ER (EB) SC (EA) +
-            = <DoInterpretator ER (EB) <M1 SC> (EA)>   
-    /Write/ ER (EB) SC (EA) +
+    /Inc/ E0 /255/ WA +
+            = <DoInterpretator E0 /0/ WA>
+    /Inc/ E0 SC WA +
+            = <DoInterpretator E0 <P1 SC> WA>     							
+    /Dec/ E0 /0/ WA +
+            = <DoInterpretator E0 /255/ WA>
+    /Dec/ E0 SC WA +
+            = <DoInterpretator E0 <M1 SC> WA>   
+    /Write/ E0 SC WA +
             = <PutCh SC> +
-            <DoInterpretator ER (EB) SC (EA)>												
-    /Read/ ER (EB) SC (EA) +
-            = <DoInterpretator ER (EB) <GetCh> (EA)>					
-    (EN) ER (EB) /0/ (EA) +
-            = <DoInterpretator ER (EB) /0/ (EA)>
-    (EN) ER (EB) SC (EA) +
+            <DoInterpretator E0 SC WA>												
+    /Read/ E0 SC WA +
+            = <DoInterpretator E0 <GetCh> WA>					
+    WN ER WB /0/ WA +
+            = <DoInterpretator ER WB /0/ WA>
+    (EN) ER WB SC WA +
             = <DoInterpretator (EN) ER +
-            <DoInterpretator EN (EB) SC (EA)>> 
+            <DoInterpretator EN WB SC WA>>
+    E0      = E0
 
             END
