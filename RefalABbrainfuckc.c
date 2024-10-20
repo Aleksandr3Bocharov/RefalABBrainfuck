@@ -1,7 +1,7 @@
 // Copyright 2024 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2024-10-02
+// 2024-10-20
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -24,9 +24,9 @@ static void putch_(void)
         refal.upshot = 2;
     return;
 }
-void (*putch_1)(void) = putch_;
-G_L_B char putch = '\122';
 char putch_0[] = {Z5 'P', 'U', 'T', 'C', 'H', '\005'};
+G_L_B char putch = '\122';
+void (*putch_1)(void) = putch_;
 
 // <GetCh> == S(/0/../255/)C
 static void getch_(void)
@@ -43,6 +43,6 @@ static void getch_(void)
         pcoden(p, (uint8_t)c);
     return;
 }
-void (*getch_1)(void) = getch_;
-G_L_B char getch = '\122';
 char getch_0[] = {Z5 'G', 'E', 'T', 'C', 'H', '\005'};
+G_L_B char getch = '\122';
+void (*getch_1)(void) = getch_;
