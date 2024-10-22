@@ -8,6 +8,6 @@ rem https://github.com/Aleksandr3Bocharov/RefalAB
 
 %REFALABBIN%\RefalAB RefalABBrainfuck > RefalABBrainfuck.log
 as -o RefalABBrainfuck.o RefalABBrainfuck.asm >> RefalABBrainfuck.log
-clang -pipe -Wall -O2 -I%REFALABINCLUDE% -c RefalABBrainfuckc.c -o RefalABBrainfuckc.o >> RefalABBrainfuck.log
+clang %REFALABCFLAGS% -I%REFALABINCLUDE% -c RefalABBrainfuckc.c -o RefalABBrainfuckc.o >> RefalABBrainfuck.log
 clang -o RefalABBrainfuck.exe %REFALABLIB%\mainrf.o RefalABBrainfuck.o RefalABBrainfuckc.o -L%REFALABLIB% -lRefalAB >> RefalABBrainfuck.log
 RefalABBrainfuck
