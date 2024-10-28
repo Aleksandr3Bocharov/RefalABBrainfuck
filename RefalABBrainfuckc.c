@@ -1,7 +1,7 @@
 // Copyright 2024 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2024-10-27
+// 2024-10-28
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -38,9 +38,9 @@ static void getch_(void)
         return;
     }
     T_LINKCB *p = refal.prevr;
-    const int c = getchar();
     if (!slins(p, 1))
         return;
+    const int c = getchar();
     p = p->next;
     p->tag = TAGN;
     p->info.codep = NULL;
