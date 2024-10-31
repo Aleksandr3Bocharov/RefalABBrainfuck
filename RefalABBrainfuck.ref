@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-10-09
+* 2024-10-31
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -19,7 +19,7 @@
             START
             ENTRY Go
 * from RefalABBrainfuckс
-            EXTRN PutCh, GetCh
+            EXTRN PutChar(PutCh), GetChar(GetCh)
 * from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
@@ -140,10 +140,10 @@ DoInterpretator +
     /Dec/ E0 SC WA +
             = <DoInterpretator E0 <M1 SC> WA>   
     /Write/ E0 SC WA +
-            = <PutCh SC> +
+            = <PutChar SC> +
             <DoInterpretator E0 SC WA>												
     /Read/ E0 SC WA +
-            = <DoInterpretator E0 <GetCh> WA>					
+            = <DoInterpretator E0 <GetChar> WA>					
     WN ER WB /0/ WA +
             = <DoInterpretator ER WB /0/ WA>
     (EN) ER WB SC WA +
