@@ -1,7 +1,7 @@
 // Copyright 2024 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2024-10-28
+// 2025-01-01
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -15,14 +15,13 @@
 static void putch_(void)
 {
     const T_LINKCB *p = refal.preva->next;
-    if (p != refal.nexta)
-        if (p->tag == TAGN && p->next == refal.nexta)
-        {
-            putchar((int)gcoden(p));
-            fflush(stdout);
-            return;
-        }
-    refal.upshot = 2;
+    if (p->next != refal.nexta || p->tag != TAGN)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    putchar((int)gcoden(p));
+    fflush(stdout);
     return;
 }
 char putch_0[] = {Z5 'P', 'U', 'T', 'C', 'H', '\005'};
