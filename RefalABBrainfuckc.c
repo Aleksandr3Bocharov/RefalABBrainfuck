@@ -8,7 +8,7 @@
 // Модуль "RefalABBrainfuckc"
 //====================================================================
 
-#include <stdio.h
+#include <stdio.h>
 #include <stdint.h>
 #include "refal.def"
 
