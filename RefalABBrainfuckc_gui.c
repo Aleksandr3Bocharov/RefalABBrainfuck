@@ -1,11 +1,11 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-01-27
+// 2025-02-20
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
-// Модуль "RefalABBrainfuckc"
+// Модуль "RefalABBrainfuckc_gui"
 //====================================================================
 
 #include <stdio.h>
