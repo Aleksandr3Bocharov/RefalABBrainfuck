@@ -8,6 +8,6 @@
 
 $REFALABBIN/RefalAB RefalABBrainfuck_gui > RefalABBrainfuck_gui.log
 as -o RefalABBrainfuck_gui.o RefalABBrainfuck_gui.asm >> RefalABBrainfuck_gui.log
-clang $REFALABCFLAGS -I$REFALABINCLUDE `pkg-config --cflags gtk4` -c RefalABBrainfuckc_gui.c -o RefalABBrainfuckc_gui.o >> RefalABBrainfuck_gui.log
-clang -o RefalABBrainfuck_gui RefalABBrainfuck_gui.o RefalABBrainfuckc_gui.o $REFALABLIB/mainrf.o -L$REFALABLIB -lRefalAB `pkg-config --libs gtk4` >> RefalABBrainfuck_gui.log
+clang $REFALABCFLAGS -I$REFALABINCLUDE $(pkg-config --cflags gtk4) -c RefalABBrainfuckc_gui.c -o RefalABBrainfuckc_gui.o >> RefalABBrainfuck_gui.log
+clang -o RefalABBrainfuck_gui RefalABBrainfuck_gui.o RefalABBrainfuckc_gui.o $REFALABLIB/mainrf.o -L$REFALABLIB -lRefalAB $(pkg-config --libs gtk4) >> RefalABBrainfuck_gui.log
 ./RefalABBrainfuck_gui
