@@ -25,7 +25,7 @@
             EXTRN Map, MapAccum, DelAccum, LoadFile
             EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go          = <GTKInit> <ODialog> <Help> +
+Go          = <GTKInit> <Prout <ODialog>> <Help> +
             <Prout 'The opening of the file "Test.b" ' +
             'with code on the Brainfuck language.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*

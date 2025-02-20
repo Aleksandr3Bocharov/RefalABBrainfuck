@@ -10,6 +10,7 @@
 
 #include <gtk\gtk.h>
 #include <stdio.h>
+#include <string.h>
 #include <stdint.h>
 #include "refal.def"
 
@@ -86,11 +87,20 @@ static void odialog_(void)
     }
     GtkFileDialog *open_file_dialog = gtk_file_dialog_new();
     gtk_file_dialog_set_title(open_file_dialog, "Открыть файл");
-    gpointer open_file_name = NULL;
-    gtk_file_dialog_open(open_file_dialog, NULL, NULL, response_open_file_dialog, open_file_name);
+    const char *open_file_name = NULL;
+    gtk_file_dialog_open(open_file_dialog, NULL, NULL, response_open_file_dialog, (gpointer)open_file_name);
     if (open_file_name != NULL)
     {
-        // r05_alloc_string(filename);
+        T_LINKCB *p = refal.prevr;
+        if (!slins(p, strlen(open_file_name)))
+            return;
+        for (size_t i = 0; open_file_name[i] != '\0'; i++)
+        {
+            p = p->next;
+            p->tag = TAGO;
+            p->info.codep = NULL;
+            p->info.infoc = open_file_name[i];
+        }
     }
     return;
 }
