@@ -8,6 +8,7 @@
 // Модуль "RefalABBrainfuckc" (GUI GTK4 версия)
 //====================================================================
 
+#include <gtk\gtk.h>
 #include <stdio.h>
 #include <stdint.h>
 #include "refal.def"
@@ -51,3 +52,18 @@ static void getch_(void)
 char getch_0[] = {Z5 'G', 'E', 'T', 'C', 'H', '\005'};
 G_L_B uint8_t getch = '\122';
 void (*getch_1)(void) = getch_;
+
+// <GTKInit> ==
+static void gtkinit_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    gtk_init();
+    return;
+}
+char gtkinit_0[] = {Z7 'G', 'T', 'K', 'I', 'N', 'I', 'T', '\007'};
+G_L_B uint8_t gtkinit = '\122';
+void (*gtkinit_1)(void) = gtkinit_;
