@@ -88,7 +88,10 @@ static void odialog_(void)
     gtk_file_dialog_set_title(open_file_dialog, "Открыть файл");
     gpointer open_file_name = NULL;
     gtk_file_dialog_open(open_file_dialog, NULL, NULL, response_open_file_dialog, open_file_name);
-    // r05_alloc_string(filename);
+    if (open_file_name != NULL)
+    {
+        // r05_alloc_string(filename);
+    }
     return;
 }
 char odialog_0[] = {Z7 'O', 'D', 'I', 'A', 'L', 'O', 'G', '\007'};
