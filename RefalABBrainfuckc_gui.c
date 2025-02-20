@@ -5,7 +5,7 @@
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
-// Модуль "RefalABBrainfuckc_gui"
+// Модуль "RefalABBrainfuckc" (GUI GTK4 версия)
 //====================================================================
 
 #include <stdio.h>
