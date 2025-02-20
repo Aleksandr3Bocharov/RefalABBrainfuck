@@ -67,3 +67,30 @@ static void gtkinit_(void)
 char gtkinit_0[] = {Z7 'G', 'T', 'K', 'I', 'N', 'I', 'T', '\007'};
 G_L_B uint8_t gtkinit = '\122';
 void (*gtkinit_1)(void) = gtkinit_;
+
+static void response_open_file_dialog(GObject *gobject, GAsyncResult *result, gpointer open_file_name)
+{
+    g_autoptr(GError) error = NULL;
+    g_autoptr(GFile) open_file = gtk_file_dialog_open_finish(GTK_FILE_DIALOG(gobject), result, &error);
+    if (error == NULL)
+        open_file_name = (gpointer)g_file_get_path(open_file);
+}
+
+// <ODialog> == E(O)F
+static void odialog_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    GtkFileDialog *open_file_dialog = gtk_file_dialog_new();
+    gtk_file_dialog_set_title(open_file_dialog, "Открыть файл");
+    gpointer open_file_name = NULL;
+    gtk_file_dialog_open(open_file_dialog, NULL, NULL, response_open_file_dialog, open_file_name);
+    // r05_alloc_string(filename);
+    return;
+}
+char odialog_0[] = {Z7 'O', 'D', 'I', 'A', 'L', 'O', 'G', '\007'};
+G_L_B uint8_t odialog = '\122';
+void (*odialog_1)(void) = odialog_;
