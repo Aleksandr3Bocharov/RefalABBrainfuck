@@ -5,7 +5,7 @@
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
-// Модуль "RefalABBrainfuckc" (GUI версия)
+// Модуль "RefalABBrainfuckc" (GUI raygui raylib версия)
 //====================================================================
 
 #include <stdio.h>
