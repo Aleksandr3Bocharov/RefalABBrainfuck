@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include "raylib.h"
 #include "refal.def"
 
 // <PutCh S(N)C> ==
@@ -60,6 +61,15 @@ static void raygui_(void)
         refal.upshot = 2;
         return;
     }
+    InitWindow(800, 450, "raylib [core] example - basic window");
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        EndDrawing();
+    }
+    CloseWindow();
     return;
 }
 char raygui_0[] = {Z6 'R', 'A', 'Y', 'G', 'U', 'I', '\006'};
