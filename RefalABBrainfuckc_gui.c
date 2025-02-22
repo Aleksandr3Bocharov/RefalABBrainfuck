@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-02-20
+// 2025-02-23
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -51,3 +51,17 @@ static void getch_(void)
 char getch_0[] = {Z5 'G', 'E', 'T', 'C', 'H', '\005'};
 G_L_B uint8_t getch = '\122';
 void (*getch_1)(void) = getch_;
+
+// <RayGUI> ==
+static void raygui_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    return;
+}
+char raygui_0[] = {Z6 'R', 'A', 'Y', 'G', 'U', 'I', '\006'};
+G_L_B uint8_t raygui = '\122';
+void (*raygui_1)(void) = raygui_;

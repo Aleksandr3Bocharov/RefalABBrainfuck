@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-02-20
+* 2025-02-23
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -19,13 +19,13 @@
             START
             ENTRY Go
 * from RefalABBrainfuckс
-            EXTRN PutChar(PutCh), GetChar(GetCh)
+            EXTRN PutChar(PutCh), GetChar(GetCh), RayGUI
 * from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
             EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go          = <Help> +
+Go          = <RayGUI> <Help> +
             <Prout 'The opening of the file "Test.b" ' +
             'with code on the Brainfuck language.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*
