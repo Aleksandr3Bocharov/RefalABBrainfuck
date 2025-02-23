@@ -7,7 +7,7 @@ rem 2025-02-23
 rem https://github.com/Aleksandr3Bocharov/RefalAB
 
 set RAYLIB=F:\Programming\raylib-5.5_win64_mingw-w64
-set RAYLIBCFLAGS=-I%RAYLIB%\include
+set RAYLIBCFLAGS=-Wall -I%RAYLIB%\include
 set RAYLIBLFLAGS=-L%RAYLIB%\lib -lraylib -lgdi32 -lwinmm
 
 %REFALABBIN%\RefalAB RefalABBrainfuck_gui > RefalABBrainfuck_gui.log
