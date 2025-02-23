@@ -5,13 +5,13 @@
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
-// Модуль "RefalABBrainfuckc" (GUI raygui raylib версия)
+// Модуль "RefalABBrainfuckc" (GUI версия)
 //====================================================================
 
 #include <stdio.h>
 #include <stdint.h>
-#include "raylib.h"
 #include "refal.def"
+#include "gui.h"
 
 // <PutCh S(N)C> ==
 static void putch_(void)
@@ -53,25 +53,17 @@ char getch_0[] = {Z5 'G', 'E', 'T', 'C', 'H', '\005'};
 G_L_B uint8_t getch = '\122';
 void (*getch_1)(void) = getch_;
 
-// <RayGUI> ==
-static void raygui_(void)
+// <Window> ==
+static void window_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
         refal.upshot = 2;
         return;
     }
-    InitWindow(800, 450, "raylib [core] example - basic window");
-    while (!WindowShouldClose())
-    {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-        EndDrawing();
-    }
-    CloseWindow();
+    guiwindow();
     return;
 }
-char raygui_0[] = {Z6 'R', 'A', 'Y', 'G', 'U', 'I', '\006'};
-G_L_B uint8_t raygui = '\122';
-void (*raygui_1)(void) = raygui_;
+char window_0[] = {Z6 'W', 'I', 'N', 'D', 'O', 'W', '\006'};
+G_L_B uint8_t window = '\122';
+void (*window_1)(void) = window_;

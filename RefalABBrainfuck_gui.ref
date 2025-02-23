@@ -6,7 +6,7 @@
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
-* RefalABBrainfuck (GUI raygui raylib версия)
+* RefalABBrainfuck (GUI версия)
 *
 * Программа "RefalABBrainfuck" написана
 * на языке программирования РефалАБ.
@@ -19,13 +19,13 @@
             START
             ENTRY Go
 * from RefalABBrainfuckс
-            EXTRN PutChar(PutCh), GetChar(GetCh), RayGUI
+            EXTRN PutChar(PutCh), GetChar(GetCh), Window
 * from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
             EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go          = <RayGUI> <Help> +
+Go          = <Window> <Help> +
             <Prout 'The opening of the file "Test.b" ' +
             'with code on the Brainfuck language.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*

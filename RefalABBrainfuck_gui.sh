@@ -9,5 +9,6 @@
 $REFALABBIN/RefalAB RefalABBrainfuck_gui > RefalABBrainfuck_gui.log
 as -o RefalABBrainfuck_gui.o RefalABBrainfuck_gui.asm >> RefalABBrainfuck_gui.log
 clang $REFALABCFLAGS -I$REFALABINCLUDE -c RefalABBrainfuckc_gui.c -o RefalABBrainfuckc_gui.o >> RefalABBrainfuck_gui.log
-clang -o RefalABBrainfuck_gui RefalABBrainfuck_gui.o RefalABBrainfuckc_gui.o $REFALABLIB/mainrf.o -L$REFALABLIB -lRefalAB -lraylib >> RefalABBrainfuck_gui.log
+clang -c gui.c -o gui.o >> RefalABBrainfuck_gui.log
+clang -o RefalABBrainfuck_gui RefalABBrainfuck_gui.o RefalABBrainfuckc_gui.o $REFALABLIB/mainrf.o -L$REFALABLIB -lRefalAB gui.o -lraylib >> RefalABBrainfuck_gui.log
 ./RefalABBrainfuck_gui
