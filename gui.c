@@ -8,8 +8,6 @@
 // Модуль "gui" (GUI raygui raylib версия)
 //====================================================================
 
-#include "gui.h"
-
 #include "raylib.h"
 
 #define RAYGUI_IMPLEMENTATION
@@ -18,6 +16,8 @@
 
 #define GUI_WINDOW_FILE_DIALOG_IMPLEMENTATION
 #include "gui_window_file_dialog.h"
+
+#include "gui.h"
 
 void guiwindow(void)
 {
