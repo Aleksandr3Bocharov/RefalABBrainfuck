@@ -23,18 +23,17 @@ void guiwindow(void)
 {
     // Initialization
     //---------------------------------------------------------------------------------------
-    int screenWidth = 800;
-    int screenHeight = 560;
-    InitWindow(screenWidth, screenHeight, "raygui - custom modal dialog");
+    const int screenWidth = 800;
+    const int screenHeight = 560;
+    InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
     SetExitKey(0);
     // Custom file dialog
     GuiWindowFileDialogState fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     bool exitWindow = false;
-    char fileNameToLoad[512] = {0};
-    Texture texture = {0};
+    char fileName[512] = {'\0'};
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
-    // Main game loop
+    // Main loop
     while (!exitWindow) // Detect window close button or ESC key
     {
         // Update
@@ -42,13 +41,8 @@ void guiwindow(void)
         exitWindow = WindowShouldClose();
         if (fileDialogState.SelectFilePressed)
         {
-            // Load image file (if supported extension)
-            if (IsFileExtension(fileDialogState.fileNameText, ".png"))
-            {
-                strcpy(fileNameToLoad, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText));
-                UnloadTexture(texture);
-                texture = LoadTexture(fileNameToLoad);
-            }
+            // Get Brainfuck's source file nmae
+            strcpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText));
             fileDialogState.SelectFilePressed = false;
         }
         //----------------------------------------------------------------------------------
@@ -56,15 +50,15 @@ void guiwindow(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-        DrawTexture(texture, GetScreenWidth() / 2 - texture.width / 2, GetScreenHeight() / 2 - texture.height / 2 - 5, WHITE);
-        DrawRectangleLines(GetScreenWidth() / 2 - texture.width / 2, GetScreenHeight() / 2 - texture.height / 2 - 5, texture.width, texture.height, BLACK);
-        DrawText(fileNameToLoad, 208, GetScreenHeight() - 20, 10, GRAY);
+        DrawText(fileName, 210, 20, 20, GRAY);
         // raygui: controls drawing
         //----------------------------------------------------------------------------------
         if (fileDialogState.windowActive)
             GuiLock();
-        if (GuiButton((Rectangle){20, 20, 140, 30}, GuiIconText(ICON_FILE_OPEN, "Open Image")))
+        if (GuiButton((Rectangle){20, 20, 180, 30}, GuiIconText(ICON_FILE_OPEN, "Open Brainfuck's source file")))
             fileDialogState.windowActive = true;
+        if (GuiButton((Rectangle){screenWidth / 2 - 80, screenHeight - 60, 160, 30}, "Run Brainfuck Interpretator"))
+            exitWindow = true;
         GuiUnlock();
         // GUI: Dialog Window
         //--------------------------------------------------------------------------------
@@ -76,7 +70,6 @@ void guiwindow(void)
     }
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    UnloadTexture(texture); // Unload texture
-    CloseWindow();          // Close window and OpenGL context
+    CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
 }
