@@ -11,6 +11,6 @@
 #ifndef GUI_H
 #define GUI_H
 
-extern void guiwindow(void);
+extern bool guiwindow(void);
 
 #endif
