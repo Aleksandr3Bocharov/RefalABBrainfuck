@@ -21,7 +21,7 @@
 
 bool guiwindow(void)
 {
-    bool isRunInterpretator = false;
+    bool ok = false;
     // Initialization
     //---------------------------------------------------------------------------------------
     const int screenWidth = 800;
@@ -62,7 +62,7 @@ bool guiwindow(void)
         if (GuiButton((Rectangle){screenWidth / 2 - 80, screenHeight - 50, 160, 30}, "Run Brainfuck Interpretator"))
             if (fileName[0] != '\0')
             {
-                isRunInterpretator = true;
+                ok = true;
                 exitWindow = true;
             }
         GuiUnlock();
@@ -78,5 +78,5 @@ bool guiwindow(void)
     //--------------------------------------------------------------------------------------
     CloseWindow(); // Close window and OpenGL context
     //--------------------------------------------------------------------------------------
-    return isRunInterpretator;
+    return ok;
 }
