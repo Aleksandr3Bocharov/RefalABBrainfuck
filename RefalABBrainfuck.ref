@@ -1,8 +1,8 @@
-* Copyright 2024 Aleksandr Bocharov
+* Copyright 2025 Aleksandr Bocharov
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2024-10-31
+* 2025-02-25
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -26,7 +26,7 @@
             EMPTY Next, Prev, Inc, Dec, Write, Read
 
 Go          = <Help> +
-            <Prout 'The opening of the file "Test.b" ' +
+            <Prout 'The opening of the source file "Test.b" ' +
             'with code on the Brainfuck language.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*
             <Br 'E.Lines' '=' +
