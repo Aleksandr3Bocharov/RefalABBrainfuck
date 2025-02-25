@@ -20,7 +20,7 @@
             ENTRY Go
 * from RefalABBrainfuckс
             EXTRN PutChar(PutCh), GetChar(GetCh)
-            EXTRN Init, Close, FileName, Message
+            EXTRN Init, Close, FileName, IsExit
 * from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
@@ -35,7 +35,7 @@ Help        = <Prout 'The programm "RefalABBrainfuck (GUI version)" ' +
             'from source file.\n'>
 
 bfFileName +
-            = <Message>
+            = <bfFileNameAux <IsExit>>
     EF      = <Prout 'The opening of the source file "' EF '" ' +
             'with code on the Brainfuck language.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*
@@ -45,7 +45,12 @@ bfFileName +
             <Br 'E.Symbols' '=' +
             <DelAccum <MapAccum /DoRows/ /1/ <Dg 'E.Lines'>>>> +
 * Запуск лексического анализатора
-            <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
+            <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>> +
+            <bfFileName <FileName>>
+
+bfFileNameAux +
+    'Y'     =
+    'N'     = <bfFileName <FileName>>
 
 DoRows +
     SR (EL) = <P1 SR> +

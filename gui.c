@@ -25,10 +25,13 @@
 static const int screenWidth = 800;
 static const int screenHeight = 340;
 
+static GuiWindowFileDialogState fileDialogState;
+
 void guiInit(void)
 {
     InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
     SetExitKey(0);
+    fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     SetTargetFPS(60);
 }
 
@@ -40,7 +43,6 @@ void guiClose(void)
 bool guiFileName(char *fileName)
 {
     bool ok = false;
-    GuiWindowFileDialogState fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     bool exitWindow = false;
     while (!exitWindow)
     {

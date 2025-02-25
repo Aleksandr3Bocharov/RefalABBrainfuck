@@ -15,6 +15,8 @@
 #include "refal.def"
 #include "gui.h"
 
+static char fileName[254] = {'\0'};
+
 // <PutCh S(N)C> ==
 static void putch_(void)
 {
@@ -93,7 +95,6 @@ static void filename_(void)
         refal.upshot = 2;
         return;
     }
-    char fileName[254] = {'\0'};
     if (guiFileName(fileName))
     {
         T_LINKCB *p = refal.prevr;
@@ -128,7 +129,7 @@ char message_0[] = {Z7 'M', 'E', 'S', 'S', 'A', 'G', 'E', '\007'};
 G_L_B uint8_t message = '\122';
 void (*message_1)(void) = message_;
 
-// <IsExit> == 'Y' | 
+// <IsExit> == 'Y' | 'N'
 static void isexit_(void)
 {
     if (refal.preva->next != refal.nexta)
@@ -139,15 +140,14 @@ static void isexit_(void)
     T_LINKCB *p = refal.prevr;
     if (!slins(p, 1))
         return;
-    if (guiIsExit())
-    {
-        p = p->next;
-        p->tag = TAGO;
-        p->info.codep = NULL;
-        p->info.infoc = 'Y';
-    }
+    p = p->next;
+    p->tag = TAGO;
+    p->info.codep = NULL;
+    p->info.infoc = 'Y';
+    if (!guiIsExit())
+        p->info.infoc = 'N';
     return;
 }
-char isexit_0[] = {Z5 'I', 'S', 'E', 'X', 'I', 'T', '\005'};
+char isexit_0[] = {Z6 'I', 'S', 'E', 'X', 'I', 'T', '\006'};
 G_L_B uint8_t isexit = '\122';
 void (*isexit_1)(void) = isexit_;
