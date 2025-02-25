@@ -22,42 +22,34 @@
 
 #include "gui.h"
 
+static const int screenWidth = 800;
+static const int screenHeight = 340;
+
+void guiInit(void)
+{
+    InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
+    SetExitKey(0);
+}
+
 bool guiFileName(char *fileName)
 {
     bool ok = false;
-    // Initialization
-    //---------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 340;
-    InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
-    SetExitKey(0);
-    // Custom file dialog
     GuiWindowFileDialogState fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     bool exitWindow = false;
     bool showMessageBox = false;
     SetTargetFPS(60);
-    //--------------------------------------------------------------------------------------
-    // Main loop
     while (!exitWindow) // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
         exitWindow = WindowShouldClose();
         if (fileDialogState.SelectFilePressed)
         {
-            // Get Brainfuck's source file name
             if (fileDialogState.fileNameText[0] != '\0')
                 strcpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText));
             fileDialogState.SelectFilePressed = false;
         }
-        //----------------------------------------------------------------------------------
-        // Draw
-        //----------------------------------------------------------------------------------
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawText(fileName, 10, 60, 20, GRAY);
-        // raygui: controls drawing
-        //----------------------------------------------------------------------------------
         if (fileDialogState.windowActive)
             GuiLock();
         if (GuiButton((Rectangle){screenWidth / 2 - 90, 20, 180, 30}, GuiIconText(ICON_FILE_OPEN, "Open Brainfuck's source file")))
@@ -70,16 +62,9 @@ bool guiFileName(char *fileName)
                 exitWindow = true;
             }
         GuiUnlock();
-        // GUI: Dialog Window
-        //--------------------------------------------------------------------------------
         GuiWindowFileDialog(&fileDialogState);
-        //--------------------------------------------------------------------------------
-        //----------------------------------------------------------------------------------
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
     BeginDrawing();
     ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
     if (showMessageBox)
@@ -92,7 +77,6 @@ bool guiFileName(char *fileName)
             exitWindow = true;
     }
     EndDrawing();
-    CloseWindow(); // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    CloseWindow();
     return ok;
 }

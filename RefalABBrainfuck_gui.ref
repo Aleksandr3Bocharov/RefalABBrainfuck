@@ -19,13 +19,14 @@
             START
             ENTRY Go
 * from RefalABBrainfuckс
-            EXTRN PutChar(PutCh), GetChar(GetCh), FileName
+            EXTRN PutChar(PutCh), GetChar(GetCh)
+            EXTRN Init, FileName
 * from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
             EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go          = <Help> <bfFileName <FileName>>
+Go          = <Init> <Help> <bfFileName <FileName>>
             
 
 * Вывод справки

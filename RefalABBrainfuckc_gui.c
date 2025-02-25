@@ -55,6 +55,21 @@ char getch_0[] = {Z5 'G', 'E', 'T', 'C', 'H', '\005'};
 G_L_B uint8_t getch = '\122';
 void (*getch_1)(void) = getch_;
 
+// <Init> ==
+static void init_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    guiInit();
+    return;
+}
+char init_0[] = {Z4 'I', 'N', 'I', 'T', '\004'};
+G_L_B uint8_t init = '\122';
+void (*init_1)(void) = init_;
+
 // <FileName> == E(O)F
 static void filename_(void)
 {

@@ -11,6 +11,7 @@
 #ifndef GUI_H
 #define GUI_H
 
+extern void guiInit(void);
 extern bool guiFileName(char *fileName);
 
 #endif
