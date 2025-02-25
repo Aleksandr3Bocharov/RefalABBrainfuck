@@ -25,22 +25,26 @@
             EXTRN Map, MapAccum, DelAccum, LoadFile
             EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go          = <Prout <FileName>> <Help> +
-            <Prout 'The opening of the file "Test.b" ' +
+Go          = <Help> <bfFileName <FileName>>
+            
+
+* Вывод справки
+Help        = <Prout 'The programm "RefalABBrainfuck (GUI version)" ' +
+            'interprets code on the language Brainfuck ' +
+            'from source file.\n'>
+
+bfFileName +
+            = <Prout 'Source file not defined.'>
+    EF      = <Prout 'The opening of the source file "' EF '" ' +
             'with code on the Brainfuck language.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*
             <Br 'E.Lines' '=' +
-            <LoadFile /0/ 'Test.b'>> +
+            <LoadFile /0/ EF>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
             <Br 'E.Symbols' '=' +
             <DelAccum <MapAccum /DoRows/ /1/ <Dg 'E.Lines'>>>> +
 * Запуск лексического анализатора
             <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
-
-* Вывод справки
-Help        = <Prout 'The programm "RefalABBrainfuck" ' + 
-            'interprets code on the language Brainfuck ' +
-            'from source file.\n'>
 
 DoRows +
     SR (EL) = <P1 SR> +
@@ -54,7 +58,7 @@ DoColumns +
 IfTokenizer +
 * Если Fails, то завершение программы
     'Fails' EE +
-            = <Prout 'FATAL_ERROR (99): ' +'
+            = <Prout 'FATAL_ERROR (99): ' +
             'There are one or more syntax errors.'> +
             <Map /DoProutLine/ EE>
 * Запуск синтаксического анализатора 
