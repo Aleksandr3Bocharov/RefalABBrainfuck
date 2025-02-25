@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-02-23
+// 2025-02-25
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -9,7 +9,9 @@
 //====================================================================
 
 #include <stdio.h>
+#include <string.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include "refal.def"
 #include "gui.h"
 
@@ -53,17 +55,30 @@ char getch_0[] = {Z5 'G', 'E', 'T', 'C', 'H', '\005'};
 G_L_B uint8_t getch = '\122';
 void (*getch_1)(void) = getch_;
 
-// <Window> ==
-static void window_(void)
+// <FileName> == E(O)F
+static void filename_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
         refal.upshot = 2;
         return;
     }
-    guiwindow();
+    char fileName[254] = {'\0'};
+    if (guiFileName(fileName))
+    {
+        T_LINKCB *p = refal.prevr;
+        if (!slins(p, strlen(fileName)))
+            return;
+        for (size_t i = 0; fileName[i] != '\0'; i++)
+        {
+            p = p->next;
+            p->tag = TAGO;
+            p->info.codep = NULL;
+            p->info.infoc = fileName[i];
+        }
+    }
     return;
 }
-char window_0[] = {Z6 'W', 'I', 'N', 'D', 'O', 'W', '\006'};
-G_L_B uint8_t window = '\122';
-void (*window_1)(void) = window_;
+char filename_0[] = {Z8 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', '\010'};
+G_L_B uint8_t filename = '\122';
+void (*filename_1)(void) = filename_;

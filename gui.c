@@ -1,12 +1,15 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-02-23
+// 2025-02-25
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
 // Модуль "gui" (GUI raygui raylib версия)
 //====================================================================
+
+#include <string.h>
+#include <stdbool.h>
 
 #include "raylib.h"
 
@@ -19,7 +22,7 @@
 
 #include "gui.h"
 
-bool guiwindow(void)
+bool guiFileName(char *fileName)
 {
     bool ok = false;
     // Initialization
@@ -31,7 +34,6 @@ bool guiwindow(void)
     // Custom file dialog
     GuiWindowFileDialogState fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     bool exitWindow = false;
-    char fileName[254] = {'\0'};
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
     // Main loop
@@ -60,7 +62,7 @@ bool guiwindow(void)
         if (GuiButton((Rectangle){screenWidth / 2 - 90, 20, 180, 30}, GuiIconText(ICON_FILE_OPEN, "Open Brainfuck's source file")))
             fileDialogState.windowActive = true;
         if (GuiButton((Rectangle){screenWidth / 2 - 80, screenHeight - 50, 160, 30}, "Run Brainfuck Interpretator"))
-            if (fileName[0] != '\0')
+            if (*fileName != '\0')
             {
                 ok = true;
                 exitWindow = true;
