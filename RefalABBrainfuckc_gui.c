@@ -127,3 +127,27 @@ static void message_(void)
 char message_0[] = {Z7 'M', 'E', 'S', 'S', 'A', 'G', 'E', '\007'};
 G_L_B uint8_t message = '\122';
 void (*message_1)(void) = message_;
+
+// <IsExit> == 'Y' | 
+static void isexit_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    T_LINKCB *p = refal.prevr;
+    if (!slins(p, 1))
+        return;
+    if (guiIsExit())
+    {
+        p = p->next;
+        p->tag = TAGO;
+        p->info.codep = NULL;
+        p->info.infoc = 'Y';
+    }
+    return;
+}
+char isexit_0[] = {Z5 'I', 'S', 'E', 'X', 'I', 'T', '\005'};
+G_L_B uint8_t isexit = '\122';
+void (*isexit_1)(void) = isexit_;

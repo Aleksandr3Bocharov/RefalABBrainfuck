@@ -11,7 +11,10 @@
 #ifndef GUI_H
 #define GUI_H
 
+#include <stdbool.h>
+
 extern void guiClose(void);
+extern bool guiIsExit(void);
 extern bool guiFileName(char *fileName);
 extern void guiInit(void);
 extern void guiMessage(const char *message);

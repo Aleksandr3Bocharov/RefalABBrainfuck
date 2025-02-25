@@ -42,7 +42,7 @@ bool guiFileName(char *fileName)
     bool ok = false;
     GuiWindowFileDialogState fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     bool exitWindow = false;
-    while (!exitWindow) // Detect window close button or ESC key
+    while (!exitWindow)
     {
         exitWindow = WindowShouldClose();
         if (fileDialogState.SelectFilePressed)
@@ -74,7 +74,7 @@ bool guiFileName(char *fileName)
 void guiMessage(const char *message)
 {
     bool exitWindow = false;
-    while (!exitWindow) // Detect window close button or ESC key
+    while (!exitWindow)
     {
         exitWindow = WindowShouldClose();
         BeginDrawing();
@@ -85,4 +85,26 @@ void guiMessage(const char *message)
             exitWindow = true;
         EndDrawing();
     }
+}
+
+bool guiIsExit(void)
+{
+    bool isExit = true;
+    bool exitWindow = false;
+    while (!exitWindow)
+    {
+        exitWindow = WindowShouldClose();
+        BeginDrawing();
+        ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
+        DrawRectangle(0, 0, screenWidth, screenHeight, Fade(RAYWHITE, 0.8f));
+        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 125, screenHeight / 2 - 50, 250, 100}, GuiIconText(ICON_EXIT, "Exit"), "Do you really want to exit?", "Yes;No");
+        if (result == 0 || result == 1 || result == 2)
+        {
+            exitWindow = true;
+            if (result == 0 || result == 2)
+                isExit = false;
+        }
+        EndDrawing();
+    }
+    return isExit;
 }
