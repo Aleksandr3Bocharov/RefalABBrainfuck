@@ -54,7 +54,7 @@ DoColumns +
 IfTokenizer +
 * Если Fails, то завершение программы
     'Fails' EE +
-            = <Prout 'FATAL_ERROR (99): ' +'
+            = <Prout 'FATAL_ERROR (99): ' +
             'There are one or more syntax errors.'> +
             <Map /DoProutLine/ EE>
 * Запуск синтаксического анализатора 
