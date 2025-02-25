@@ -121,7 +121,7 @@ static void message_(void)
         refal.upshot = 2;
         return;
     }
-    guiMessage("Source file not defined.");
+    guiMessage("The program will exit.");
     return;
 }
 char message_0[] = {Z7 'M', 'E', 'S', 'S', 'A', 'G', 'E', '\007'};

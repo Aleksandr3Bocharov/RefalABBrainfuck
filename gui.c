@@ -80,7 +80,7 @@ void guiMessage(const char *message)
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawRectangle(0, 0, screenWidth, screenHeight, Fade(RAYWHITE, 0.8f));
-        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 125, screenHeight / 2 - 50, 250, 100}, GuiIconText(ICON_EXIT, "Close Window"), message, "OK");
+        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 125, screenHeight / 2 - 50, 250, 100}, GuiIconText(ICON_EXIT, "Exit"), message, "OK");
         if (result == 0 || result == 1)
             exitWindow = true;
         EndDrawing();
