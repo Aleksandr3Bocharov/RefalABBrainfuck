@@ -70,6 +70,21 @@ char init_0[] = {Z4 'I', 'N', 'I', 'T', '\004'};
 G_L_B uint8_t init = '\122';
 void (*init_1)(void) = init_;
 
+// <Close> ==
+static void close_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    guiClose();
+    return;
+}
+char close_0[] = {Z5 'C', 'L', 'O', 'S', 'E', '\005'};
+G_L_B uint8_t close = '\122';
+void (*close_1)(void) = close_;
+
 // <FileName> == E(O)F
 static void filename_(void)
 {
@@ -97,3 +112,18 @@ static void filename_(void)
 char filename_0[] = {Z8 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', '\010'};
 G_L_B uint8_t filename = '\122';
 void (*filename_1)(void) = filename_;
+
+// <Message> ==
+static void message_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    guiMessage("Source file not defined.");
+    return;
+}
+char message_0[] = {Z7 'M', 'E', 'S', 'S', 'A', 'G', 'E', '\007'};
+G_L_B uint8_t message = '\122';
+void (*message_1)(void) = message_;

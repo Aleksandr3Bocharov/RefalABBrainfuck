@@ -29,6 +29,7 @@ void guiInit(void)
 {
     InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
     SetExitKey(0);
+    SetTargetFPS(60);
 }
 
 void guiClose(void)
@@ -41,8 +42,6 @@ bool guiFileName(char *fileName)
     bool ok = false;
     GuiWindowFileDialogState fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     bool exitWindow = false;
-    bool showMessageBox = false;
-    SetTargetFPS(60);
     while (!exitWindow) // Detect window close button or ESC key
     {
         exitWindow = WindowShouldClose();
@@ -63,26 +62,27 @@ bool guiFileName(char *fileName)
             if (*fileName != '\0')
             {
                 ok = true;
-                showMessageBox = true;
                 exitWindow = true;
             }
         GuiUnlock();
         GuiWindowFileDialog(&fileDialogState);
         EndDrawing();
     }
-    /*
-    BeginDrawing();
-    ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-    if (showMessageBox)
-    {
-        DrawRectangle(0, 0, screenWidth, screenHeight, Fade(RAYWHITE, 0.8f));
-        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 125, screenHeight / 2 - 50, 250, 100}, GuiIconText(ICON_EXIT, "Close Window"), "Do you really want to exit?", "Yes;No");
-        if (result == 0 || result == 2)
-            showMessageBox = false;
-        else if (result == 1)
-            exitWindow = true;
-    }
-    EndDrawing();
-    */
     return ok;
+}
+
+void guiMessage(const char *message)
+{
+    bool exitWindow = false;
+    while (!exitWindow) // Detect window close button or ESC key
+    {
+        exitWindow = WindowShouldClose();
+        BeginDrawing();
+        ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
+        DrawRectangle(0, 0, screenWidth, screenHeight, Fade(RAYWHITE, 0.8f));
+        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 125, screenHeight / 2 - 50, 250, 100}, GuiIconText(ICON_EXIT, "Close Window"), message, "OK");
+        if (result == 0 || result == 1)
+            exitWindow = true;
+        EndDrawing();
+    }
 }
