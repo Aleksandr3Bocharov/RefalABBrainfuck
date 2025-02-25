@@ -31,6 +31,11 @@ void guiInit(void)
     SetExitKey(0);
 }
 
+void guiClose(void)
+{
+    CloseWindow();
+}
+
 bool guiFileName(char *fileName)
 {
     bool ok = false;
@@ -65,6 +70,7 @@ bool guiFileName(char *fileName)
         GuiWindowFileDialog(&fileDialogState);
         EndDrawing();
     }
+    /*
     BeginDrawing();
     ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
     if (showMessageBox)
@@ -77,6 +83,6 @@ bool guiFileName(char *fileName)
             exitWindow = true;
     }
     EndDrawing();
-    CloseWindow();
+    */
     return ok;
 }
