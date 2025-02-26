@@ -56,6 +56,9 @@ bool guiFileName(char *fileName)
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawText(fileName, 10, 60, 20, GRAY);
+        DrawText("The programm ""RefalABBrainfuck (GUI version)""", 10, 100, 20, DARKGRAY);
+        DrawText("interprets code on the language Brainfuck", 10, 140, 20, DARKGRAY);
+        DrawText("from source file.", 10, 180, 20, DARKGRAY);
         if (fileDialogState.windowActive)
             GuiLock();
         if (GuiButton((Rectangle){screenWidth / 2 - 90, 20, 180, 30}, GuiIconText(ICON_FILE_OPEN, "Open Brainfuck's source file")))

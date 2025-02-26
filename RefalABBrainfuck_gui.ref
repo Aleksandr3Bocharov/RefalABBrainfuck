@@ -26,14 +26,8 @@
             EXTRN Map, MapAccum, DelAccum, LoadFile
             EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go          = <Init> <Help> <bfFileName <FileName>> <Prout> <Close>
+Go          = <Init> <bfFileName <FileName>> <Prout> <Close>
             
-
-* Вывод справки
-Help        = <Prout 'The programm "RefalABBrainfuck (GUI version)" ' +
-            'interprets code on the language Brainfuck ' +
-            'from source file.\n'>
-
 bfFileName +
             = <bfFileNameAux <IsExit>>
     EF      = <Prout 'The opening of the source file "' EF '" ' +
