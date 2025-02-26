@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-02-25
+* 2025-02-27
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -30,8 +30,7 @@ Go          = <Init> <bfFileName <FileName>> <Prout> <Close>
             
 bfFileName +
             = <bfFileNameAux <IsExit>>
-    EF      = <Prout 'The opening of the source file "' EF '" ' +
-            'with code on the Brainfuck language.\n'> +
+    EF      = +
 * Загрузка строк файла в E.Lines := (E(O)L)*
             <Br 'E.Lines' '=' +
             <LoadFile /0/ EF>> +
@@ -65,9 +64,7 @@ IfTokenizer +
     ET      = <Br 'e.ParsingTree' '=' +
             <Parser ET>> +
 * Запуск интерпретатора
-            <Prout 'The running of the interpretator ' +
-            'of the code on the Brainfuck language.\n'> +
-            <Interpretator <Dg 'e.ParsingTree'>>
+            <Prout> <Interpretator <Dg 'e.ParsingTree'>>
 
 DoProutLine +
     (EL)    = <Prout EL>
