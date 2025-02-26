@@ -58,16 +58,16 @@ IfTokenizer +
 * Если Fails, то завершение программы
     'Fails' EE +
             = <Prout 'FATAL_ERROR (99): ' +
-            'There are one or more syntax errors.'> +
-            <Map /DoProutLine/ EE>
+            'There are one or more syntax errors.' +
+            <Map /DoLine/ EE>>
 * Запуск синтаксического анализатора 
     ET      = <Br 'e.ParsingTree' '=' +
             <Parser ET>> +
 * Запуск интерпретатора
             <Prout> <Interpretator <Dg 'e.ParsingTree'>>
 
-DoProutLine +
-    (EL)    = <Prout EL>
+DoLine +
+    (EL)    = '\n' EL
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
