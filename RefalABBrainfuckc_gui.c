@@ -164,11 +164,9 @@ static void erradd_(void)
         }
         else
         {
-            char *temp = NULL;
-            temp = (char *)realloc(errors, (strlen(errors) + strlen(error) + 2) * NMBL);
-            if (temp == NULL)
+            errors = (char *)realloc(errors, (strlen(errors) + strlen(error) + 2) * NMBL);
+            if (errors == NULL)
                 rfabe("erradd: error");
-            errors = temp;
             strcat(strcat(errors, ";"), error);
         }
         return;
