@@ -155,16 +155,22 @@ static void erradd_(void)
         if (neot)
             break;
         error[i] = '\0';
-        char *temp = NULL;
         if (errors == NULL)
-            temp = (char *)malloc((strlen(error) + 2) * NMBL);
-        else
-            temp = (char *)realloc(errors, (strlen(errors) + strlen(error) + 2) * NMBL);
-        if (temp != NULL)
         {
+            errors = (char *)malloc((strlen(error) + 1) * NMBL);
+            if (errors == NULL)
+                rfabe("erradd: error");
+            strcpy(errors, error);
         }
         else
-            rfabe("erradd: error");
+        {
+            char *temp = NULL;
+            temp = (char *)realloc(errors, (strlen(errors) + strlen(error) + 2) * NMBL);
+            if (temp == NULL)
+                rfabe("erradd: error");
+            errors = temp;
+            strcat(strcat(errors, ";"), error);
+        }
         return;
     } while (false);
     refal.upshot = 2;
