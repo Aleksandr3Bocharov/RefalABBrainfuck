@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-02-25
+// 2025-02-27
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -16,6 +16,7 @@
 #include "gui.h"
 
 static char fileName[254] = {'\0'};
+static char *errors = NULL;
 
 // <PutCh S(N)C> ==
 static void putch_(void)
@@ -114,20 +115,20 @@ char filename_0[] = {Z8 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', '\010'};
 G_L_B uint8_t filename = '\122';
 void (*filename_1)(void) = filename_;
 
-// <Errors> ==
-static void errors_(void)
+// <ErrView> ==
+static void errview_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
         refal.upshot = 2;
         return;
     }
-    guiErrors("Hd;fg");
+    guiErrView(errors);
     return;
 }
-char errors_0[] = {Z6 'E', 'R', 'R', 'O', 'R', 'S', '\006'};
-G_L_B uint8_t errors = '\122';
-void (*errors_1)(void) = errors_;
+char errors_0[] = {Z7 'E', 'R', 'R', 'V', 'I', 'E', 'W', '\007'};
+G_L_B uint8_t errview = '\122';
+void (*errview_1)(void) = errview_;
 
 // <IsExit> == 'Y' | 'N'
 static void isexit_(void)

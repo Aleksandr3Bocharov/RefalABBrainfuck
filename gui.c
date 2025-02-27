@@ -81,7 +81,7 @@ bool guiFileName(char *fileName)
     return ok;
 }
 
-bool guiErrors(const char *errors)
+bool guiErrView(const char *errors)
 {
     bool exitWindow = false;
     bool ok =false;
