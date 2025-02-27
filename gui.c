@@ -37,7 +37,6 @@ void guiInit(void)
     InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
     SetExitKey(0);
     cyrillicFont = LoadFont("dejavu.fnt");
-    GuiSetFont(cyrillicFont);
     fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     SetTargetFPS(60);
 }
@@ -61,6 +60,7 @@ bool guiFileName(char *fileName)
             fileDialogState.SelectFilePressed = false;
         }
         BeginDrawing();
+        GuiSetFont(cyrillicFont);
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawText("The programm "
                  "RefalABBrainfuck (GUI version)"
@@ -78,15 +78,18 @@ bool guiFileName(char *fileName)
         DrawText("The running of the interpretator of the code on the Brainfuck language.", 10, 320, 20, DARKGRAY);
         if (fileDialogState.windowActive)
             GuiLock();
-        if (GuiButton((Rectangle){screenWidth / 2 - 90, 100, 180, 30}, GuiIconText(ICON_FILE_OPEN, "Open Brainfuck's source file")))
+        GuiSetStyle(DEFAULT, TEXT_SIZE, 15);
+        if (GuiButton((Rectangle){screenWidth / 2 - 170, 100, 340, 30}, GuiIconText(ICON_FILE_OPEN, "Открыть файл с исходником Brainfuck")))
             fileDialogState.windowActive = true;
-        if (GuiButton((Rectangle){screenWidth / 2 - 80, 270, 160, 30}, "Run Brainfuck Interpretator"))
+        if (GuiButton((Rectangle){screenWidth / 2 - 140, 270, 280, 30}, "Запустить интерпретатор Brainfuck"))
             if (*fileName != '\0')
             {
                 ok = true;
                 exitWindow = true;
             }
         GuiUnlock();
+        GuiSetFont(GetFontDefault());
+        GuiLoadStyleDefault();
         GuiWindowFileDialog(&fileDialogState);
         EndDrawing();
     }
