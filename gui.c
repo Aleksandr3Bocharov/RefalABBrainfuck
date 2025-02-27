@@ -103,7 +103,12 @@ bool guiErrView(const char *errors)
         exitWindow = WindowShouldClose();
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-        GuiListView((Rectangle){165, 25, 140, 124}, errors, &errorsViewScrollIndex, &errorsViewActive);
+        GuiListView((Rectangle){10, 20, screenWidth - 20, screenHeight - 90}, errors, &errorsViewScrollIndex, &errorsViewActive);
+        if (GuiButton((Rectangle){screenWidth / 2 - 20, screenHeight - 50, 40, 30}, "OK"))
+        {
+            ok = true;
+            exitWindow = true;
+        }
         EndDrawing();
     }
     return ok;
