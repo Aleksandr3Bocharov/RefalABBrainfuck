@@ -74,6 +74,7 @@ bool guiFileName(char *fileName)
                 ok = true;
                 exitWindow = true;
             }
+        GuiUnlock();
         GuiWindowFileDialog(&fileDialogState);
         EndDrawing();
     }
