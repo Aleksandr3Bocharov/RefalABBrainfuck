@@ -133,6 +133,20 @@ char errclear_0[] = {Z8 'E', 'R', 'R', 'C', 'L', 'E', 'A', 'R', '\010'};
 G_L_B uint8_t errclear = '\122';
 void (*errclear_1)(void) = errclear_;
 
+// <ErrAdd E(O)E> ==
+static void erradd_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    return;
+}
+char erradd_0[] = {Z6 'E', 'R', 'R', 'A', 'D', 'D', '\006'};
+G_L_B uint8_t erradd = '\122';
+void (*erradd_1)(void) = erradd_;
+
 // <ErrView> ==
 static void errview_(void)
 {

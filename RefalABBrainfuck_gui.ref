@@ -21,7 +21,7 @@
 * from RefalABBrainfuckс_gui
             EXTRN PutChar(PutCh), GetChar(GetCh)
             EXTRN Init, Close, FileName, IsExit
-            EXTRN ErrClear, ErrView
+            EXTRN ErrClear, ErrAdd, ErrView
 * from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
