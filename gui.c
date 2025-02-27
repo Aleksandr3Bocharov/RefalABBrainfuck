@@ -28,12 +28,16 @@ static const int screenHeight = 360;
 static int errorsViewScrollIndex = 0;
 static int errorsViewActive = -1;
 
+Font cyrillicFont;
+
 static GuiWindowFileDialogState fileDialogState;
 
 void guiInit(void)
 {
     InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
     SetExitKey(0);
+    cyrillicFont = LoadFont("dejavu.fnt");
+    GuiSetFont(cyrillicFont);
     fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     SetTargetFPS(60);
 }
@@ -62,6 +66,7 @@ bool guiFileName(char *fileName)
                  "RefalABBrainfuck (GUI version)"
                  "",
                  10, 20, 20, DARKGRAY);
+        DrawTextEx(cyrillicFont, "ппп", (Vector2){64.0f, 64.0f}, (float)cyrillicFont.baseSize, 1.0f, DARKGRAY);
         DrawText("interprets code on the language Brainfuck from source file.", 10, 60, 20, DARKGRAY);
         DrawText("The opening of the source file", 10, 150, 20, DARKGRAY);
         DrawText(TextFormat(""
