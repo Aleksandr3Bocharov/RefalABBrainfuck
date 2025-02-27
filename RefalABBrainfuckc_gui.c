@@ -155,7 +155,7 @@ static void erradd_(void)
         if (neot)
             break;
         error[i] = '\0';
-        char *temp = NULL
+        char *temp = NULL;
         if (errors == NULL)
             temp = (char *)malloc((strlen(error) + 2) * NMBL);
         else
