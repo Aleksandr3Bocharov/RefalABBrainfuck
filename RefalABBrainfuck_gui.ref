@@ -67,7 +67,7 @@ IfTokenizer +
             <Prout> <Interpretator <Dg 'e.ParsingTree'>>
 
 DoPrintLine +
-    (EL)    = <Print EL>
+    (EL)    = <Prout EL>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
