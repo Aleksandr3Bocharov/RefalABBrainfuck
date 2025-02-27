@@ -16,7 +16,7 @@
 #include "refal.def"
 #include "gui.h"
 
-static char fileName[254] = {'\0'};
+static char fileName[255] = {'\0'};
 static char *errors = NULL;
 
 // <PutCh S(N)C> ==
@@ -67,6 +67,7 @@ static void init_(void)
         refal.upshot = 2;
         return;
     }
+    fileName[254] = '\0';
     guiInit();
     return;
 }
@@ -186,7 +187,15 @@ static void errview_(void)
         refal.upshot = 2;
         return;
     }
-    guiErrView(errors);
+    T_LINKCB *p = refal.prevr;
+    if (!slins(p, 1))
+        return;
+    p = p->next;
+    p->tag = TAGO;
+    p->info.codep = NULL;
+    p->info.infoc = 'Y';
+    if (!guiErrView(errors))
+        p->info.infoc = 'N';
     return;
 }
 char errors_0[] = {Z7 'E', 'R', 'R', 'V', 'I', 'E', 'W', '\007'};
