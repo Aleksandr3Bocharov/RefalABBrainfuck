@@ -61,7 +61,7 @@ IfTokenizer +
             = <ErrClear> +
             <ErrAdd 'FATAL_ERROR (99): ' +
             'There are one or more syntax errors.'> +
-            <Map /DoErrAdd/ EE> +
+            <Map /DoErrAdd/ EE> + <ErrAdd>
             <ErrView>
 * Запуск синтаксического анализатора 
     ET      = <Br 'e.ParsingTree' '=' +
