@@ -58,17 +58,19 @@ DoColumns +
 IfTokenizer +
 * Если Fails, то вывод ошибок
     'Fails' EE +
-            = <ErrClear> <Prout 'FATAL_ERROR (99): ' +
+            = <ErrClear> +
+            <ErrAdd 'FATAL_ERROR (99): ' +
             'There are one or more syntax errors.'> +
-            <Map /DoPrintLine/ EE> <ErrView>
+            <Map /DoErrAdd/ EE> +
+            <ErrView>
 * Запуск синтаксического анализатора 
     ET      = <Br 'e.ParsingTree' '=' +
             <Parser ET>> +
 * Запуск интерпретатора
             <Prout> <Interpretator <Dg 'e.ParsingTree'>>
 
-DoPrintLine +
-    (EL)    = <Prout EL>
+DoErrAdd +
+    (EL)    = <ErrAdd EL>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
