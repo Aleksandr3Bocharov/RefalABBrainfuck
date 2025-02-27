@@ -37,6 +37,8 @@ void guiInit(void)
     InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
     SetExitKey(0);
     cyrillicFont = LoadFont("dejavu.fnt");
+    GuiSetFont(cyrillicFont);
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 15);
     fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     SetTargetFPS(60);
 }
@@ -60,13 +62,12 @@ bool guiFileName(char *fileName)
             fileDialogState.SelectFilePressed = false;
         }
         BeginDrawing();
-        GuiSetFont(cyrillicFont);
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawText("The programm "
                  "RefalABBrainfuck (GUI version)"
                  "",
                  10, 20, 20, DARKGRAY);
-        DrawTextEx(cyrillicFont, "ппп", (Vector2){64.0f, 64.0f}, (float)cyrillicFont.baseSize, 1.0f, DARKGRAY);
+        DrawTextEx(cyrillicFont, "ппп", (Vector2){64.0f, 64.0f}, (float)cyrillicFont.baseSize + 5.0f, 1.0f, DARKGRAY);
         DrawText("interprets code on the language Brainfuck from source file.", 10, 60, 20, DARKGRAY);
         DrawText("The opening of the source file", 10, 150, 20, DARKGRAY);
         DrawText(TextFormat(""
@@ -78,7 +79,6 @@ bool guiFileName(char *fileName)
         DrawText("The running of the interpretator of the code on the Brainfuck language.", 10, 320, 20, DARKGRAY);
         if (fileDialogState.windowActive)
             GuiLock();
-        GuiSetStyle(DEFAULT, TEXT_SIZE, 15);
         if (GuiButton((Rectangle){screenWidth / 2 - 170, 100, 340, 30}, GuiIconText(ICON_FILE_OPEN, "Открыть файл с исходником Brainfuck")))
             fileDialogState.windowActive = true;
         if (GuiButton((Rectangle){screenWidth / 2 - 140, 270, 280, 30}, "Запустить интерпретатор Brainfuck"))
@@ -91,6 +91,8 @@ bool guiFileName(char *fileName)
         GuiSetFont(GetFontDefault());
         GuiLoadStyleDefault();
         GuiWindowFileDialog(&fileDialogState);
+        GuiSetFont(cyrillicFont);
+        GuiSetStyle(DEFAULT, TEXT_SIZE, 15);
         EndDrawing();
     }
     return ok;
