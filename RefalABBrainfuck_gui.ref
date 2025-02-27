@@ -21,6 +21,7 @@
 * from RefalABBrainfuckс_gui
             EXTRN PutChar(PutCh), GetChar(GetCh)
             EXTRN Init, Close, FileName, IsExit
+            EXTRN ErrClear, ErrView
 * from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
@@ -57,9 +58,9 @@ DoColumns +
 IfTokenizer +
 * Если Fails, то вывод ошибок
     'Fails' EE +
-            = <Prout 'FATAL_ERROR (99): ' +
+            = <ErrClear> <Prout 'FATAL_ERROR (99): ' +
             'There are one or more syntax errors.'> +
-            <Map /DoPrintLine/ EE>
+            <Map /DoPrintLine/ EE> <ErrView>
 * Запуск синтаксического анализатора 
     ET      = <Br 'e.ParsingTree' '=' +
             <Parser ET>> +

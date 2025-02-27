@@ -58,10 +58,17 @@ bool guiFileName(char *fileName)
         }
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-        DrawText("The programm ""RefalABBrainfuck (GUI version)""", 10, 20, 20, DARKGRAY);
+        DrawText("The programm "
+                 "RefalABBrainfuck (GUI version)"
+                 "",
+                 10, 20, 20, DARKGRAY);
         DrawText("interprets code on the language Brainfuck from source file.", 10, 60, 20, DARKGRAY);
         DrawText("The opening of the source file", 10, 150, 20, DARKGRAY);
-        DrawText(TextFormat("""%s""", fileName), 10, 190, 20, GRAY);
+        DrawText(TextFormat(""
+                            "%s"
+                            "",
+                            fileName),
+                 10, 190, 20, GRAY);
         DrawText("with code on the Brainfuck language.", 10, 230, 20, DARKGRAY);
         DrawText("The running of the interpretator of the code on the Brainfuck language.", 10, 320, 20, DARKGRAY);
         if (fileDialogState.windowActive)
@@ -81,10 +88,16 @@ bool guiFileName(char *fileName)
     return ok;
 }
 
+void guiErrClear(void)
+{
+    errorsViewScrollIndex = 0;
+    errorsViewActive = -1;
+}
+
 bool guiErrView(const char *errors)
 {
     bool exitWindow = false;
-    bool ok =false;
+    bool ok = false;
     while (!exitWindow)
     {
         exitWindow = WindowShouldClose();

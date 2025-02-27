@@ -9,6 +9,7 @@
 //====================================================================
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -114,6 +115,23 @@ static void filename_(void)
 char filename_0[] = {Z8 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', '\010'};
 G_L_B uint8_t filename = '\122';
 void (*filename_1)(void) = filename_;
+
+// <ErrClear> ==
+static void errclear_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    free(errors);
+    errors = NULL;
+    guiErrClear();
+    return;
+}
+char errclear_0[] = {Z8 'E', 'R', 'R', 'C', 'L', 'E', 'A', 'R', '\010'};
+G_L_B uint8_t errclear = '\122';
+void (*errclear_1)(void) = errclear_;
 
 // <ErrView> ==
 static void errview_(void)
