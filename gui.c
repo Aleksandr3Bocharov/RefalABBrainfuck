@@ -25,6 +25,9 @@
 static const int screenWidth = 800;
 static const int screenHeight = 360;
 
+static int errorsViewScrollIndex = 0;
+static int errorsViewActive = -1;
+
 static GuiWindowFileDialogState fileDialogState;
 
 void guiInit(void)
@@ -71,27 +74,25 @@ bool guiFileName(char *fileName)
                 ok = true;
                 exitWindow = true;
             }
-        GuiUnlock();
         GuiWindowFileDialog(&fileDialogState);
         EndDrawing();
     }
     return ok;
 }
 
-void guiMessage(const char *message)
+bool guiErrors(const char *errors)
 {
     bool exitWindow = false;
+    bool ok =false;
     while (!exitWindow)
     {
         exitWindow = WindowShouldClose();
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-        DrawRectangle(0, 0, screenWidth, screenHeight, Fade(RAYWHITE, 0.8f));
-        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 125, screenHeight / 2 - 50, 250, 100}, GuiIconText(ICON_EXIT, "Exit"), message, "OK");
-        if (result == 0 || result == 1)
-            exitWindow = true;
+        GuiListView((Rectangle){165, 25, 140, 124}, errors, &errorsViewScrollIndex, &errorsViewActive);
         EndDrawing();
     }
+    return ok;
 }
 
 bool guiIsExit(void)

@@ -14,9 +14,9 @@
 #include <stdbool.h>
 
 extern void guiClose(void);
-extern bool guiIsExit(void);
+extern bool guiErrors(const char *errors);
 extern bool guiFileName(char *fileName);
 extern void guiInit(void);
-extern void guiMessage(const char *message);
+extern bool guiIsExit(void);
 
 #endif

@@ -18,7 +18,7 @@
 
             START
             ENTRY Go
-* from RefalABBrainfuckс
+* from RefalABBrainfuckс_gui
             EXTRN PutChar(PutCh), GetChar(GetCh)
             EXTRN Init, Close, FileName, IsExit
 * from libRefalAB
@@ -55,7 +55,7 @@ DoColumns +
             (SS SR SC)
 
 IfTokenizer +
-* Если Fails, то завершение программы
+* Если Fails, то вывод ошибок
     'Fails' EE +
             = <Prout 'FATAL_ERROR (99): ' +
             'There are one or more syntax errors.' +
