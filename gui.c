@@ -53,7 +53,7 @@ bool guiFileName(char *fileName)
         if (fileDialogState.SelectFilePressed)
         {
             if (fileDialogState.fileNameText[0] != '\0')
-                strcpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText));
+                strncpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText), 254);
             fileDialogState.SelectFilePressed = false;
         }
         BeginDrawing();
