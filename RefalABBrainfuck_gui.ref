@@ -39,8 +39,7 @@ bfFileName +
             <Br 'E.Symbols' '=' +
             <DelAccum <MapAccum /DoRows/ /1/ <Dg 'E.Lines'>>>> +
 * Запуск лексического анализатора
-            <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>> +
-            <bfFileName <FileName>>
+            <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
 
 bfFileNameAux +
     'Y'     =
@@ -58,19 +57,27 @@ DoColumns +
 IfTokenizer +
 * Если Fails, то вывод ошибок
     'Fails' EE +
-            = <ErrClear> +
-            <ErrAdd 'FATAL_ERROR (99): ' +
+            = <ErrAdd 'FATAL_ERROR (99): ' +
             'There are one or more syntax errors.'> +
             <Map /DoErrAdd/ EE> +
-            <ErrView>
+            <IsErrView <ErrView>>
 * Запуск синтаксического анализатора 
     ET      = <Br 'e.ParsingTree' '=' +
             <Parser ET>> +
 * Запуск интерпретатора
-            <Prout> <Interpretator <Dg 'e.ParsingTree'>>
+            <Prout> <Interpretator <Dg 'e.ParsingTree'>> +
+            <bfFileName <FileName>>
 
 DoErrAdd +
     (EL)    = <ErrAdd EL>
+
+IsErrView +
+    'Y'     = <ErrClear> <bfFileName <FileName>>
+    'N'     = <IsErrViewAux <IsExit>>
+
+IsErrViewAux +
+    'Y'     =
+    'N'     = <IsErrView <ErrView>>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
