@@ -136,11 +136,38 @@ void (*errclear_1)(void) = errclear_;
 // <ErrAdd E(O)E> ==
 static void erradd_(void)
 {
-    if (refal.preva->next != refal.nexta)
+    char error[128];
+    const T_LINKCB *p = refal.preva->next;
+    do
     {
-        refal.upshot = 2;
+        bool neot = false;
+        size_t i;
+        for (i = 0; p != refal.nexta; i++)
+        {
+            if (p->tag != TAGO || i == 127)
+            {
+                neot = true;
+                break;
+            }
+            error[i] = p->info.infoc;
+            p = p->next;
+        }
+        if (neot)
+            break;
+        error[i] = '\0';
+        char *temp = NULL
+        if (errors == NULL)
+            temp = (char *)malloc((strlen(error) + 2) * NMBL);
+        else
+            temp = (char *)realloc(errors, (strlen(errors) + strlen(error) + 2) * NMBL);
+        if (temp != NULL)
+        {
+        }
+        else
+            rfabe("erradd: error");
         return;
-    }
+    } while (false);
+    refal.upshot = 2;
     return;
 }
 char erradd_0[] = {Z6 'E', 'R', 'R', 'A', 'D', 'D', '\006'};
