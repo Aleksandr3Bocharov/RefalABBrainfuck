@@ -137,7 +137,7 @@ void (*errclear_1)(void) = errclear_;
 // <ErrAdd E(O)E> ==
 static void erradd_(void)
 {
-    char error[128];
+    char error[256];
     const T_LINKCB *p = refal.preva->next;
     do
     {
@@ -145,7 +145,7 @@ static void erradd_(void)
         size_t i;
         for (i = 0; p != refal.nexta; i++)
         {
-            if (p->tag != TAGO || i == 127)
+            if (p->tag != TAGO || i == 255)
             {
                 neot = true;
                 break;

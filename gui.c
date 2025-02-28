@@ -22,7 +22,7 @@
 
 #include "gui.h"
 
-static const int screenWidth = 800;
+static const int screenWidth = 1024;
 static const int screenHeight = 360;
 
 static int errorsViewScrollIndex = 0;

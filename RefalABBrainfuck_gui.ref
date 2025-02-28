@@ -58,7 +58,8 @@ IfTokenizer +
 * Если Fails, то вывод ошибок
     'Fails' EE +
             = <ErrAdd 'FATAL_ERROR (99): ' +
-            'There are one or more syntax errors.'> +
+            'Имеется одна или больше ' +
+            'синтаксическхи ошибок.'> +
             <Map /DoErrAdd/ EE> +
             <IsErrView <ErrView>>
 * Запуск синтаксического анализатора 
@@ -92,8 +93,10 @@ DoTokenizer +
     ('[' SR SC) +
             = <Br 'Fails12' '=' <Dg 'Fails12'> +
             ('SYNTAX_ERROR(12): ' +
-            'Not exist symbol '']'' for symbol ''['' ' +
-            'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')> +
+            'Не существует символа '']'' ' +
+            'для символа ''['' ' +
+            'на строке: ' <Symb SR> +
+            ' и колонке: ' <Symb SC> '.')> +
             '['
     (']' E0) +
             = <DoTokenizerAux E0 <Dg 'Fails12'>>
@@ -104,8 +107,9 @@ DoTokenizer +
 DoTokenizerAux +
     SR SC   = <Br 'Fails11' '=' <Dg 'Fails11'> +
             ('SYNTAX_ERROR(11): ' +
-            'Unexpected symbol '']'' ' +
-            'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')>
+            'Неожиданный символ '']'' ' +
+            'на строке: ' <Symb SR> +
+            ' и колонке: ' <Symb SC> '.')>
     SR SC E2 WF +
             = <Br 'Fails12' '=' E2> ']'
 
