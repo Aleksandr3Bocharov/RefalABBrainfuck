@@ -27,7 +27,7 @@ static const int screenHeight = 360;
 
 static int errorsViewScrollIndex = 0;
 
-Font cyrillicFont;
+static Font cyrillicFont;
 
 static GuiWindowFileDialogState fileDialogState;
 
