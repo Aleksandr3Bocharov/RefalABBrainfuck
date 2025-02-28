@@ -57,7 +57,7 @@ bool guiFileName(char *fileName)
 {
     bool ok = false;
     bool exitWindow = false;
-    float sizeCyrillicFont = (float)cyrillicFont.baseSize + 1.0f;
+    const float sizeCyrillicFont = (float)cyrillicFont.baseSize + 1.0f;
     while (!exitWindow)
     {
         exitWindow = WindowShouldClose();
@@ -107,7 +107,7 @@ bool guiErrView(const char *errors)
     while (!exitWindow)
     {
         exitWindow = WindowShouldClose();
-        bool enter = IsKeyPressed(KEY_ENTER);
+        const bool enter = IsKeyPressed(KEY_ENTER);
         if (IsKeyPressed(KEY_DOWN))
             errorsViewScrollIndex++;
         if (IsKeyPressed(KEY_UP))
@@ -132,8 +132,8 @@ bool guiIsExit(void)
     while (!exitWindow)
     {
         exitWindow = WindowShouldClose();
-        bool enter = IsKeyPressed(KEY_ENTER);
-        bool escape = IsKeyPressed(KEY_ESCAPE);
+        const bool enter = IsKeyPressed(KEY_ENTER);
+        const bool escape = IsKeyPressed(KEY_ESCAPE);
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawRectangle(0, 0, screenWidth, screenHeight, Fade(RAYWHITE, 0.8f));
