@@ -32,15 +32,21 @@ Font cyrillicFont;
 
 static GuiWindowFileDialogState fileDialogState;
 
+static void setStyle(void)
+{
+    GuiSetFont(cyrillicFont);
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
+    GuiSetStyle(LISTVIEW, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
+}
+
 void guiInit(void)
 {
     InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
     SetExitKey(0);
     cyrillicFont = LoadFont("dejavu.fnt");
-    GuiSetFont(cyrillicFont);
-    GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
     fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     SetTargetFPS(60);
+    setStyle();
 }
 
 void guiClose(void)
@@ -84,8 +90,7 @@ bool guiFileName(char *fileName)
         GuiSetFont(GetFontDefault());
         GuiLoadStyleDefault();
         GuiWindowFileDialog(&fileDialogState);
-        GuiSetFont(cyrillicFont);
-        GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
+        setStyle();
         EndDrawing();
     }
     return ok;
