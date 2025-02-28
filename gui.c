@@ -38,7 +38,7 @@ void guiInit(void)
     SetExitKey(0);
     cyrillicFont = LoadFont("dejavu.fnt");
     GuiSetFont(cyrillicFont);
-    GuiSetStyle(DEFAULT, TEXT_SIZE, 15);
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
     fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     SetTargetFPS(60);
 }
@@ -52,6 +52,7 @@ bool guiFileName(char *fileName)
 {
     bool ok = false;
     bool exitWindow = false;
+    float sizeCyrillicFont = (float)cyrillicFont.baseSize + 1.0f;
     while (!exitWindow)
     {
         exitWindow = WindowShouldClose();
@@ -63,25 +64,17 @@ bool guiFileName(char *fileName)
         }
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-        DrawText("The programm "
-                 "RefalABBrainfuck (GUI version)"
-                 "",
-                 10, 20, 20, DARKGRAY);
-        DrawTextEx(cyrillicFont, "ппп", (Vector2){64.0f, 64.0f}, (float)cyrillicFont.baseSize + 5.0f, 1.0f, DARKGRAY);
-        DrawText("interprets code on the language Brainfuck from source file.", 10, 60, 20, DARKGRAY);
-        DrawText("The opening of the source file", 10, 150, 20, DARKGRAY);
-        DrawText(TextFormat(""
-                            "%s"
-                            "",
-                            fileName),
-                 10, 190, 20, GRAY);
-        DrawText("with code on the Brainfuck language.", 10, 230, 20, DARKGRAY);
-        DrawText("The running of the interpretator of the code on the Brainfuck language.", 10, 320, 20, DARKGRAY);
+        DrawTextEx(cyrillicFont, "The programm ""RefalABBrainfuck (GUI version)""", (Vector2){10.0f, 20.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
+        DrawTextEx(cyrillicFont, "interprets code on the language Brainfuck from source file.", (Vector2){10.0f, 60.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
+        DrawTextEx(cyrillicFont, "The opening of the source file", (Vector2){10.0f, 150.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
+        DrawTextEx(cyrillicFont, TextFormat("""%s""", fileName), (Vector2){10.0f, 190.0f}, sizeCyrillicFont, 1.0f, GRAY);
+        DrawTextEx(cyrillicFont, "with code on the Brainfuck language.", (Vector2){10.0f, 230.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
+        DrawTextEx(cyrillicFont, "The running of the interpretator of the code on the Brainfuck language.", (Vector2){10.0f, 320.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         if (fileDialogState.windowActive)
             GuiLock();
-        if (GuiButton((Rectangle){screenWidth / 2 - 170, 100, 340, 30}, GuiIconText(ICON_FILE_OPEN, "Открыть файл с исходником Brainfuck")))
+        if (GuiButton((Rectangle){screenWidth / 2 - 210, 100, 420, 30}, GuiIconText(ICON_FILE_OPEN, "Открыть файл с исходником Brainfuck")))
             fileDialogState.windowActive = true;
-        if (GuiButton((Rectangle){screenWidth / 2 - 140, 270, 280, 30}, "Запустить интерпретатор Brainfuck"))
+        if (GuiButton((Rectangle){screenWidth / 2 - 190, 270, 380, 30}, "Запустить интерпретатор Brainfuck"))
             if (*fileName != '\0')
             {
                 ok = true;
@@ -92,7 +85,7 @@ bool guiFileName(char *fileName)
         GuiLoadStyleDefault();
         GuiWindowFileDialog(&fileDialogState);
         GuiSetFont(cyrillicFont);
-        GuiSetStyle(DEFAULT, TEXT_SIZE, 15);
+        GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
         EndDrawing();
     }
     return ok;
@@ -134,7 +127,7 @@ bool guiIsExit(void)
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawRectangle(0, 0, screenWidth, screenHeight, Fade(RAYWHITE, 0.8f));
-        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 150, screenHeight / 2 - 50, 300, 100}, GuiIconText(ICON_EXIT, "Выход"), "Вы действительно хотите выйти?", "Да;Нет");
+        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 180, screenHeight / 2 - 50, 360, 100}, GuiIconText(ICON_EXIT, "Выход"), "Вы действительно хотите выйти?", "Да;Нет");
         if (result == 0 || result == 1 || result == 2)
         {
             exitWindow = true;
