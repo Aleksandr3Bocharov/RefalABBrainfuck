@@ -109,10 +109,25 @@ bool guiErrView(const char *errors)
     while (!exitWindow)
     {
         exitWindow = WindowShouldClose();
+        bool enter = IsKeyPressed(KEY_ENTER);
+        bool down = IsKeyPressed(KEY_DOWN);
+        if (down)
+        {
+            if (errorsViewActive == -1)
+                errorsViewActive = errorsViewScrollIndex;
+            else
+            {
+                errorsViewActive++;
+            }
+        }
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
+        const int oldErrorsViewActive = errorsViewActive;
+        const int oldErrorsViewScrollIndex = errorsViewScrollIndex;
         GuiListView((Rectangle){10, 20, screenWidth - 20, screenHeight - 90}, errors, &errorsViewScrollIndex, &errorsViewActive);
-        if (GuiButton((Rectangle){screenWidth / 2 - 20, screenHeight - 50, 40, 30}, "ОК"))
+        if (errorsViewActive != oldErrorsViewActive && down)
+            errorsViewActive = oldErrorsViewActive - 1;
+        if (GuiButton((Rectangle){screenWidth / 2 - 20, screenHeight - 50, 40, 30}, "ОК") || enter)
         {
             ok = true;
             exitWindow = true;
@@ -129,14 +144,16 @@ bool guiIsExit(void)
     while (!exitWindow)
     {
         exitWindow = WindowShouldClose();
+        bool enter = IsKeyPressed(KEY_ENTER);
+        bool escape = IsKeyPressed(KEY_ESCAPE);
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawRectangle(0, 0, screenWidth, screenHeight, Fade(RAYWHITE, 0.8f));
         int result = GuiMessageBox((Rectangle){screenWidth / 2 - 180, screenHeight / 2 - 50, 360, 100}, GuiIconText(ICON_EXIT, "Выход"), "Вы действительно хотите выйти?", "Да;Нет");
-        if (result == 0 || result == 1 || result == 2)
+        if (result == 0 || result == 1 || result == 2 || enter || escape)
         {
             exitWindow = true;
-            if (result == 0 || result == 2)
+            if (result == 0 || result == 2 || escape)
                 isExit = false;
         }
         EndDrawing();
