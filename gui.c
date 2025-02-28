@@ -26,7 +26,6 @@ static const int screenWidth = 1024;
 static const int screenHeight = 360;
 
 static int errorsViewScrollIndex = 0;
-static int errorsViewActive = -1;
 
 Font cyrillicFont;
 
@@ -99,7 +98,6 @@ bool guiFileName(char *fileName)
 void guiErrClear(void)
 {
     errorsViewScrollIndex = 0;
-    errorsViewActive = -1;
 }
 
 bool guiErrView(const char *errors)
@@ -110,23 +108,13 @@ bool guiErrView(const char *errors)
     {
         exitWindow = WindowShouldClose();
         bool enter = IsKeyPressed(KEY_ENTER);
-        bool down = IsKeyPressed(KEY_DOWN);
-        if (down)
-        {
-            if (errorsViewActive == -1)
-                errorsViewActive = errorsViewScrollIndex;
-            else
-            {
-                errorsViewActive++;
-            }
-        }
+        if (IsKeyPressed(KEY_DOWN))
+            errorsViewScrollIndex++;
+        if (IsKeyPressed(KEY_UP))
+            errorsViewScrollIndex--;
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-        const int oldErrorsViewActive = errorsViewActive;
-        const int oldErrorsViewScrollIndex = errorsViewScrollIndex;
-        GuiListView((Rectangle){10, 20, screenWidth - 20, screenHeight - 90}, errors, &errorsViewScrollIndex, &errorsViewActive);
-        if (errorsViewActive != oldErrorsViewActive && down)
-            errorsViewActive = oldErrorsViewActive - 1;
+        GuiListView((Rectangle){10, 20, screenWidth - 20, screenHeight - 90}, errors, &errorsViewScrollIndex, NULL);
         if (GuiButton((Rectangle){screenWidth / 2 - 20, screenHeight - 50, 40, 30}, "ОК") || enter)
         {
             ok = true;
