@@ -114,7 +114,7 @@ bool guiErrView(const char *errors)
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         GuiListView((Rectangle){10, 20, screenWidth - 20, screenHeight - 90}, errors, &errorsViewScrollIndex, &errorsViewActive);
-        if (GuiButton((Rectangle){screenWidth / 2 - 20, screenHeight - 50, 40, 30}, "OK"))
+        if (GuiButton((Rectangle){screenWidth / 2 - 20, screenHeight - 50, 40, 30}, "ОК"))
         {
             ok = true;
             exitWindow = true;
@@ -134,7 +134,7 @@ bool guiIsExit(void)
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawRectangle(0, 0, screenWidth, screenHeight, Fade(RAYWHITE, 0.8f));
-        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 125, screenHeight / 2 - 50, 250, 100}, GuiIconText(ICON_EXIT, "Exit"), "Do you really want to exit?", "Yes;No");
+        int result = GuiMessageBox((Rectangle){screenWidth / 2 - 150, screenHeight / 2 - 50, 300, 100}, GuiIconText(ICON_EXIT, "Выход"), "Вы действительно хотите выйти?", "Да;Нет");
         if (result == 0 || result == 1 || result == 2)
         {
             exitWindow = true;
