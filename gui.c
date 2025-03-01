@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-02-27
+// 2025-03-01
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -14,11 +14,11 @@
 #include "raylib.h"
 
 #define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
+#include "raygui/raygui.h"
 #undef RAYGUI_IMPLEMENTATION
 
 #define GUI_WINDOW_FILE_DIALOG_IMPLEMENTATION
-#include "gui_window_file_dialog.h"
+#include "raygui/gui_window_file_dialog.h"
 
 #include "gui.h"
 
@@ -42,7 +42,7 @@ void guiInit(void)
 {
     InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
     SetExitKey(0);
-    cyrillicFont = LoadFont("dejavu.fnt");
+    cyrillicFont = LoadFont("fonts/dejavu.fnt");
     fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     SetTargetFPS(60);
     setStyle();
