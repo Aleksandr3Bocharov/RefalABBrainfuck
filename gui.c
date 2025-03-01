@@ -71,6 +71,10 @@ bool guiFileName(char *fileName)
         const bool can_open = cntrl_o && !fileDialogState.windowActive;
         const bool cntrl_r = IsKeyPressed(KEY_R) && (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL));
         const bool can_run = cntrl_r && !fileDialogState.windowActive;
+        const bool enter = IsKeyPressed(KEY_ENTER);
+        const bool can_select = enter && fileDialogState.windowActive;
+        const bool escape = IsKeyPressed(KEY_ESCAPE);
+        const bool can_cancel = escape && fileDialogState.windowActive;
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawTextEx(cyrillicFont, "Программа ''RefalABBrainfuck (GUI version)'' интерпретирует код", (Vector2){10.0f, 20.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
@@ -89,6 +93,13 @@ bool guiFileName(char *fileName)
                 ok = true;
                 exitWindow = true;
             }
+        if (can_select)
+        {
+            fileDialogState.SelectFilePressed = true;
+            fileDialogState.windowActive = false;
+        }
+        if (can_cancel)
+            fileDialogState.windowActive = false;
         GuiUnlock();
         GuiSetFont(GetFontDefault());
         GuiLoadStyleDefault();
