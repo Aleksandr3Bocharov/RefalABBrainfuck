@@ -67,6 +67,10 @@ bool guiFileName(char *fileName)
                 strncpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText), 254);
             fileDialogState.SelectFilePressed = false;
         }
+        const bool cntrl_o = IsKeyPressed(KEY_O) && (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL));
+        const bool can_open = cntrl_o && !fileDialogState.windowActive;
+        const bool cntrl_r = IsKeyPressed(KEY_R) && (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL));
+        const bool can_run = cntrl_r && !fileDialogState.windowActive;
         BeginDrawing();
         ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawTextEx(cyrillicFont, "Программа ''RefalABBrainfuck (GUI version)'' интерпретирует код", (Vector2){10.0f, 20.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
@@ -77,9 +81,9 @@ bool guiFileName(char *fileName)
         DrawTextEx(cyrillicFont, "Запуск интерпретатора кода на языке программирования Brainfuck.", (Vector2){10.0f, 320.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         if (fileDialogState.windowActive)
             GuiLock();
-        if (GuiButton((Rectangle){screenWidth / 2 - 210, 100, 420, 30}, GuiIconText(ICON_FILE_OPEN, "Открыть файл с исходником Brainfuck")))
+        if (GuiButton((Rectangle){screenWidth / 2 - 210, 100, 420, 30}, GuiIconText(ICON_FILE_OPEN, "Открыть файл с исходником Brainfuck")) || can_open)
             fileDialogState.windowActive = true;
-        if (GuiButton((Rectangle){screenWidth / 2 - 190, 270, 380, 30}, "Запустить интерпретатор Brainfuck"))
+        if (GuiButton((Rectangle){screenWidth / 2 - 190, 270, 380, 30}, "Запустить интерпретатор Brainfuck") || can_run)
             if (*fileName != '\0')
             {
                 ok = true;
