@@ -93,6 +93,9 @@ bool guiFileName(char *fileName)
                 ok = true;
                 exitWindow = true;
             }
+        GuiUnlock();
+        GuiSetFont(GetFontDefault());
+        GuiLoadStyleDefault();
         if (can_select)
         {
             fileDialogState.SelectFilePressed = true;
@@ -100,9 +103,6 @@ bool guiFileName(char *fileName)
         }
         if (can_cancel)
             fileDialogState.windowActive = false;
-        GuiUnlock();
-        GuiSetFont(GetFontDefault());
-        GuiLoadStyleDefault();
         GuiWindowFileDialog(&fileDialogState);
         setStyle();
         EndDrawing();
