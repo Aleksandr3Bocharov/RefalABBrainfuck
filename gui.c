@@ -85,9 +85,9 @@ bool guiFileName(char *fileName)
         DrawTextEx(cyrillicFont, "Запуск интерпретатора кода на языке программирования Brainfuck.", (Vector2){10.0f, 320.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         if (fileDialogState.windowActive)
             GuiLock();
-        if (GuiButton((Rectangle){screenWidth / 2 - 210, 100, 420, 30}, GuiIconText(ICON_FILE_OPEN, "Открыть файл с исходником Brainfuck")) || can_open)
+        if (GuiButton((Rectangle){screenWidth / 2 - 250, 100, 500, 30}, GuiIconText(ICON_FILE_OPEN, "Открыть файл с исходником Brainfuck (Cntrl+O)")) || can_open)
             fileDialogState.windowActive = true;
-        if (GuiButton((Rectangle){screenWidth / 2 - 190, 270, 380, 30}, "Запустить интерпретатор Brainfuck") || can_run)
+        if (GuiButton((Rectangle){screenWidth / 2 - 230, 270, 460, 30}, "Запустить интерпретатор Brainfuck (Cntrl+R)") || can_run)
             if (*fileName != '\0')
             {
                 ok = true;
