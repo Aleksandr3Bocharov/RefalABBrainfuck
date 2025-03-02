@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-02-27
+// 2025-03-03
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -52,7 +52,7 @@ static void getch_(void)
     p->tag = TAGN;
     p->info.codep = NULL;
     if (c != EOF)
-        pcoden(p, (uint8_t)c);
+        pcoden(p, (uint8_t)c) else clearerr(stdin);
     return;
 }
 char getch_0[] = {Z5 'G', 'E', 'T', 'C', 'H', '\005'};
