@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-02-27
+* 2025-03-10
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -18,16 +18,15 @@
 
             START
             ENTRY Go
-* from RefalABBrainfuckс_gui
-            EXTRN PutChar(PutCh), GetChar(GetCh)
-            EXTRN Init, Close, FileName, IsExit
+            EXTRN PutChar, GetChar
+            EXTRN GInit, GClose, FileName, IsExit
             EXTRN ErrClear, ErrAdd, ErrView
-* from libRefalAB
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
+            EXTRN True, False
             EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go          = <Init> <bfFileName <FileName>> <Prout> <Close>
+Go          = <GInit> <bfFileName <FileName>> <Prout> <GClose>
             
 bfFileName +
             = <bfFileNameAux <IsExit>>
@@ -42,8 +41,8 @@ bfFileName +
             <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
 
 bfFileNameAux +
-    'Y'     =
-    'N'     = <bfFileName <FileName>>
+    /True/  =
+    /False/ = <bfFileName <FileName>>
 
 DoRows +
     SR (EL) = <P1 SR> +
@@ -73,12 +72,12 @@ DoErrAdd +
     (EL)    = <ErrAdd EL>
 
 IsErrView +
-    'Y'     = <ErrClear> <bfFileName <FileName>>
-    'N'     = <IsErrViewAux <IsExit>>
+    /True/  = <ErrClear> <bfFileName <FileName>>
+    /False/ = <IsErrViewAux <IsExit>>
 
 IsErrViewAux +
-    'Y'     =
-    'N'     = <IsErrView <ErrView>>
+    /True/  =
+    /False/ = <IsErrView <ErrView>>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
