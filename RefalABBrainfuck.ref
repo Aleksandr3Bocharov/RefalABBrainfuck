@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-02-25
+* 2025-03-10
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -18,9 +18,7 @@
 
             START
             ENTRY Go
-* from RefalABBrainfuckс
-            EXTRN PutChar(PutCh), GetChar(GetCh)
-* from libRefalAB
+            EXTRN PutChar, GetChar
             EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
             EXTRN Map, MapAccum, DelAccum, LoadFile
             EMPTY Next, Prev, Inc, Dec, Write, Read

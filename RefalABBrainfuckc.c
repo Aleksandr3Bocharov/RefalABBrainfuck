@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-01-27
+// 2025-03-10
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -12,8 +12,8 @@
 #include <stdint.h>
 #include "refal.def"
 
-// <PutCh S(N)C> ==
-static void putch_(void)
+// <PutChar S(N)C> ==
+static void putchar_(void)
 {
     const T_LINKCB *p = refal.preva->next;
     if (p->next != refal.nexta || p->tag != TAGN)
@@ -25,12 +25,12 @@ static void putch_(void)
     fflush(stdout);
     return;
 }
-char putch_0[] = {Z5 'P', 'U', 'T', 'C', 'H', '\005'};
-G_L_B uint8_t putch = '\122';
-void (*putch_1)(void) = putch_;
+char putchar_0[] = {Z7 'P', 'U', 'T', 'C', 'H', 'A', 'R', '\007'};
+G_L_B uint8_t refalab_putchar = '\122';
+void (*putchar_1)(void) = putchar_;
 
-// <GetCh> == S(/0/../255/)C
-static void getch_(void)
+// <GetChar> == S(/0/../255/)C
+static void getchar_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
@@ -48,6 +48,6 @@ static void getch_(void)
         pcoden(p, (uint8_t)c);
     return;
 }
-char getch_0[] = {Z5 'G', 'E', 'T', 'C', 'H', '\005'};
-G_L_B uint8_t getch = '\122';
-void (*getch_1)(void) = getch_;
+char getchar_0[] = {Z7 'G', 'E', 'T', 'C', 'H', 'A', 'R', '\007'};
+G_L_B uint8_t refalab_getchar = '\122';
+void (*getchar_1)(void) = getchar_;
