@@ -7,7 +7,7 @@
 # https://github.com/Aleksandr3Bocharov/RefalAB
 
 $REFALABBIN/RefalAB RefalABBrainfuck > RefalABBrainfuck.log
-as -o RefalABBrainfuck.o RefalABBrainfuck.asm >> RefalABBrainfuck.log
+as -o RefalABBrainfuck.o RefalABBrainfuck.s >> RefalABBrainfuck.log
 clang $REFALABCFLAGS -I$REFALABINCLUDE -c RefalABBrainfuckc.c -o RefalABBrainfuckc.o >> RefalABBrainfuck.log
 clang -o RefalABBrainfuck RefalABBrainfuck.o RefalABBrainfuckc.o $REFALABLIB/mainrf.o -L$REFALABLIB -lRefalAB >> RefalABBrainfuck.log
 ./RefalABBrainfuck
