@@ -39,16 +39,16 @@ Help    = <Prout 'The programm "RefalABBrainfuck" ' +
         'interprets code on the language Brainfuck ' +
         'from source file.\n'>
 
-DoRows +
+DoRows
     SR (EL) +
         = <P1 SR> +
         <DelAccum <MapAccum /DoColumns/ (SR /1/) EL>>	
                       
-DoColumns +
+DoColumns
     (SR SC) SS +
         = (SR <P1 SC>) (SS SR SC)
 
-IfTokenizer +
+IfTokenizer
 * Если Fails, то завершение программы
     'Fails' EE +
         = <Prout 'FATAL_ERROR (99): ' +
@@ -62,22 +62,22 @@ IfTokenizer +
         'of the code on the Brainfuck language.\n'> +
         <Interpretator <Dg 'e.ParsingTree'>>
 
-DoProutLine +
+DoProutLine
     (EL) +
         = <Prout EL>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
-Tokenizer +
+Tokenizer
     ES  = <TokenizerAux  +
         <Map /DoTokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
 
-TokenizerAux +
+TokenizerAux
     ET () +
         = ET
     ET (EE) +
         = 'Fails' EE
   
-DoTokenizer +
+DoTokenizer
     ('[' SR SC) +
         = <Br 'Fails12' '=' <Dg 'Fails12'> +
         ('SYNTAX_ERROR(12): ' +
@@ -90,7 +90,7 @@ DoTokenizer +
         = SS 
     E0  =
 
-DoTokenizerAux +
+DoTokenizerAux
     SR SC +
         = <Br 'Fails11' '=' <Dg 'Fails11'> +
         ('SYNTAX_ERROR(11): ' +
@@ -101,8 +101,7 @@ DoTokenizerAux +
 
 * <Parser E('><+-.,[]')T> == WN*
 * WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
-Parser +
-        =
+Parser  =
     '>' ER +
         = /Next/ <Parser ER>
     '<' ER +
@@ -120,19 +119,19 @@ Parser +
     ']' ER +
         = (ER)      
 
-ParserAux +
+ParserAux
     EP (ER) +
         = (EP) <Parser ER>
 
 * <Interpretator WN*> == 
 * WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
-Interpretator +
+Interpretator
     EP  = <InterpretatorAux <DoInterpretator EP () /0/ ()>>
 
-InterpretatorAux +
+InterpretatorAux
     EC  = 
 
-DoInterpretator +
+DoInterpretator
     /Next/ ER (EB) SC () +
         = <DoInterpretator ER (EB SC) /0/ ()>
     /Next/ ER (EB) SC (SN EA) +

@@ -28,7 +28,7 @@
 
 Go      = <GInit> <bfFileName <FileName>> <Prout> <GClose>
             
-bfFileName +
+bfFileName
         = <bfFileNameAux <IsExit>>
     EF  = +
 * Загрузка строк файла в E.Lines := (E(O)L)*
@@ -40,22 +40,22 @@ bfFileName +
 * Запуск лексического анализатора
         <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
 
-bfFileNameAux +
+bfFileNameAux
     /True/ +
         =
     /False/ +
         = <bfFileName <FileName>>
 
-DoRows +
+DoRows
     SR (EL) +
         = <P1 SR> +
         <DelAccum <MapAccum /DoColumns/ (SR /1/) EL>>	
                       
-DoColumns +
+DoColumns
     (SR SC) SS +
         = (SR <P1 SC>) (SS SR SC)
 
-IfTokenizer +
+IfTokenizer
 * Если Fails, то вывод ошибок
     'Fails' EE +
         = <ErrAdd 'FATAL_ERROR (99): ' +
@@ -70,34 +70,34 @@ IfTokenizer +
         <Prout> <Interpretator <Dg 'e.ParsingTree'>> +
         <bfFileName <FileName>>
 
-DoErrAdd +
+DoErrAdd
     (EL) +
         = <ErrAdd EL>
 
-IsErrView +
+IsErrView
     /True/ +
         = <ErrClear> <bfFileName <FileName>>
     /False/ +
         = <IsErrViewAux <IsExit>>
 
-IsErrViewAux +
+IsErrViewAux
     /True/ +
         =
     /False/ +
         = <IsErrView <ErrView>>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
-Tokenizer +
+Tokenizer
     ES  = <TokenizerAux  +
         <Map /DoTokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
 
-TokenizerAux +
+TokenizerAux
     ET () +
         = ET
     ET (EE) +
         = 'Fails' EE
   
-DoTokenizer +
+DoTokenizer
     ('[' SR SC) +
         = <Br 'Fails12' '=' <Dg 'Fails12'> +
         ('SYNTAX_ERROR(12): ' +
@@ -112,7 +112,7 @@ DoTokenizer +
         = SS 
     E0  =
 
-DoTokenizerAux +
+DoTokenizerAux
     SR SC +
         = <Br 'Fails11' '=' <Dg 'Fails11'> +
         ('SYNTAX_ERROR(11): ' +
@@ -124,8 +124,7 @@ DoTokenizerAux +
 
 * <Parser E('><+-.,[]')T> == WN*
 * WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
-Parser +
-        =
+Parser  =
     '>' ER +
         = /Next/ <Parser ER>
     '<' ER +
@@ -143,19 +142,19 @@ Parser +
     ']' ER +
         = (ER)      
 
-ParserAux +
+ParserAux
     EP (ER) +
         = (EP) <Parser ER>
 
 * <Interpretator WN*> == 
 * WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
-Interpretator +
+Interpretator
     EP  = <InterpretatorAux <DoInterpretator EP () /0/ ()>>
 
-InterpretatorAux +
+InterpretatorAux
     EC  = 
 
-DoInterpretator +
+DoInterpretator
     /Next/ ER (EB) SC () +
         = <DoInterpretator ER (EB SC) /0/ ()>
     /Next/ ER (EB) SC (SN EA) +
