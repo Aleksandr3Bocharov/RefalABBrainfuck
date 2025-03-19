@@ -19,7 +19,7 @@
     START
     ENTRY Go
     EXTRN PutChar, GetChar
-    EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
+    EXTRN Prout, M1, P1, Symb, Br, Dg
     EXTRN Map, MapAccum, DelAccum, LoadFile
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
