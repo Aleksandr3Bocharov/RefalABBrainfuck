@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-03-10
+* 2025-03-19
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -16,137 +16,149 @@
 * код на языке Brainfuck из исходного файла.
 *====================================================================
 
-            START
-            ENTRY Go
-            EXTRN PutChar, GetChar
-            EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
-            EXTRN Map, MapAccum, DelAccum, LoadFile
-            EMPTY Next, Prev, Inc, Dec, Write, Read
+    START
+    ENTRY Go
+    EXTRN PutChar, GetChar
+    EXTRN Prout, Card, M1, P1, Symb, Numb, Br, Dg
+    EXTRN Map, MapAccum, DelAccum, LoadFile
+    EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go          = <Help> +
-            <Prout 'The opening of the source file "Test.b" ' +
-            'with code on the Brainfuck language.\n'> +
+Go      = <Help> +
+        <Prout 'The opening of the source file "Test.b" ' +
+        'with code on the Brainfuck language.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*
-            <Br 'E.Lines' '=' +
-            <LoadFile /0/ 'Test.b'>> +
+        <Br 'E.Lines' '=' <LoadFile /0/ 'Test.b'>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
-            <Br 'E.Symbols' '=' +
-            <DelAccum <MapAccum /DoRows/ /1/ <Dg 'E.Lines'>>>> +
+        <Br 'E.Symbols' '=' +
+        <DelAccum <MapAccum /DoRows/ /1/ <Dg 'E.Lines'>>>> +
 * Запуск лексического анализатора
-            <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
+        <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
 
 * Вывод справки
-Help        = <Prout 'The programm "RefalABBrainfuck" ' + 
-            'interprets code on the language Brainfuck ' +
-            'from source file.\n'>
+Help    = <Prout 'The programm "RefalABBrainfuck" ' + 
+        'interprets code on the language Brainfuck ' +
+        'from source file.\n'>
 
 DoRows +
-    SR (EL) = <P1 SR> +
-            <DelAccum <MapAccum /DoColumns/ (SR /1/) EL>>	
+    SR (EL) +
+        = <P1 SR> +
+        <DelAccum <MapAccum /DoColumns/ (SR /1/) EL>>	
                       
 DoColumns +
     (SR SC) SS +
-            = (SR <P1 SC>) +
-            (SS SR SC)
+        = (SR <P1 SC>) (SS SR SC)
 
 IfTokenizer +
 * Если Fails, то завершение программы
     'Fails' EE +
-            = <Prout 'FATAL_ERROR (99): ' +
-            'There are one or more syntax errors.'> +
-            <Map /DoProutLine/ EE>
+        = <Prout 'FATAL_ERROR (99): ' +
+        'There are one or more syntax errors.'> +
+        <Map /DoProutLine/ EE>
 * Запуск синтаксического анализатора 
-    ET      = <Br 'e.ParsingTree' '=' +
-            <Parser ET>> +
+    ET  = <Br 'e.ParsingTree' '=' +
+        <Parser ET>> +
 * Запуск интерпретатора
-            <Prout 'The running of the interpretator ' +
-            'of the code on the Brainfuck language.\n'> +
-            <Interpretator <Dg 'e.ParsingTree'>>
+        <Prout 'The running of the interpretator ' +
+        'of the code on the Brainfuck language.\n'> +
+        <Interpretator <Dg 'e.ParsingTree'>>
 
 DoProutLine +
-    (EL)    = <Prout EL>
+    (EL) +
+        = <Prout EL>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer +
-    ES      = <TokenizerAux  +
-            <Map /DoTokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
+    ES  = <TokenizerAux  +
+        <Map /DoTokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
 
 TokenizerAux +
-    ET ()   = ET
-    ET (EE) = 'Fails' EE
+    ET () +
+        = ET
+    ET (EE) +
+        = 'Fails' EE
   
 DoTokenizer +
     ('[' SR SC) +
-            = <Br 'Fails12' '=' <Dg 'Fails12'> +
-            ('SYNTAX_ERROR(12): ' +
-            'Not exist symbol '']'' for symbol ''['' ' +
-            'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')> +
-            '['
+        = <Br 'Fails12' '=' <Dg 'Fails12'> +
+        ('SYNTAX_ERROR(12): ' +
+        'Not exist symbol '']'' for symbol ''['' ' +
+        'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')> +
+        '['
     (']' E0) +
-            = <DoTokenizerAux E0 <Dg 'Fails12'>>
+        = <DoTokenizerAux E0 <Dg 'Fails12'>>
     (S('><+-.,')S E0) + 
-            = SS 
-    E0      =
+        = SS 
+    E0  =
 
 DoTokenizerAux +
-    SR SC   = <Br 'Fails11' '=' <Dg 'Fails11'> +
-            ('SYNTAX_ERROR(11): ' +
-            'Unexpected symbol '']'' ' +
-            'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')>
+    SR SC +
+        = <Br 'Fails11' '=' <Dg 'Fails11'> +
+        ('SYNTAX_ERROR(11): ' +
+        'Unexpected symbol '']'' ' +
+        'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')>
     SR SC E2 WF +
-            = <Br 'Fails12' '=' E2> ']'
+        = <Br 'Fails12' '=' E2> ']'
 
 * <Parser E('><+-.,[]')T> == WN*
 * WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
 Parser +
-            =
-    '>' ER  = /Next/ <Parser ER>
-    '<' ER  = /Prev/ <Parser ER>
-    '+' ER  = /Inc/ <Parser ER>
-    '-' ER  = /Dec/ <Parser ER>
-    '.' ER  = /Write/ <Parser ER>
-    ',' ER  = /Read/ <Parser ER>
-    '[' ER  = <ParserAux <Parser ER>>
-    ']' ER  = (ER)      
+        =
+    '>' ER +
+        = /Next/ <Parser ER>
+    '<' ER +
+        = /Prev/ <Parser ER>
+    '+' ER +
+        = /Inc/ <Parser ER>
+    '-' ER +
+        = /Dec/ <Parser ER>
+    '.' ER +
+        = /Write/ <Parser ER>
+    ',' ER +
+        = /Read/ <Parser ER>
+    '[' ER +
+        = <ParserAux <Parser ER>>
+    ']' ER +
+        = (ER)      
 
 ParserAux +
-    EP (ER) = (EP) <Parser ER>
+    EP (ER) +
+        = (EP) <Parser ER>
 
 * <Interpretator WN*> == 
 * WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
 Interpretator +
-    EP      = <InterpretatorAux <DoInterpretator EP () /0/ ()>>
+    EP  = <InterpretatorAux <DoInterpretator EP () /0/ ()>>
 
 InterpretatorAux +
-    EC      = 
+    EC  = 
 
 DoInterpretator +
     /Next/ ER (EB) SC () +
-            = <DoInterpretator ER (EB SC) /0/ ()>
+        = <DoInterpretator ER (EB SC) /0/ ()>
     /Next/ ER (EB) SC (SN EA) +
-            = <DoInterpretator ER (EB SC) SN (EA)>   
+        = <DoInterpretator ER (EB SC) SN (EA)>   
     /Prev/ ER () SC (EA) +
-            = <DoInterpretator ER () /0/ (SC EA)>
+        = <DoInterpretator ER () /0/ (SC EA)>
     /Prev/ ER (EB SP) SC (EA) +
-            = <DoInterpretator ER (EB) SP (SC EA)>   
+        = <DoInterpretator ER (EB) SP (SC EA)>   
     /Inc/ E0 /255/ WA +
-            = <DoInterpretator E0 /0/ WA>
+        = <DoInterpretator E0 /0/ WA>
     /Inc/ E0 SC WA +
-            = <DoInterpretator E0 <P1 SC> WA>     							
+        = <DoInterpretator E0 <P1 SC> WA>     							
     /Dec/ E0 /0/ WA +
-            = <DoInterpretator E0 /255/ WA>
+        = <DoInterpretator E0 /255/ WA>
     /Dec/ E0 SC WA +
-            = <DoInterpretator E0 <M1 SC> WA>   
+        = <DoInterpretator E0 <M1 SC> WA>   
     /Write/ E0 SC WA +
-            = <PutChar SC> +
-            <DoInterpretator E0 SC WA>												
+        = <PutChar SC> +
+        <DoInterpretator E0 SC WA>												
     /Read/ E0 SC WA +
-            = <DoInterpretator E0 <GetChar> WA>					
+        = <DoInterpretator E0 <GetChar> WA>					
     WN ER WB /0/ WA +
-            = <DoInterpretator ER WB /0/ WA>
+        = <DoInterpretator ER WB /0/ WA>
     (EN) ER WB SC WA +
-            = <DoInterpretator (EN) ER +
-            <DoInterpretator EN WB SC WA>>
-    E0      = E0
+        = <DoInterpretator (EN) ER +
+        <DoInterpretator EN WB SC WA>>
+    E0  = E0
 
-            END
+    END
