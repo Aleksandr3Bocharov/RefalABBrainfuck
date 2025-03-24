@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-03-19
+* 2025-03-25
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -16,44 +16,47 @@
 * код на языке Brainfuck из исходного файла.
 *====================================================================
 
+RefalABBrainfuck +
     START
     ENTRY Go
-    EXTRN PutChar, GetChar
+    EXTRN Put_Char, Get_Char
     EXTRN Prout, M1, P1, Symb, Br, Dg
-    EXTRN Map, MapAccum, DelAccum, LoadFile
+    EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
 Go      = <Help> +
         <Prout 'The opening of the source file "Test.b" ' +
         'with code on the Brainfuck language.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*
-        <Br 'E.Lines' '=' <LoadFile /0/ 'Test.b'>> +
+        <Br 'E.Lines' '=' <Load_File /0/ 'Test.b'>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
         <Br 'E.Symbols' '=' +
-        <DelAccum <MapAccum /DoRows/ /1/ <Dg 'E.Lines'>>>> +
+        <Del_Accumulator +
+            <Map_Accumulator /Do_Rows/ /1/ <Dg 'E.Lines'>>> +
+        > +
 * Запуск лексического анализатора
-        <IfTokenizer <Tokenizer <Dg 'E.Symbols'>>>
+        <If_Tokenizer <Tokenizer <Dg 'E.Symbols'>>>
 
 * Вывод справки
 Help    = <Prout 'The programm "RefalABBrainfuck" ' + 
         'interprets code on the language Brainfuck ' +
         'from source file.\n'>
 
-DoRows
+Do_Rows
     SR (EL) +
         = <P1 SR> +
-        <DelAccum <MapAccum /DoColumns/ (SR /1/) EL>>	
+        <Del_Accumulator <Map_Accumulator /Do_Columns/ (SR /1/) EL>>	
                       
-DoColumns
+Do_Columns
     (SR SC) SS +
         = (SR <P1 SC>) (SS SR SC)
 
-IfTokenizer
+If_Tokenizer
 * Если Fails, то завершение программы
     'Fails' EE +
         = <Prout 'FATAL_ERROR (99): ' +
         'There are one or more syntax errors.'> +
-        <Map /DoProutLine/ EE>
+        <Map /Do_Prout_Line/ EE>
 * Запуск синтаксического анализатора 
     ET  = <Br 'e.ParsingTree' '=' +
         <Parser ET>> +
@@ -62,22 +65,22 @@ IfTokenizer
         'of the code on the Brainfuck language.\n'> +
         <Interpretator <Dg 'e.ParsingTree'>>
 
-DoProutLine
+Do_Prout_Line
     (EL) +
         = <Prout EL>
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer
-    ES  = <TokenizerAux  +
-        <Map /DoTokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
+    ES  = <Tokenizer_Aux  +
+        <Map /Do_Tokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
 
-TokenizerAux
+Tokenizer_Aux
     ET () +
         = ET
     ET (EE) +
         = 'Fails' EE
   
-DoTokenizer
+Do_Tokenizer
     ('[' SR SC) +
         = <Br 'Fails12' '=' <Dg 'Fails12'> +
         ('SYNTAX_ERROR(12): ' +
@@ -85,12 +88,12 @@ DoTokenizer
         'on the row: ' <Symb SR> ' and column: ' <Symb SC> '.')> +
         '['
     (']' E0) +
-        = <DoTokenizerAux E0 <Dg 'Fails12'>>
+        = <Do_Tokenizer_Aux E0 <Dg 'Fails12'>>
     (S('><+-.,')S E0) + 
         = SS 
     E0  =
 
-DoTokenizerAux
+Do_Tokenizer_Aux
     SR SC +
         = <Br 'Fails11' '=' <Dg 'Fails11'> +
         ('SYNTAX_ERROR(11): ' +
@@ -115,49 +118,49 @@ Parser  =
     ',' ER +
         = /Read/ <Parser ER>
     '[' ER +
-        = <ParserAux <Parser ER>>
+        = <Parser_Aux <Parser ER>>
     ']' ER +
         = (ER)      
 
-ParserAux
+Parser_Aux
     EP (ER) +
         = (EP) <Parser ER>
 
 * <Interpretator WN*> == 
 * WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
 Interpretator
-    EP  = <InterpretatorAux <DoInterpretator EP () /0/ ()>>
+    EP  = <Interpretator_Aux <Step_Interpretator EP () /0/ ()>>
 
-InterpretatorAux
+Interpretator_Aux
     EC  = 
 
-DoInterpretator
+Step_Interpretator
     /Next/ ER (EB) SC () +
-        = <DoInterpretator ER (EB SC) /0/ ()>
+        = <Step_Interpretator ER (EB SC) /0/ ()>
     /Next/ ER (EB) SC (SN EA) +
-        = <DoInterpretator ER (EB SC) SN (EA)>   
+        = <Step_Interpretator ER (EB SC) SN (EA)>   
     /Prev/ ER () SC (EA) +
-        = <DoInterpretator ER () /0/ (SC EA)>
+        = <Step_Interpretator ER () /0/ (SC EA)>
     /Prev/ ER (EB SP) SC (EA) +
-        = <DoInterpretator ER (EB) SP (SC EA)>   
+        = <Step_Interpretator ER (EB) SP (SC EA)>   
     /Inc/ E0 /255/ WA +
-        = <DoInterpretator E0 /0/ WA>
+        = <Step_Interpretator E0 /0/ WA>
     /Inc/ E0 SC WA +
-        = <DoInterpretator E0 <P1 SC> WA>     							
+        = <Step_Interpretator E0 <P1 SC> WA>     							
     /Dec/ E0 /0/ WA +
-        = <DoInterpretator E0 /255/ WA>
+        = <Step_Interpretator E0 /255/ WA>
     /Dec/ E0 SC WA +
-        = <DoInterpretator E0 <M1 SC> WA>   
+        = <Step_Interpretator E0 <M1 SC> WA>   
     /Write/ E0 SC WA +
-        = <PutChar SC> +
-        <DoInterpretator E0 SC WA>												
+        = <Put_Char SC> +
+        <Step_Interpretator E0 SC WA>												
     /Read/ E0 SC WA +
-        = <DoInterpretator E0 <GetChar> WA>					
+        = <Step_Interpretator E0 <Get_Char> WA>					
     WN ER WB /0/ WA +
-        = <DoInterpretator ER WB /0/ WA>
+        = <Step_Interpretator ER WB /0/ WA>
     (EN) ER WB SC WA +
-        = <DoInterpretator (EN) ER +
-        <DoInterpretator EN WB SC WA>>
+        = <Step_Interpretator (EN) ER +
+        <Step_Interpretator EN WB SC WA>>
     E0  = E0
 
     END
