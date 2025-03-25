@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-03-10
+// 2025-03-25
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -13,7 +13,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "refal.def"
+#include "refalab.h"
 #include "gui.h"
 
 extern uint8_t refalab_true, refalab_false;
@@ -21,8 +21,8 @@ extern uint8_t refalab_true, refalab_false;
 static char fileName[255] = {'\0'};
 static char *errors = NULL;
 
-// <PutChar S(N)C> ==
-static void putchar_(void)
+// <Put_Char S(N)C> ==
+static void put_char_(void)
 {
     const T_LINKCB *p = refal.preva->next;
     if (p->next != refal.nexta || p->tag != TAGN)
@@ -34,12 +34,12 @@ static void putchar_(void)
     fflush(stdout);
     return;
 }
-char putchar_0[] = {Z7 'P', 'U', 'T', 'C', 'H', 'A', 'R', '\007'};
-G_L_B uint8_t refalab_putchar = '\122';
-void (*putchar_1)(void) = putchar_;
+char put_char_0[] = {Z0 'P', 'U', 'T', '_', 'C', 'H', 'A', 'R', (char)8};
+G_L_B uint8_t refalab_put_char = '\122';
+void (*put_char_1)(void) = put_char_;
 
-// <GetChar> == S(/0/../255/)C
-static void getchar_(void)
+// <Get_Char> == S(/0/../255/)C
+static void get_char_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
@@ -59,12 +59,12 @@ static void getchar_(void)
         clearerr(stdin);
     return;
 }
-char getchar_0[] = {Z7 'G', 'E', 'T', 'C', 'H', 'A', 'R', '\007'};
-G_L_B uint8_t refalab_getchar = '\122';
-void (*getchar_1)(void) = getchar_;
+char get_char_0[] = {Z0 'G', 'E', 'T', '_', 'C', 'H', 'A', 'R', (char)8};
+G_L_B uint8_t refalab_get_char = '\122';
+void (*get_char_1)(void) = get_char_;
 
-// <GInit> ==
-static void ginit_(void)
+// <GUI_Init> ==
+static void gui_init_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
@@ -75,12 +75,12 @@ static void ginit_(void)
     guiInit();
     return;
 }
-char ginit_0[] = {Z5 'G', 'I', 'N', 'I', 'T', '\005'};
-G_L_B uint8_t refalab_ginit = '\122';
-void (*ginit_1)(void) = ginit_;
+char gui_init_0[] = {Z0 'G', 'U', 'I', '_', 'I', 'N', 'I', 'T', (char)8};
+G_L_B uint8_t refalab_gui_init = '\122';
+void (*gui_init_1)(void) = gui_init_;
 
-// <GClose> ==
-static void gclose_(void)
+// <GUI_Close> ==
+static void gui_close_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
@@ -90,12 +90,12 @@ static void gclose_(void)
     guiClose();
     return;
 }
-char gclose_0[] = {Z6 'G', 'C', 'L', 'O', 'S', 'E', '\006'};
-G_L_B uint8_t refalab_gclose = '\122';
-void (*gclose_1)(void) = gclose_;
+char gui_close_0[] = {Z1 'G', 'U', 'I', '_', 'C', 'L', 'O', 'S', 'E', (char)9};
+G_L_B uint8_t refalab_gui_close = '\122';
+void (*gui_close_1)(void) = gui_close_;
 
-// <FileName> == E(O)F
-static void filename_(void)
+// <Dialog_FileName> == E(O)F
+static void dialog_filename_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
@@ -117,11 +117,11 @@ static void filename_(void)
     }
     return;
 }
-char filename_0[] = {Z8 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', '\010'};
-G_L_B uint8_t refalab_filename = '\122';
-void (*filename_1)(void) = filename_;
+char doalog_filename_0[] = {Z7 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', (char)15};
+G_L_B uint8_t refalab_dialog_filename = '\122';
+void (*dialog_filename_1)(void) = dialog_filename_;
 
-// <ErrClear> ==
+// <View_Errors_Clear> ==
 static void errclear_(void)
 {
     if (refal.preva->next != refal.nexta)
@@ -134,11 +134,11 @@ static void errclear_(void)
     guiErrClear();
     return;
 }
-char errclear_0[] = {Z8 'E', 'R', 'R', 'C', 'L', 'E', 'A', 'R', '\010'};
+char errclear_0[] = {Z0 'E', 'R', 'R', 'C', 'L', 'E', 'A', 'R', '\010'};
 G_L_B uint8_t refalab_errclear = '\122';
 void (*errclear_1)(void) = errclear_;
 
-// <ErrAdd E(O)E> ==
+// <View_Errors_Add E(O)E> ==
 static void erradd_(void)
 {
     char error[256];
@@ -183,7 +183,7 @@ char erradd_0[] = {Z6 'E', 'R', 'R', 'A', 'D', 'D', '\006'};
 G_L_B uint8_t refalab_erradd = '\122';
 void (*erradd_1)(void) = erradd_;
 
-// <ErrView> == /True/ | /False/
+// <View_Errors_Show> == /True/ | /False/
 static void errview_(void)
 {
     if (refal.preva->next != refal.nexta)
@@ -206,8 +206,8 @@ char errors_0[] = {Z7 'E', 'R', 'R', 'V', 'I', 'E', 'W', '\007'};
 G_L_B uint8_t refalab_errview = '\122';
 void (*errview_1)(void) = errview_;
 
-// <IsExit> == /True/ | /False/
-static void isexit_(void)
+// <Dialog_Is_Exit> == /True/ | /False/
+static void dialog_is_exit_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
@@ -225,6 +225,6 @@ static void isexit_(void)
         p->info.codef = &refalab_false;
     return;
 }
-char isexit_0[] = {Z6 'I', 'S', 'E', 'X', 'I', 'T', '\006'};
-G_L_B uint8_t refalab_isexit = '\122';
-void (*isexit_1)(void) = isexit_;
+char dialog_is_exit_0[] = {Z6 'D', 'I', 'A', 'L', 'O', 'G', '_', 'I', 'S', '_', 'E', 'X', 'I', 'T', (char)14};
+G_L_B uint8_t refalab_dialog_is_exit = '\122';
+void (*dialog_is_exit_1)(void) = dialog_is_exit_;
