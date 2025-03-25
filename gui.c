@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-03-01
+// 2025-03-25
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -31,29 +31,29 @@ static Font cyrillicFont;
 
 static GuiWindowFileDialogState fileDialogState;
 
-static void setStyle(void)
+static void set_Style(void)
 {
     GuiSetFont(cyrillicFont);
     GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
     GuiSetStyle(LISTVIEW, TEXT_ALIGNMENT, TEXT_ALIGN_LEFT);
 }
 
-void guiInit(void)
+void gui_Init(void)
 {
     InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
     SetExitKey(0);
     cyrillicFont = LoadFont("fonts/dejavu.fnt");
     fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
     SetTargetFPS(60);
-    setStyle();
+    set_Style();
 }
 
-void guiClose(void)
+void gui_Close(void)
 {
     CloseWindow();
 }
 
-bool guiFileName(char *fileName)
+bool dialog_FileName(char *fileName)
 {
     bool ok = false;
     bool exitWindow = false;
@@ -104,18 +104,18 @@ bool guiFileName(char *fileName)
         if (can_cancel)
             fileDialogState.windowActive = false;
         GuiWindowFileDialog(&fileDialogState);
-        setStyle();
+        set_Style();
         EndDrawing();
     }
     return ok;
 }
 
-void guiErrClear(void)
+void view_Errors_Clear(void)
 {
     errorsViewScrollIndex = 0;
 }
 
-bool guiErrView(const char *errors)
+bool view_Errors_Show(const char *errors)
 {
     bool exitWindow = false;
     bool ok = false;
@@ -140,7 +140,7 @@ bool guiErrView(const char *errors)
     return ok;
 }
 
-bool guiIsExit(void)
+bool dialog_Is_Exit(void)
 {
     bool isExit = true;
     bool exitWindow = false;

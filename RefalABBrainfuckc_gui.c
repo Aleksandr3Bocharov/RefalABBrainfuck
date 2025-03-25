@@ -72,7 +72,7 @@ static void gui_init_(void)
         return;
     }
     fileName[254] = '\0';
-    guiInit();
+    gui_Init();
     return;
 }
 char gui_init_0[] = {Z0 'G', 'U', 'I', '_', 'I', 'N', 'I', 'T', (char)8};
@@ -87,7 +87,7 @@ static void gui_close_(void)
         refal.upshot = 2;
         return;
     }
-    guiClose();
+    gui_Close();
     return;
 }
 char gui_close_0[] = {Z1 'G', 'U', 'I', '_', 'C', 'L', 'O', 'S', 'E', (char)9};
@@ -102,7 +102,7 @@ static void dialog_filename_(void)
         refal.upshot = 2;
         return;
     }
-    if (guiFileName(fileName))
+    if (dialog_FileName(fileName))
     {
         T_LINKCB *p = refal.prevr;
         if (!slins(p, strlen(fileName)))
@@ -131,7 +131,7 @@ static void view_errors_clear_(void)
     }
     free(errors);
     errors = NULL;
-    guiErrClear();
+    view_Errors_Clear();
     return;
 }
 char view_errors_clear_0[] = {Z1 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R', 'S', '_', 'C', 'L', 'E', 'A', 'R', (char)17};
@@ -198,7 +198,7 @@ static void view_errors_show_(void)
     p->tag = TAGF;
     p->info.codep = NULL;
     p->info.codef = &refalab_true;
-    if (!guiErrView(errors))
+    if (!view_Errors_Show(errors))
         p->info.codef = &refalab_false;
     return;
 }
@@ -221,7 +221,7 @@ static void dialog_is_exit_(void)
     p->tag = TAGF;
     p->info.codep = NULL;
     p->info.codef = &refalab_true;
-    if (!guiIsExit())
+    if (!dialog_Is_Exit())
         p->info.codef = &refalab_false;
     return;
 }
