@@ -122,7 +122,7 @@ G_L_B uint8_t refalab_dialog_filename = '\122';
 void (*dialog_filename_1)(void) = dialog_filename_;
 
 // <View_Errors_Clear> ==
-static void errclear_(void)
+static void view_errors_clear_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
@@ -134,12 +134,12 @@ static void errclear_(void)
     guiErrClear();
     return;
 }
-char errclear_0[] = {Z0 'E', 'R', 'R', 'C', 'L', 'E', 'A', 'R', '\010'};
-G_L_B uint8_t refalab_errclear = '\122';
-void (*errclear_1)(void) = errclear_;
+char view_errors_clear_0[] = {Z1 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R', 'S', '_', 'C', 'L', 'E', 'A', 'R', (char)17};
+G_L_B uint8_t refalab_view_errors_clear = '\122';
+void (*view_errors_clear_1)(void) = view_errors_clear_;
 
 // <View_Errors_Add E(O)E> ==
-static void erradd_(void)
+static void view_errors_add_(void)
 {
     char error[256];
     const T_LINKCB *p = refal.preva->next;
@@ -164,14 +164,14 @@ static void erradd_(void)
         {
             errors = (char *)malloc((strlen(error) + 1) * NMBL);
             if (errors == NULL)
-                rfabe("erradd: error");
+                rfabe("view_errors_add: error");
             strcpy(errors, error);
         }
         else
         {
             errors = (char *)realloc(errors, (strlen(errors) + strlen(error) + 2) * NMBL);
             if (errors == NULL)
-                rfabe("erradd: error");
+                rfabe("view_errors_add: error");
             strcat(strcat(errors, ";"), error);
         }
         return;
@@ -179,12 +179,12 @@ static void erradd_(void)
     refal.upshot = 2;
     return;
 }
-char erradd_0[] = {Z6 'E', 'R', 'R', 'A', 'D', 'D', '\006'};
-G_L_B uint8_t refalab_erradd = '\122';
-void (*erradd_1)(void) = erradd_;
+char view_errors_add_0[] = {Z7 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R', 'S', '_', 'A', 'D', 'D', (char)15};
+G_L_B uint8_t refalab_view_errors_add = '\122';
+void (*view_errors_add_1)(void) = view_errors_add_;
 
 // <View_Errors_Show> == /True/ | /False/
-static void errview_(void)
+static void view_errors_show_(void)
 {
     if (refal.preva->next != refal.nexta)
     {
@@ -202,9 +202,9 @@ static void errview_(void)
         p->info.codef = &refalab_false;
     return;
 }
-char errors_0[] = {Z7 'E', 'R', 'R', 'V', 'I', 'E', 'W', '\007'};
-G_L_B uint8_t refalab_errview = '\122';
-void (*errview_1)(void) = errview_;
+char eview_errors_show_0[] = {Z0 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R', 'S', '_', 'S', 'H', 'O', 'W', (char)16};
+G_L_B uint8_t refalab_view_errors_show = '\122';
+void (*view_errors_show_1)(void) = view_errors_show_;
 
 // <Dialog_Is_Exit> == /True/ | /False/
 static void dialog_is_exit_(void)
