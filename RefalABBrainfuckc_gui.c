@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-03-25
+// 2025-03-30
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -87,6 +87,8 @@ static void gui_close_(void)
         refal.upshot = 2;
         return;
     }
+    free(errors);
+    errors = NULL;
     gui_Close();
     return;
 }
