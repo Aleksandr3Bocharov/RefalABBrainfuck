@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-03-25
+* 2025-03-30
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -86,7 +86,7 @@ Is_View_Errors_Show
 
 Is_View_Errors_Show_Aux
     /True/ +
-        =
+        = <View_Errors_Clear>
     /False/ +
         = <Is_View_Errors_Show <View_Errors_Show>>
 
