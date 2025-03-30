@@ -87,8 +87,6 @@ static void gui_close_(void)
         refal.upshot = 2;
         return;
     }
-    free(errors);
-    errors = NULL;
     gui_Close();
     return;
 }
