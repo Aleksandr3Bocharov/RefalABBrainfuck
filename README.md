@@ -13,4 +13,6 @@ RefalABBrainfuck
 
 [raylib](https://github.com/raysan5/raylib)
 
+Интерпретатор языка программирования Brainfuck на РефалАБ.
+
 Программа "RefalABBrainfuck" интерпретирует код на языке Brainfuck из исходного файла.
