@@ -25,9 +25,11 @@ RefalABBrainfuck +
     EXTRN Put_Char, Get_Char
     EXTRN Prout, M1, P1, Symb, Br, Dg
     EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File
+    EXTRN Platform, System
+    EXTRN Windows
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go      = <Help> +
+Go      = <chcp_utf8 <Platform>> <Help> +
         <Prout 'Открытие исходного файла "Test.b" ' +
         'с кодом на языке программирования ' +
         'Brainfuck.\n'> +
@@ -38,6 +40,15 @@ Go      = <Help> +
         <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg 'E.Lines'>>>> +
 * Запуск лексического анализатора
         <If_Tokenizer <Tokenizer <Dg 'E.Symbols'>>>
+
+* Смена кодовой страницы в Windows на UTF-8
+chcp_utf8
+    /Windows/ +
+        = <chcp_utf8_Aux <System 'chcp 65001'>> 
+    E0  =
+
+chcp_utf8_Aux
+    E0  =
 
 * Вывод справки
 Help    = <Prout 'Интерпретатор языка ' +
