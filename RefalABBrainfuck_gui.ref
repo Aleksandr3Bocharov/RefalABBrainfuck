@@ -30,20 +30,16 @@ RefalABBrainfuck_GUI +
     EXTRN True, False
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
-Go      = <GUI_Init> <bf_FileName <Dialog_FileName>> +
-        <Prout> <GUI_Close>
+Go      = <GUI_Init> <bf_FileName <Dialog_FileName>> <Prout> <GUI_Close>
             
 bf_FileName
         = <bf_FileName_Aux <Dialog_Is_Exit>>
     EF  = +
 * Загрузка строк файла в E.Lines := (E(O)L)*
-        <Br 'E.Lines' '=' +
-        <Load_File /0/ EF>> +
+        <Br 'E.Lines' '=' <Load_File /0/ EF>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
         <Br 'E.Symbols' '=' +
-        <Del_Accumulator +
-            <Map_Accumulator /Do_Rows/ /1/ <Dg 'E.Lines'>>> +
-        > +
+        <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg 'E.Lines'>>>> +
 * Запуск лексического анализатора
         <If_Tokenizer <Tokenizer <Dg 'E.Symbols'>>>
 
@@ -71,8 +67,7 @@ If_Tokenizer
         <Map /Do_View_Errors_Add/ EE> +
         <Is_View_Errors_Show <View_Errors_Show>>
 * Запуск синтаксического анализатора 
-    ET  = <Br 'e.ParsingTree' '=' +
-        <Parser ET>> +
+    ET  = <Br 'e.ParsingTree' '=' <Parser ET>> +
 * Запуск интерпретатора
         <Prout> <Interpretator <Dg 'e.ParsingTree'>> +
         <bf_FileName <Dialog_FileName>>
@@ -95,8 +90,7 @@ Is_View_Errors_Show_Aux
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer
-    ES  = <Tokenizer_Aux  +
-        <Map /Do_Tokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
+    ES  = <Tokenizer_Aux  <Map /Do_Tokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
 
 Tokenizer_Aux
     ET () +

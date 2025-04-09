@@ -35,9 +35,7 @@ Go      = <Help> +
         <Br 'E.Lines' '=' <Load_File /0/ 'Test.b'>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
         <Br 'E.Symbols' '=' +
-        <Del_Accumulator +
-            <Map_Accumulator /Do_Rows/ /1/ <Dg 'E.Lines'>>> +
-        > +
+        <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg 'E.Lines'>>>> +
 * Запуск лексического анализатора
         <If_Tokenizer <Tokenizer <Dg 'E.Symbols'>>>
 
@@ -65,8 +63,7 @@ If_Tokenizer
         'синтаксических ошибок.'> +
         <Map /Do_Prout_Line/ EE>
 * Запуск синтаксического анализатора 
-    ET  = <Br 'e.ParsingTree' '=' +
-        <Parser ET>> +
+    ET  = <Br 'e.ParsingTree' '=' <Parser ET>> +
 * Запуск интерпретатора
         <Prout 'Запуск интерпретатора кода ' +
         'на языке программирования Brainfuck.\n'> +
@@ -78,8 +75,7 @@ Do_Prout_Line
 
 * <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | 'Fails' (V(O)E)+
 Tokenizer
-    ES  = <Tokenizer_Aux  +
-        <Map /Do_Tokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
+    ES  = <Tokenizer_Aux  <Map /Do_Tokenizer/ ES> (<Dg 'Fails11'> <Dg 'Fails12'>)>
 
 Tokenizer_Aux
     ET () +
