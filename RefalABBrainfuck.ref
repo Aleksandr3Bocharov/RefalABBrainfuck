@@ -25,16 +25,12 @@ RefalABBrainfuck +
     EXTRN Put_Char, Get_Char
     EXTRN Prout, M1, P1, Symb, Br, Dg
     EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File
-    EXTRN Platform, System
+    EXTRN Platform, System, Arg, Exit
     EXTRN Windows
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
 Go      = <chcp_utf8 <Platform>> <Help> +
-        <Prout 'Открытие исходного файла "Test.b" ' +
-        'с кодом на языке программирования ' +
-        'Brainfuck.\n'> +
-* Загрузка строк файла в E.Lines := (E(O)L)*
-        <Br 'E.Lines' '=' <Load_File /0/ 'Test.b'>> +
+        <Open_File <Arg /1/>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
         <Br 'E.Symbols' '=' +
         <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg 'E.Lines'>>>> +
@@ -57,6 +53,17 @@ Help    = <Prout 'Интерпретатор языка ' +
         'интерпретирует код на языке Brainfuck ' +
         'из исходного файла.\n'>
 
+Open_File
+        = <Prout 'FATAL_ERROR (9): ' +
+        'Имя файла не задано в аргументе ' +
+        'командной строки.'> +
+        <Exit /9/>
+    Ef  = <Prout 'Открытие исходного файла "' Ef '" ' +
+        'с кодом на языке программирования ' +
+        'Brainfuck.\n'> +
+* Загрузка строк файла в E.Lines := (E(O)L)*
+        <Br 'E.Lines' '=' <Load_File /0/ Ef>>
+
 Do_Rows
     SR (EL) +
         = <P1 SR> +
@@ -72,7 +79,8 @@ If_Tokenizer
         = <Prout 'FATAL_ERROR (99): ' +
         'Имеется одна или больше ' +
         'синтаксических ошибок.'> +
-        <Map /Do_Prout_Line/ EE>
+        <Map /Do_Prout_Line/ EE> +
+        <Exit /99/>
 * Запуск синтаксического анализатора 
     ET  = <Br 'e.ParsingTree' '=' <Parser ET>> +
 * Запуск интерпретатора
