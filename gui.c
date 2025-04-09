@@ -79,7 +79,7 @@ bool dialog_FileName(char *fileName)
         ClearBackground(GetColor((unsigned int)GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawTextEx(cyrillicFont, "Программа ''RefalABBrainfuck'' интерпретирует код", (Vector2){10.0f, 20.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         DrawTextEx(cyrillicFont, "на  языке программирования Brainfuck из исходного файла.", (Vector2){10.0f, 60.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
-        DrawTextEx(cyrillicFont, "Открытие файла с исходником", (Vector2){10.0f, 150.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
+        DrawTextEx(cyrillicFont, "Открытие исходного файла", (Vector2){10.0f, 150.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         DrawTextEx(cyrillicFont, TextFormat("''%s''", fileName), (Vector2){10.0f, 190.0f}, sizeCyrillicFont, 1.0f, GRAY);
         DrawTextEx(cyrillicFont, "с кодом на языке программирования Brainfuck.", (Vector2){10.0f, 230.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         DrawTextEx(cyrillicFont, "Запуск интерпретатора кода на языке программирования Brainfuck.", (Vector2){10.0f, 320.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
