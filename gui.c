@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-03-25
+// 2025-04-09
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -40,7 +40,7 @@ static void set_Style(void)
 
 void gui_Init(void)
 {
-    InitWindow(screenWidth, screenHeight, "RefalABBrainfuck (GUI версия)");
+    InitWindow(screenWidth, screenHeight, "Интерпретатор языка программирования Brainfuck на РефалАБ");
     SetExitKey(0);
     cyrillicFont = LoadFont("fonts/dejavu.fnt");
     fileDialogState = InitGuiWindowFileDialog(GetWorkingDirectory());
@@ -77,8 +77,8 @@ bool dialog_FileName(char *fileName)
         const bool can_cancel = escape && fileDialogState.windowActive;
         BeginDrawing();
         ClearBackground(GetColor((unsigned int)GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-        DrawTextEx(cyrillicFont, "Программа ''RefalABBrainfuck (GUI version)'' интерпретирует код", (Vector2){10.0f, 20.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
-        DrawTextEx(cyrillicFont, "на  языке программирования Brainfuck из файла с исходником.", (Vector2){10.0f, 60.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
+        DrawTextEx(cyrillicFont, "Программа ''RefalABBrainfuck'' интерпретирует код", (Vector2){10.0f, 20.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
+        DrawTextEx(cyrillicFont, "на  языке программирования Brainfuck из исходного файла.", (Vector2){10.0f, 60.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         DrawTextEx(cyrillicFont, "Открытие файла с исходником", (Vector2){10.0f, 150.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         DrawTextEx(cyrillicFont, TextFormat("''%s''", fileName), (Vector2){10.0f, 190.0f}, sizeCyrillicFont, 1.0f, GRAY);
         DrawTextEx(cyrillicFont, "с кодом на языке программирования Brainfuck.", (Vector2){10.0f, 230.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);

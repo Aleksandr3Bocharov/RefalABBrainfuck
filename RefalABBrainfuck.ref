@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-03-25
+* 2025-04-09
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -11,6 +11,9 @@
 * Программа "RefalABBrainfuck" написана
 * на языке программирования РефалАБ.
 * https://github.com/Aleksandr3Bocharov/RefalAB
+*
+* Интерпретатор языка программирования Brainfuck
+* на РефалАБ.
 *
 * Программа "RefalABBrainfuck" интерпретирует 
 * код на языке Brainfuck из исходного файла.
