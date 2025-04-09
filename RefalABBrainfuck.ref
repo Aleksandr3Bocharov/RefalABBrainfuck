@@ -30,7 +30,7 @@ RefalABBrainfuck +
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
 Go      = <chcp_utf8 <Platform>> <Help> +
-        <Open_File <Arg /1/>> +
+        <Args (<Arg /1/>) <Arg /2/>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
         <Br 'E.Symbols' '=' +
         <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg 'E.Lines'>>>> +
@@ -53,12 +53,15 @@ Help    = <Prout 'Интерпретатор языка ' +
         'интерпретирует код на языке Brainfuck ' +
         'из исходного файла.\n'>
 
-Open_File
-        = <Prout 'FATAL_ERROR (9): ' +
+Args    
+    (E0) V1 +
+        =
+    ()  = <Prout 'FATAL_ERROR (9): ' +
         'Имя файла не задано в аргументе ' +
         'командной строки.'> +
         <Exit /9/>
-    Ef  = <Prout 'Открытие исходного файла "' Ef '" ' +
+    (Ef) +
+        = <Prout 'Открытие исходного файла "' Ef '" ' +
         'с кодом на языке программирования ' +
         'Brainfuck.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*
