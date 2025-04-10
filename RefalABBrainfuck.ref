@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-04-09
+* 2025-04-10
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -26,7 +26,7 @@ RefalABBrainfuck +
     EXTRN Prout, M1, P1, Symb, Br, Dg
     EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File, Exist_File
     EXTRN Platform, System, Arg, Exit
-    EXTRN Windows, False
+    EXTRN Windows, True, False
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
 Go      = <chcp_utf8 <Platform>> <Help> +
@@ -70,7 +70,7 @@ Open_File
         = <Prout 'FATAL_ERROR (19): ' +
         'Файл "' Ef '" не существует.'> +
         <Exit /19/>
-    S0 Ef +
+    /True/ Ef +
         = <Prout 'Открытие исходного файла "' Ef '" ' +
         'с кодом на языке программирования ' +
         'Brainfuck.\n'> +
