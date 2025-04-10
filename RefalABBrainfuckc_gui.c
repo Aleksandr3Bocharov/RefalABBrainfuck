@@ -19,7 +19,7 @@
 extern uint8_t refalab_true, refalab_false;
 
 static char fileName[255] = {'\0'};
-static bool dialogFileNotExist = false;
+static bool file_Not_Exist = false;
 static char *errors = NULL;
 
 // <Put_Char S(N)C> ==
@@ -103,7 +103,7 @@ static void dialog_filename_(void)
         refal.upshot = 2;
         return;
     }
-    if (dialog_FileName(fileName))
+    if (dialog_FileName(fileName, &file_Not_Exist))
     {
         T_LINKCB *p = refal.prevr;
         if (!slins(p, strlen(fileName)))
@@ -130,7 +130,7 @@ static void dialog_file_not_exist_(void)
         refal.upshot = 2;
         return;
     }
-    dialogFileNotExist = true;
+    file_Not_Exist = true;
     return;
 }
 char dialog_file_not_exist_0[] = {Z5 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', '_', 'N', 'O', 'T', '_', 'E', 'X', 'I', 'S', 'T', (char)21};

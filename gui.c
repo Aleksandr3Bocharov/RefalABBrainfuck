@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-04-09
+// 2025-04-10
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -53,7 +53,7 @@ void gui_Close(void)
     CloseWindow();
 }
 
-bool dialog_FileName(char *fileName)
+bool dialog_FileName(char *fileName, bool *file_Not_Exist)
 {
     bool ok = false;
     bool exitWindow = false;
