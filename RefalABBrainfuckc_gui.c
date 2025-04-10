@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-03-30
+// 2025-04-10
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -19,6 +19,7 @@
 extern uint8_t refalab_true, refalab_false;
 
 static char fileName[255] = {'\0'};
+static bool dialogFileNotExist = false;
 static char *errors = NULL;
 
 // <Put_Char S(N)C> ==
@@ -117,9 +118,24 @@ static void dialog_filename_(void)
     }
     return;
 }
-char doalog_filename_0[] = {Z7 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', (char)15};
+char dialog_filename_0[] = {Z7 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', (char)15};
 G_L_B uint8_t refalab_dialog_filename = '\122';
 void (*dialog_filename_1)(void) = dialog_filename_;
+
+// <Dialog_File_Not_Exist> ==
+static void dialog_file_not_exist_(void)
+{
+    if (refal.preva->next != refal.nexta)
+    {
+        refal.upshot = 2;
+        return;
+    }
+    dialogFileNotExist = true;
+    return;
+}
+char dialog_file_not_exist_0[] = {Z5 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', '_', 'N', 'O', 'T', '_', 'E', 'X', 'I', 'S', 'T', (char)21};
+G_L_B uint8_t refalab_dialog_file_not_exist = '\122';
+void (*dialog_file_not_exist_1)(void) = dialog_file_not_exist_;
 
 // <View_Errors_Clear> ==
 static void view_errors_clear_(void)
