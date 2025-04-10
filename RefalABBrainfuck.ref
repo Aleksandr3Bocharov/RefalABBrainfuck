@@ -24,9 +24,9 @@ RefalABBrainfuck +
     ENTRY Go
     EXTRN Put_Char, Get_Char
     EXTRN Prout, M1, P1, Symb, Br, Dg
-    EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File
+    EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File, Exist_File
     EXTRN Platform, System, Arg, Exit
-    EXTRN Windows
+    EXTRN Windows, False
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
 Go      = <chcp_utf8 <Platform>> <Help> +
@@ -55,12 +55,22 @@ Help    = <Prout 'Интерпретатор языка ' +
 
 Args    
     (E0) V1 +
-        =
-    ()  = <Prout 'FATAL_ERROR (9): ' +
-        'Имя файла не задано в аргументе ' +
-        'командной строки.'> +
-        <Exit /9/>
+        = <Args_Error>
+    ()  = <Args_Error>
     (Ef) +
+        = <Open_File <Exist_File Ef> Ef>
+
+Args_Error
+        = <Prout 'FATAL_ERROR (9): ' +
+        'Синтаксис - RefalABBrainfuck имя_файла'> +
+        <Exit /9/>
+
+Open_File
+    /False/ Ef +
+        = <Prout 'FATAL_ERROR (19): ' +
+        'Файл "' Ef '" не существует.'> +
+        <Exit /19/>
+    S0 Ef +
         = <Prout 'Открытие исходного файла "' Ef '" ' +
         'с кодом на языке программирования ' +
         'Brainfuck.\n'> +
