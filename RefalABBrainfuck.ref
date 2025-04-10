@@ -68,7 +68,7 @@ Args_Error
 Open_File
     /False/ EF +
         = <Prout 'FATAL_ERROR (19): ' +
-        'Файл "' EF '" не существует.'> +
+        'Исходный файл "' EF '" не существует.'> +
         <Exit /19/>
     /True/ EF +
         = <Prout 'Открытие исходного файла "' EF '" ' +
