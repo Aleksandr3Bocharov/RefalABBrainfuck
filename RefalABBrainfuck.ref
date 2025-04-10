@@ -29,7 +29,7 @@ RefalABBrainfuck +
     EXTRN Windows, True, False
     EMPTY Symbols, Lines, Fails, Fails11, Fails12, Next, Prev, Inc, Dec, Write, Read
 
-Go      = <chcp_utf8 <Platform>> <Help> +
+Go      = <chcp_UTF8 <Platform>> <Help> +
         <Args (<Arg /1/>) <Arg /2/>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
         <Br /Symbols/ '=' +
@@ -38,12 +38,12 @@ Go      = <chcp_utf8 <Platform>> <Help> +
         <If_Tokenizer <Tokenizer <Dg /Symbols/>>>
 
 * Смена кодовой страницы в Windows на UTF-8
-chcp_utf8
+chcp_UTF8
     /Windows/ +
-        = <chcp_utf8_Aux <System 'chcp 65001'>> 
+        = <chcp_UTF8_Aux <System 'chcp 65001'>> 
     E0  =
 
-chcp_utf8_Aux
+chcp_UTF8_Aux
     E0  =
 
 * Вывод справки
@@ -57,8 +57,8 @@ Args
     (E0) V1 +
         = <Args_Error>
     ()  = <Args_Error>
-    (Ef) +
-        = <Open_File <Exist_File Ef> Ef>
+    (EF) +
+        = <Open_File <Exist_File EF> EF>
 
 Args_Error
         = <Prout 'FATAL_ERROR (9): ' +
@@ -66,16 +66,16 @@ Args_Error
         <Exit /9/>
 
 Open_File
-    /False/ Ef +
+    /False/ EF +
         = <Prout 'FATAL_ERROR (19): ' +
-        'Файл "' Ef '" не существует.'> +
+        'Файл "' EF '" не существует.'> +
         <Exit /19/>
-    /True/ Ef +
-        = <Prout 'Открытие исходного файла "' Ef '" ' +
+    /True/ EF +
+        = <Prout 'Открытие исходного файла "' EF '" ' +
         'с кодом на языке программирования ' +
         'Brainfuck.\n'> +
 * Загрузка строк файла в E.Lines := (E(O)L)*
-        <Br /Lines/ '=' <Load_File /0/ Ef>>
+        <Br /Lines/ '=' <Load_File /0/ EF>>
 
 Do_Rows
     SR (EL) +
