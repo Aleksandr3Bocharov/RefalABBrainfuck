@@ -23,10 +23,10 @@ RefalABBrainfuck_GUI +
     START
     ENTRY Go
     EXTRN Put_Char, Get_Char
-    EXTRN GUI_Init, GUI_Close, Dialog_FileName, Dialog_Is_Exit
+    EXTRN GUI_Init, GUI_Close, Dialog_FileName, Dialog_Is_Exit, Dialog_File_Not_Exist
     EXTRN View_Errors_Clear, View_Errors_Add, View_Errors_Show
     EXTRN Prout, M1, P1, Symb, Br, Dg
-    EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File
+    EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File, Exist_File
     EXTRN True, False
     EMPTY Symbols, Lines, Fails, Fails11, Fails12, Next, Prev, Inc, Dec, Write, Read
 
@@ -34,7 +34,19 @@ Go      = <GUI_Init> <bf_FileName <Dialog_FileName>> <Prout> <GUI_Close>
             
 bf_FileName
         = <bf_FileName_Aux <Dialog_Is_Exit>>
-    EF  = +
+    EF  = <Open_File <Exist_File EF> EF>
+
+bf_FileName_Aux
+    /True/ +
+        =
+    /False/ +
+        = <bf_FileName <Dialog_FileName>>
+
+Open_File
+    /False/ E0 +
+        = <Dialog_File_Not_Exist> <bf_FileName <Dialog_FileName>>
+    /True/ EF +
+        = +
 * Загрузка строк файла в E.Lines := (E(O)L)*
         <Br /Lines/ '=' <Load_File /0/ EF>> +
 * Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
@@ -42,12 +54,6 @@ bf_FileName
         <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg /Lines/>>>> +
 * Запуск лексического анализатора
         <If_Tokenizer <Tokenizer <Dg /Symbols/>>>
-
-bf_FileName_Aux
-    /True/ +
-        =
-    /False/ +
-        = <bf_FileName <Dialog_FileName>>
 
 Do_Rows
     SR (EL) +
