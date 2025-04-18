@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-04-10
+* 2025-04-18
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -31,7 +31,7 @@ RefalABBrainfuck +
 
 Go      = <chcp_UTF8 <Platform>> <Help> +
         <Args (<Arg /1/>) <Arg /2/>> +
-* Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
+* Преобразование E.Lines в E.Symbols := (O.S N.R N.C)* 
         <Br /Symbols/ '=' +
         <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg /Lines/>>>> +
 * Запуск лексического анализатора
@@ -41,10 +41,10 @@ Go      = <chcp_UTF8 <Platform>> <Help> +
 chcp_UTF8
     /Windows/ +
         = <chcp_UTF8_Aux <System 'chcp 65001'>> 
-    E0  =
+    E.0 =
 
 chcp_UTF8_Aux
-    E0  =
+    E.0 =
 
 * Вывод справки
 Help    = <Prout 'Интерпретатор языка ' +
@@ -54,11 +54,11 @@ Help    = <Prout 'Интерпретатор языка ' +
         'из исходного файла.\n'>
 
 Args    
-    (E0) V1 +
+    (E.0) V.1 +
         = <Args_Error>
     ()  = <Args_Error>
-    (EF) +
-        = <Open_File <Exist_File EF> EF>
+    (E.F) +
+        = <Open_File <Exist_File E.F> E.F>
 
 Args_Error
         = <Prout 'FATAL_ERROR (9): ' +
@@ -66,140 +66,140 @@ Args_Error
         <Exit /9/>
 
 Open_File
-    /False/ EF +
+    /False/ E.F +
         = <Prout 'FATAL_ERROR (19): ' +
-        'Исходный файл "' EF '" не существует.\n'> +
+        'Исходный файл "' E.F '" не существует.\n'> +
         <Exit /19/>
-    /True/ EF +
-        = <Prout 'Открытие исходного файла "' EF '" ' +
+    /True/ E.F +
+        = <Prout 'Открытие исходного файла "' E.F '" ' +
         'с кодом на языке программирования ' +
         'Brainfuck.\n'> +
-* Загрузка строк файла в E.Lines := (E(O)L)*
-        <Br /Lines/ '=' <Load_File /0/ EF>>
+* Загрузка строк файла в E.Lines := (E(O).L)*
+        <Br /Lines/ '=' <Load_File /0/ E.F>>
 
 Do_Rows
-    SR (EL) +
-        = <P1 SR> +
-        <Del_Accumulator <Map_Accumulator /Do_Columns/ (SR /1/) EL>>	
+    S.R (E.L) +
+        = <P1 S.R> +
+        <Del_Accumulator <Map_Accumulator /Do_Columns/ (S.R /1/) E.L>>	
                       
 Do_Columns
-    (SR SC) SS +
-        = (SR <P1 SC>) (SS SR SC)
+    (S.R S.C) S.S +
+        = (SR <P1 S.C>) (S.S S.R S.C)
 
 If_Tokenizer
 * Если Fails, то завершение программы
-    /Fails/ EE +
+    /Fails/ E.E +
         = <Prout 'FATAL_ERROR (99): ' +
         'Имеется одна или больше ' +
         'синтаксических ошибок.'> +
-        <Map /Do_Prout_Line/ EE> +
+        <Map /Do_Prout_Line/ E.E> +
         <Prout> +
         <Exit /99/>
 * Запуск синтаксического анализатора 
-    ET  = <Br 'e.ParsingTree' '=' <Parser ET>> +
+    E.T = <Br 'e.ParsingTree' '=' <Parser E.T>> +
 * Запуск интерпретатора
         <Prout 'Запуск интерпретатора кода ' +
         'на языке программирования Brainfuck.\n'> +
         <Interpretator <Dg 'e.ParsingTree'>>
 
 Do_Prout_Line
-    (EL) +
-        = <Prout EL>
+    (E.L) +
+        = <Prout E.L>
 
-* <Tokenizer (SS S(N)R S(N)C)*> == E('><+-.,[]')T | /Fails/ (V(O)E)+
+* <Tokenizer (S.S N.R N.C)*> == E('><+-.,[]').T | /Fails/ (V(O).E)+
 Tokenizer
-    ES  = <Tokenizer_Aux  <Map /Do_Tokenizer/ ES> (<Dg /Fails11/> <Dg /Fails12/>)>
+    E.S = <Tokenizer_Aux  <Map /Do_Tokenizer/ E.S> (<Dg /Fails11/> <Dg /Fails12/>)>
 
 Tokenizer_Aux
-    ET () +
-        = ET
-    ET (EE) +
-        = /Fails/ EE
+    E.T () +
+        = E.T
+    E.T (E.E) +
+        = /Fails/ E.E
   
 Do_Tokenizer
-    ('[' SR SC) +
+    ('[' S.R S.C) +
         = <Br /Fails12/ '=' <Dg /Fails12/> +
         ('SYNTAX_ERROR(12): ' +
         'Не существует символа '']'' ' +
         'для символа ''['' ' +
-        'на строке: ' <Symb SR> +
-        ' и колонке: ' <Symb SC> '.')> +
+        'на строке: ' <Symb S.R> +
+        ' и колонке: ' <Symb S.C> '.')> +
         '['
-    (']' E0) +
-        = <Do_Tokenizer_Aux E0 <Dg /Fails12/>>
-    (S('><+-.,')S E0) + 
-        = SS 
-    E0  =
+    (']' E.0) +
+        = <Do_Tokenizer_Aux E.0 <Dg /Fails12/>>
+    (S('><+-.,').S E.0) + 
+        = S.S
+    E.0 =
 
 Do_Tokenizer_Aux
-    SR SC +
+    S.R S.C +
         = <Br /Fails11/ '=' <Dg /Fails11/> +
         ('SYNTAX_ERROR(11): ' +
         'Неожиданный символ '']'' ' +
-        'на строке: ' <Symb SR> +
-        ' и колонке: ' <Symb SC> '.')>
-    SR SC E2 WF +
-        = <Br /Fails12/ '=' E2> ']'
+        'на строке: ' <Symb S.R> +
+        ' и колонке: ' <Symb S.C> '.')>
+    S.R S.C E.2 W.F +
+        = <Br /Fails12/ '=' E.2> ']'
 
-* <Parser E('><+-.,[]')T> == WN*
-* WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
+* <Parser E('><+-.,[]').T> == W.N*
+* W.N ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/).L | (W.N*)
 Parser  =
-    '>' ER +
-        = /Next/ <Parser ER>
-    '<' ER +
-        = /Prev/ <Parser ER>
-    '+' ER +
-        = /Inc/ <Parser ER>
-    '-' ER +
-        = /Dec/ <Parser ER>
-    '.' ER +
-        = /Write/ <Parser ER>
-    ',' ER +
-        = /Read/ <Parser ER>
-    '[' ER +
-        = <Parser_Aux <Parser ER>>
-    ']' ER +
-        = (ER)      
+    '>' E.R +
+        = /Next/ <Parser E.R>
+    '<' E.R +
+        = /Prev/ <Parser E.R>
+    '+' E.R +
+        = /Inc/ <Parser E.R>
+    '-' E.R +
+        = /Dec/ <Parser E.R>
+    '.' E.R +
+        = /Write/ <Parser E.R>
+    ',' E.R +
+        = /Read/ <Parser E.R>
+    '[' E.R +
+        = <Parser_Aux <Parser E.R>>
+    ']' E.R +
+        = (E.R)      
 
 Parser_Aux
-    EP (ER) +
-        = (EP) <Parser ER>
+    E.P (E.R) +
+        = (E.P) <Parser E.R>
 
-* <Interpretator WN*> == 
-* WN ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/)L | (WN*)
+* <Interpretator W.N*> == 
+* W.N ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/).L | (W.N*)
 Interpretator
-    EP  = <Interpretator_Aux <Step_Interpretator EP () /0/ ()>>
+    E.P = <Interpretator_Aux <Step_Interpretator E.P () /0/ ()>>
 
 Interpretator_Aux
-    EC  = 
+    E.C = 
 
 Step_Interpretator
-    /Next/ ER (EB) SC () +
-        = <Step_Interpretator ER (EB SC) /0/ ()>
-    /Next/ ER (EB) SC (SN EA) +
-        = <Step_Interpretator ER (EB SC) SN (EA)>   
-    /Prev/ ER () SC (EA) +
-        = <Step_Interpretator ER () /0/ (SC EA)>
-    /Prev/ ER (EB SP) SC (EA) +
-        = <Step_Interpretator ER (EB) SP (SC EA)>   
-    /Inc/ E0 /255/ WA +
-        = <Step_Interpretator E0 /0/ WA>
-    /Inc/ E0 SC WA +
-        = <Step_Interpretator E0 <P1 SC> WA>     							
-    /Dec/ E0 /0/ WA +
-        = <Step_Interpretator E0 /255/ WA>
-    /Dec/ E0 SC WA +
-        = <Step_Interpretator E0 <M1 SC> WA>   
-    /Write/ E0 SC WA +
-        = <Put_Char SC> +
-        <Step_Interpretator E0 SC WA>												
-    /Read/ E0 SC WA +
-        = <Step_Interpretator E0 <Get_Char> WA>					
-    WN ER WB /0/ WA +
-        = <Step_Interpretator ER WB /0/ WA>
-    (EN) ER WB SC WA +
-        = <Step_Interpretator (EN) ER +
-        <Step_Interpretator EN WB SC WA>>
-    E0  = E0
+    /Next/ E.R (E.B) S.C () +
+        = <Step_Interpretator E.R (E.B S.C) /0/ ()>
+    /Next/ E.R (E.B) S.C (S.N E.A) +
+        = <Step_Interpretator E.R (E.B S.C) S.N (E.A)>   
+    /Prev/ E.R () S.C (E.A) +
+        = <Step_Interpretator E.R () /0/ (S.C E.A)>
+    /Prev/ E.R (E.B S.P) S.C (E.A) +
+        = <Step_Interpretator E.R (E.B) S.P (S.C E.A)>   
+    /Inc/ E.0 /255/ W.A +
+        = <Step_Interpretator E.0 /0/ W.A>
+    /Inc/ E.0 S.C W.A +
+        = <Step_Interpretator E.0 <P1 S.C> W.A>     							
+    /Dec/ E.0 /0/ W.A +
+        = <Step_Interpretator E.0 /255/ W.A>
+    /Dec/ E.0 S.C W.A +
+        = <Step_Interpretator E.0 <M1 S.C> W.A>   
+    /Write/ E.0 S.C W.A +
+        = <Put_Char S.C> +
+        <Step_Interpretator E.0 S.C W.A>												
+    /Read/ E.0 S.C W.A +
+        = <Step_Interpretator E.0 <Get_Char> W.A>					
+    W.N E.R W.B /0/ W.A +
+        = <Step_Interpretator E.R W.B /0/ W.A>
+    (E.N) E.R W.B S.C W.A +
+        = <Step_Interpretator (E.N) E.R +
+        <Step_Interpretator E.N W.B S.C W.A>>
+    E.0 = E.0
 
     END
