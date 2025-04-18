@@ -27,11 +27,12 @@ RefalABBrainfuck +
     EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File, Exist_File
     EXTRN Platform, System, Arg, Exit
     EXTRN Windows, True, False
-    EMPTY Symbols, Lines, Fails, Fails11, Fails12, Next, Prev, Inc, Dec, Write, Read
+    EMPTY Symbols, Lines, Fails, Fails11, Fails12, Parsing_Tree
+    EMPTY Next, Prev, Inc, Dec, Write, Read
 
 Go      = <chcp_UTF8 <Platform>> <Help> +
         <Args (<Arg /1/>) <Arg /2/>> +
-* Преобразование E.Lines в E.Symbols := (O.S N.R N.C)* 
+* Преобразование E.Lines в E.Symbols := (O.Symbol N.Row N.Column)* 
         <Br /Symbols/ '=' +
         <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg /Lines/>>>> +
 * Запуск лексического анализатора
@@ -41,10 +42,10 @@ Go      = <chcp_UTF8 <Platform>> <Help> +
 chcp_UTF8
     /Windows/ +
         = <chcp_UTF8_Aux <System 'chcp 65001'>> 
-    E.0 =
+    E._ =
 
 chcp_UTF8_Aux
-    E.0 =
+    E._ =
 
 * Вывод справки
 Help    = <Prout 'Интерпретатор языка ' +
@@ -54,11 +55,11 @@ Help    = <Prout 'Интерпретатор языка ' +
         'из исходного файла.\n'>
 
 Args    
-    (E.0) V.1 +
+    (E._) V.__ +
         = <Args_Error>
     ()  = <Args_Error>
-    (E.F) +
-        = <Open_File <Exist_File E.F> E.F>
+    (E.FileName) +
+        = <Open_File <Exist_File E.FileName> E.FileName>
 
 Args_Error
         = <Prout 'FATAL_ERROR (9): ' +
@@ -66,140 +67,148 @@ Args_Error
         <Exit /9/>
 
 Open_File
-    /False/ E.F +
+    /False/ E.FileName +
         = <Prout 'FATAL_ERROR (19): ' +
-        'Исходный файл "' E.F '" не существует.\n'> +
+        'Исходный файл "' E.FileName '" не существует.\n'> +
         <Exit /19/>
-    /True/ E.F +
-        = <Prout 'Открытие исходного файла "' E.F '" ' +
+    /True/ E.FileName +
+        = <Prout 'Открытие исходного файла "' E.FileName '" ' +
         'с кодом на языке программирования ' +
         'Brainfuck.\n'> +
-* Загрузка строк файла в E.Lines := (E(O).L)*
-        <Br /Lines/ '=' <Load_File /0/ E.F>>
+* Загрузка строк файла в E.Lines := (E(O).Line)*
+        <Br /Lines/ '=' <Load_File /0/ E.FileName>>
 
 Do_Rows
-    S.R (E.L) +
-        = <P1 S.R> +
-        <Del_Accumulator <Map_Accumulator /Do_Columns/ (S.R /1/) E.L>>	
+    S.Row (E.Line) +
+        = <P1 S.Row> +
+        <Del_Accumulator <Map_Accumulator /Do_Columns/ (S.Row /1/) E.Line>>	
                       
 Do_Columns
-    (S.R S.C) S.S +
-        = (SR <P1 S.C>) (S.S S.R S.C)
+    (S.Row S.Column) S.Symbol +
+        = (S.Row <P1 S.Column>) (S.Symbol S.Row S.Column)
 
 If_Tokenizer
 * Если Fails, то завершение программы
-    /Fails/ E.E +
+    /Fails/ E.Errors +
         = <Prout 'FATAL_ERROR (99): ' +
         'Имеется одна или больше ' +
         'синтаксических ошибок.'> +
-        <Map /Do_Prout_Line/ E.E> +
+        <Map /Do_Prout_Line/ E.Errors> +
         <Prout> +
         <Exit /99/>
 * Запуск синтаксического анализатора 
-    E.T = <Br 'e.ParsingTree' '=' <Parser E.T>> +
+    E.Tokens +
+        = <Br /Parsing_Tree/ '=' <Parser E.Tokens>> +
 * Запуск интерпретатора
         <Prout 'Запуск интерпретатора кода ' +
         'на языке программирования Brainfuck.\n'> +
-        <Interpretator <Dg 'e.ParsingTree'>>
+        <Interpretator <Dg /Parsing_Tree/>>
 
 Do_Prout_Line
-    (E.L) +
-        = <Prout E.L>
+    (E.Line) +
+        = <Prout E.Line>
 
-* <Tokenizer (S.S N.R N.C)*> == E('><+-.,[]').T | /Fails/ (V(O).E)+
+* <Tokenizer (O.Symbol N.Row N.Column)*> == E('><+-.,[]').Tokens |
+*                                           /Fails/ (V(O).Error)+
 Tokenizer
-    E.S = <Tokenizer_Aux  <Map /Do_Tokenizer/ E.S> (<Dg /Fails11/> <Dg /Fails12/>)>
+    E.Symbols +
+        = <Tokenizer_Aux +
+        <Map /Do_Tokenizer/ E.Symbols> +
+        (<Dg /Fails11/> <Dg /Fails12/>)>
 
 Tokenizer_Aux
-    E.T () +
-        = E.T
-    E.T (E.E) +
-        = /Fails/ E.E
+    E.Tokens () +
+        = E.Tokens
+    E._ (E.Errors) +
+        = /Fails/ E.Errors
   
 Do_Tokenizer
-    ('[' S.R S.C) +
+    ('[' S.Row S.Column) +
         = <Br /Fails12/ '=' <Dg /Fails12/> +
         ('SYNTAX_ERROR(12): ' +
         'Не существует символа '']'' ' +
         'для символа ''['' ' +
-        'на строке: ' <Symb S.R> +
-        ' и колонке: ' <Symb S.C> '.')> +
+        'на строке: ' <Symb S.Row> +
+        ' и колонке: ' <Symb S.Column> '.')> +
         '['
-    (']' E.0) +
-        = <Do_Tokenizer_Aux E.0 <Dg /Fails12/>>
-    (S('><+-.,').S E.0) + 
-        = S.S
-    E.0 =
+    (']' E.RowColumn) +
+        = <Do_Tokenizer_Aux E.RowColumn <Dg /Fails12/>>
+    (S('><+-.,').Symbol E._) + 
+        = S.Symbol
+    E._ =
 
 Do_Tokenizer_Aux
-    S.R S.C +
+    S.Row S.Column +
         = <Br /Fails11/ '=' <Dg /Fails11/> +
         ('SYNTAX_ERROR(11): ' +
         'Неожиданный символ '']'' ' +
-        'на строке: ' <Symb S.R> +
-        ' и колонке: ' <Symb S.C> '.')>
-    S.R S.C E.2 W.F +
-        = <Br /Fails12/ '=' E.2> ']'
+        'на строке: ' <Symb S.Row> +
+        ' и колонке: ' <Symb S.Column> '.')>
+    S.Row S.Column E.Fails12_B W.Fail12 +
+        = <Br /Fails12/ '=' E.Fails12_B> ']'
 
-* <Parser E('><+-.,[]').T> == W.N*
-* W.N ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/).L | (W.N*)
+* <Parser E('><+-.,[]').Tokens> == W.Node*
+* W.Node ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/).Leaf | (W.Node*)
 Parser  =
-    '>' E.R +
-        = /Next/ <Parser E.R>
-    '<' E.R +
-        = /Prev/ <Parser E.R>
-    '+' E.R +
-        = /Inc/ <Parser E.R>
-    '-' E.R +
-        = /Dec/ <Parser E.R>
-    '.' E.R +
-        = /Write/ <Parser E.R>
-    ',' E.R +
-        = /Read/ <Parser E.R>
-    '[' E.R +
-        = <Parser_Aux <Parser E.R>>
-    ']' E.R +
-        = (E.R)      
+    '>' E.Rest_Tokens +
+        = /Next/ <Parser E.Rest_Tokens>
+    '<' E.Rest_Tokens +
+        = /Prev/ <Parser E.Rest_Tokens>
+    '+' E.Rest_Tokens +
+        = /Inc/ <Parser E.Rest_Tokens>
+    '-' E.Rest_Tokens +
+        = /Dec/ <Parser E.Rest_Tokens>
+    '.' E.Rest_Tokens +
+        = /Write/ <Parser E.Rest_Tokens>
+    ',' E.Rest_Tokens +
+        = /Read/ <Parser E.Rest_Tokens>
+    '[' E.Rest_Tokens +
+        = <Parser_Aux <Parser E.Rest_Tokens>>
+    ']' E.Rest_Tokens +
+        = (E.Rest_Tokens)      
 
 Parser_Aux
-    E.P (E.R) +
-        = (E.P) <Parser E.R>
+    E.Prev_Tokens (E.Rest_Tokens) +
+        = (E.Prev_Tokens) <Parser E.Rest_Tokens>
 
-* <Interpretator W.N*> == 
-* W.N ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/).L | (W.N*)
+* <Interpretator W.Node*> == 
+* W.Node ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/).Leaf | (W.Node*)
 Interpretator
-    E.P = <Interpretator_Aux <Step_Interpretator E.P () /0/ ()>>
+    E.Parsing_Tree +
+        = <Interpretator_Aux <Step_Interpretator E.Parsing_Tree () /0/ ()>>
 
 Interpretator_Aux
-    E.C = 
+    E._ = 
 
 Step_Interpretator
-    /Next/ E.R (E.B) S.C () +
-        = <Step_Interpretator E.R (E.B S.C) /0/ ()>
-    /Next/ E.R (E.B) S.C (S.N E.A) +
-        = <Step_Interpretator E.R (E.B S.C) S.N (E.A)>   
-    /Prev/ E.R () S.C (E.A) +
-        = <Step_Interpretator E.R () /0/ (S.C E.A)>
-    /Prev/ E.R (E.B S.P) S.C (E.A) +
-        = <Step_Interpretator E.R (E.B) S.P (S.C E.A)>   
-    /Inc/ E.0 /255/ W.A +
-        = <Step_Interpretator E.0 /0/ W.A>
-    /Inc/ E.0 S.C W.A +
-        = <Step_Interpretator E.0 <P1 S.C> W.A>     							
-    /Dec/ E.0 /0/ W.A +
-        = <Step_Interpretator E.0 /255/ W.A>
-    /Dec/ E.0 S.C W.A +
-        = <Step_Interpretator E.0 <M1 S.C> W.A>   
-    /Write/ E.0 S.C W.A +
-        = <Put_Char S.C> +
-        <Step_Interpretator E.0 S.C W.A>												
-    /Read/ E.0 S.C W.A +
-        = <Step_Interpretator E.0 <Get_Char> W.A>					
-    W.N E.R W.B /0/ W.A +
-        = <Step_Interpretator E.R W.B /0/ W.A>
-    (E.N) E.R W.B S.C W.A +
-        = <Step_Interpretator (E.N) E.R +
-        <Step_Interpretator E.N W.B S.C W.A>>
-    E.0 = E.0
+    /Next/ E.Rest_Parsing_Tree (E.Cells_B) S.Cell () +
+        = <Step_Interpretator E.Rest_Parsing_Tree (E.Cells_B S.Cell) /0/ ()>
+    /Next/ E.Rest_Parsing_Tree (E.Cells_B) S.Cell (S.Next_Cell E.Cells_A) +
+        = <Step_Interpretator +
+        E.Rest_Parsing_Tree (E.Cells_B S.Cell) S.Next_Cell (E.Cells_A)> 
+    /Prev/ E.Rest_Parsing_Tree () S.Cell (E.Cells_A) +
+        = <Step_Interpretator E.Rest_Parsing_Tree () /0/ (S.Cell E.Cells_A)>
+    /Prev/ E.Rest_Parsing_Tree (E.Cells_B S.Prev_Cell) S.Cell (E.Cells_A) +
+        = <Step_Interpretator +
+        E.Rest_Parsing_Tree (E.Cells_B) S.Prev_Cell (S.Cell E.Cells_A)>   
+    /Inc/ E._ /255/ W.Cells_A +
+        = <Step_Interpretator E._ /0/ W.Cells_A>
+    /Inc/ E._ S.Cell W.Cells_A +
+        = <Step_Interpretator E._ <P1 S.Cell> W.Cells_A>     							
+    /Dec/ E._ /0/ W.Cells_A +
+        = <Step_Interpretator E._ /255/ W.Cells_A>
+    /Dec/ E._ S.Cell W.Cells_A +
+        = <Step_Interpretator E._ <M1 S.Cell> W.Cells_A>   
+    /Write/ E._ S.Cell W.Cells_A +
+        = <Put_Char S.Cell> +
+        <Step_Interpretator E._ S.Cell W.Cells_A>												
+    /Read/ E._ S.__ W.Cells_A +
+        = <Step_Interpretator E._ <Get_Char> W.Cells_A>					
+    W.Node E.Rest_Parsing_Tree W.Cells_B /0/ W.Cells_A +
+        = <Step_Interpretator E.Rest_Parsing_Tree W.Cells_B /0/ W.Cells_A>
+    (E.Node) E.Rest_Parsing_Tree W.Cells_B S.Cell W.Cells_A +
+        = <Step_Interpretator (E.Node) E.Rest_Parsing_Tree +
+        <Step_Interpretator E.Node W.Cells_B S.Cell W.Cells_A>>
+    E._ = E._
 
     END
