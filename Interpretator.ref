@@ -13,7 +13,7 @@ Interpretator +
     START
     ENTRY Symbols, Tokenizer, Parser, Interpretator, Fails
     EXTRN Put_Char, Get_Char
-    EXTRN P1, M1, Symb, Map, Map_Accumulator, Del_Accumulator
+    EXTRN P1, M1, Symb, Br, Dg, Map, Map_Accumulator, Del_Accumulator
     EMPTY Fails, Fails11, Fails12
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
