@@ -28,7 +28,7 @@ RefalABBrainfuck_GUI +
     EXTRN Prout, M1, P1, Symb, Br, Dg
     EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File, Exist_File
     EXTRN True, False
-    EMPTY Symbols, Lines, Fails, Fails11, Fails12, Next, Prev, Inc, Dec, Write, Read
+    EMPTY Lines, Fails, Fails11, Fails12, Next, Prev, Inc, Dec, Write, Read
 
 Go      = <GUI_Init> <bf_FileName <Dialog_FileName>> <Prout> <GUI_Close>
             
@@ -49,11 +49,13 @@ Open_File
         = +
 * Загрузка строк файла в E.Lines := (E(O)L)*
         <Br /Lines/ '=' <Load_File /0/ EF>> +
-* Преобразование E.Lines в E.Symbols := (S(O)S S(N)R S(N)C)* 
-        <Br /Symbols/ '=' +
-        <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg /Lines/>>>> +
 * Запуск лексического анализатора
-        <If_Tokenizer <Tokenizer <Dg /Symbols/>>>
+        <If_Tokenizer <Tokenizer <Symbols <Dg /Lines/>>>>
+
+* <Symbols (E(O).Line)*> == (O.Symbol N.Row N.Column)*
+Symbols
+    E.Lines +
+        = <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ E.Lines>>
 
 Do_Rows
     SR (EL) +
@@ -73,9 +75,9 @@ If_Tokenizer
         <Map /Do_View_Errors_Add/ EE> +
         <Is_View_Errors_Show <View_Errors_Show>>
 * Запуск синтаксического анализатора 
-    ET  = <Br 'e.ParsingTree' '=' <Parser ET>> +
+    ET  = <Br /Parsing_Tree/ '=' <Parser ET>> +
 * Запуск интерпретатора
-        <Prout> <Interpretator <Dg 'e.ParsingTree'>> +
+        <Prout> <Interpretator <Dg /Parsing_Tree/>> +
         <bf_FileName <Dialog_FileName>>
 
 Do_View_Errors_Add

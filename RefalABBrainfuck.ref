@@ -27,16 +27,13 @@ RefalABBrainfuck +
     EXTRN Map, Map_Accumulator, Del_Accumulator, Load_File, Exist_File
     EXTRN Platform, System, Arg, Exit
     EXTRN Windows, True, False
-    EMPTY Symbols, Lines, Fails, Fails11, Fails12, Parsing_Tree
+    EMPTY Lines, Fails, Fails11, Fails12, Parsing_Tree
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
 Go      = <chcp_UTF8 <Platform>> <Help> +
         <Args (<Arg /1/>) <Arg /2/>> +
-* Преобразование E.Lines в E.Symbols := (O.Symbol N.Row N.Column)* 
-        <Br /Symbols/ '=' +
-        <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ <Dg /Lines/>>>> +
 * Запуск лексического анализатора
-        <If_Tokenizer <Tokenizer <Dg /Symbols/>>>
+        <If_Tokenizer <Tokenizer <Symbols <Dg /Lines/>>>>
 
 * Смена кодовой страницы в Windows на UTF-8
 chcp_UTF8
@@ -77,6 +74,11 @@ Open_File
         'Brainfuck.\n'> +
 * Загрузка строк файла в E.Lines := (E(O).Line)*
         <Br /Lines/ '=' <Load_File /0/ E.FileName>>
+
+* <Symbols (E(O).Line)*> == (O.Symbol N.Row N.Column)*
+Symbols
+    E.Lines +
+        = <Del_Accumulator <Map_Accumulator /Do_Rows/ /1/ E.Lines>>
 
 Do_Rows
     S.Row (E.Line) +
