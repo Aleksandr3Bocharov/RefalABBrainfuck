@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-04-18
+* 2025-04-21
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -44,10 +44,10 @@ chcp_UTF8_Aux
 
 * Вывод справки
 Help    = <Prout 'Интерпретатор языка ' +
-        'программирования Brainfuck на РефалАБ.\n\n' +
-        'Программа "RefalABBrainfuck" ' + 
-        'интерпретирует код на языке Brainfuck ' +
-        'из исходного файла.\n'>
+            'программирования Brainfuck на РефалАБ.\n\n' +
+            'Программа "RefalABBrainfuck" ' + 
+            'интерпретирует код на языке Brainfuck ' +
+            'из исходного файла.\n'>
 
 Args    
     (E._) V.__ +
@@ -58,26 +58,26 @@ Args
 
 Args_Error
         = <Prout 'FATAL_ERROR (9): ' +
-        'Синтаксис - RefalABBrainfuck имя_файла\n'> +
+            'Синтаксис - RefalABBrainfuck имя_файла\n'> +
         <Exit /9/>
 
 Open_File
     /False/ E.FileName +
         = <Prout 'FATAL_ERROR (19): ' +
-        'Исходный файл "' E.FileName '" не существует.\n'> +
+            'Исходный файл "' E.FileName '" не существует.\n'> +
         <Exit /19/>
     /True/ E.FileName +
         = <Prout 'Открытие исходного файла "' E.FileName '" ' +
-        'с кодом на языке программирования ' +
-        'Brainfuck.\n'> +
+            'с кодом на языке программирования ' +
+            'Brainfuck.\n'> +
         <Br /Lines/ '=' <Load_File /0/ E.FileName>>
 
 If_Tokenizer
 * Если Fails, то завершение программы
     /Fails/ E.Errors +
         = <Prout 'FATAL_ERROR (99): ' +
-        'Имеется одна или больше ' +
-        'синтаксических ошибок.'> +
+            'Имеется одна или больше ' +
+            'синтаксических ошибок.'> +
         <Map /Do_Prout_Line/ E.Errors> +
         <Prout> +
         <Exit /99/>
@@ -86,7 +86,7 @@ If_Tokenizer
         = <Br /Parsing_Tree/ '=' <Parser E.Tokens>> +
 * Запуск интерпретатора
         <Prout 'Запуск интерпретатора кода ' +
-        'на языке программирования Brainfuck.\n'> +
+            'на языке программирования Brainfuck.\n'> +
         <Interpretator <Dg /Parsing_Tree/>>
 
 Do_Prout_Line
