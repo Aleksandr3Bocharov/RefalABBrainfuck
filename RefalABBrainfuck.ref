@@ -83,7 +83,7 @@ If_Tokenizer
 * Запуск интерпретатора
         <Prout 'Запуск интерпретатора кода ' +
             'на языке программирования Brainfuck.'> +
-        <Interpretator <Dg /Parsing_Tree/>>
+        <Interpretator <Dg /Parsing_Tree/>> <Prout>
 
 Do_Prout_Line
     (E.Line) +
