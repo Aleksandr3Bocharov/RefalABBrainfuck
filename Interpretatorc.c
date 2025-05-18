@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-04-20
+// 2025-05-17
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -21,7 +21,8 @@ static void put_char_(void)
         refal.upshot = 2;
         return;
     }
-    putchar((int)gcoden(p));
+    if (putchar((int)gcoden(p)) == EOF)
+        rfabe("put_char: error");
     fflush(stdout);
     return;
 }
