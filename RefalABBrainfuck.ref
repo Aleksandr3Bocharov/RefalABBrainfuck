@@ -25,7 +25,7 @@ RefalABBrainfuck +
     EXTRN Symbols, Tokenizer, Parser, Interpretator, Fails
     EXTRN Prout, Br, Dg, Map, Load_File, Exist_File
     EXTRN Platform, System, Arg, Exit, Empty
-    EXTRN Windows, True, False
+    EXTRN Windows, True, False, NULL, FEOF, FError
     EMPTY Lines, Parsing_Tree
 
 Go      = <chcp_UTF8 <Platform>> <Help> +
@@ -67,7 +67,13 @@ Open_File
         = <Prout 'Открытие исходного файла "' E.FileName '" ' +
             'с кодом на языке программирования ' +
             'Brainfuck.\n'> +
-        <Br /Lines/ '=' <Load_File /0/ E.FileName>>
+        <Open_File_Aux <Load_File /0/ E.FileName>>
+
+Open_File_Aux
+    E.Open_Error /NULL/ +
+        = <Prout 'FATAL_ERROR (29): ' E.Open_Error> <Exit /29/>
+    E.Lines V(/FEOF/ /FError/).EOF E._ +
+        = <Br /Lines/ '=' E.Lines>
 
 If_Tokenizer
 * Если Fails, то завершение программы
