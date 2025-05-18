@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-04-20
+// 2025-05-17
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -93,6 +93,15 @@ static void dialog_file_not_exist_(void)
 char dialog_file_not_exist_0[] = {Z5 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', '_', 'N', 'O', 'T', '_', 'E', 'X', 'I', 'S', 'T', (char)21};
 G_L_B uint8_t refalab_dialog_file_not_exist = '\122';
 void (*dialog_file_not_exist_1)(void) = dialog_file_not_exist_;
+
+// <Dialog_File_Not_Open V(O).Open_Error> ==
+static void dialog_file_not_open_(void)
+{
+    return;
+}
+char dialog_file_not_open_0[] = {Z4 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', '_', 'N', 'O', 'T', '_', 'O', 'P', 'E', 'N', (char)20};
+G_L_B uint8_t refalab_dialog_file_not_open = '\122';
+void (*dialog_file_not_open_1)(void) = dialog_file_not_open_;
 
 // <View_Errors_Clear> ==
 static void view_errors_clear_(void)
