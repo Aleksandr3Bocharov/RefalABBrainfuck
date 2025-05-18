@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-04-21
+* 2025-05-17
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -23,10 +23,11 @@ RefalABBrainfuck_GUI +
     START
     ENTRY Go
     EXTRN Symbols, Tokenizer, Parser, Interpretator, Fails
-    EXTRN GUI_Init, GUI_Close, Dialog_FileName, Dialog_Is_Exit, Dialog_File_Not_Exist
+    EXTRN GUI_Init, GUI_Close
+    EXTRN Dialog_FileName, Dialog_Is_Exit, Dialog_File_Not_Exist, Dialog_File_Not_Open
     EXTRN View_Errors_Clear, View_Errors_Add, View_Errors_Show
     EXTRN Prout, Br, Dg, Map, Load_File, Exist_File
-    EXTRN True, False
+    EXTRN True, False, NULL, FEOF, FError
     EMPTY Lines, Parsing_Tree
 
 Go      = <GUI_Init> <bf_FileName <Dialog_FileName>> <Prout> <GUI_Close>
@@ -46,7 +47,13 @@ Open_File
     /False/ E._ +
         = <Dialog_File_Not_Exist> <bf_FileName <Dialog_FileName>>
     /True/ E.FileName +
-        = <Br /Lines/ '=' <Load_File /0/ E.FileName>> +
+        = <Open_File_Aux <Load_File /0/ E.FileName>>
+
+Open_File_Aux
+    E.Open_Error /NULL/ +
+        = <Dialog_File_Not_Open E.Open_Error> <bf_FileName <Dialog_FileName>>
+    E.Lines V(/FEOF/ /FError/).EOF E._ +
+        = <Br /Lines/ '=' E.Lines> +
 * Запуск лексического анализатора
         <If_Tokenizer <Tokenizer <Symbols <Dg /Lines/>>>>
 
