@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-04-21
+* 2025-05-17
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -13,7 +13,7 @@ Interpretator +
     START
     ENTRY Symbols, Tokenizer, Parser, Interpretator, Fails
     EXTRN Put_Char, Get_Char
-    EXTRN P1, M1, Symb, Br, Dg, Map, Map_Accumulator, Del_Accumulator
+    EXTRN P1, M1, Symb, Br, Dg, Map, Map_Accumulator, Del_Accumulator, Empty
     EMPTY Fails, Fails11, Fails12
     EMPTY Next, Prev, Inc, Dec, Write, Read
 
@@ -97,10 +97,7 @@ Parser_Aux
 * W.Node ::= S(/Next/ /Prev/ /Inc/ /Dec/ /Write/ /Read/).Leaf | (W.Node*)
 Interpretator
     E.Parsing_Tree +
-        = <Interpretator_Aux <Step_Interpretator E.Parsing_Tree () /0/ ()>>
-
-Interpretator_Aux
-    E._ = 
+        = <Empty <Step_Interpretator E.Parsing_Tree () /0/ ()>>
 
 Step_Interpretator
     /Next/ E.Rest_Parsing_Tree (E.Cells_B) S.Cell () +
