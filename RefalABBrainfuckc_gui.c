@@ -17,7 +17,7 @@
 
 extern uint8_t refalab_true, refalab_false;
 
-static char fileName[255] = {'\0'};
+static char fileName[2050] = {'\0'};
 static bool file_Not_Exist = false;
 static char *errors = NULL;
 
@@ -29,7 +29,7 @@ static void gui_init_(void)
         refal.upshot = 2;
         return;
     }
-    fileName[254] = '\0';
+    fileName[2049] = '\0';
     gui_Init();
     return;
 }

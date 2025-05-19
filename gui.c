@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-04-10
+// 2025-05-17
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -65,7 +65,7 @@ bool dialog_FileName(char *fileName, bool *file_Not_Exist)
         {
             if (fileDialogState.fileNameText[0] != '\0')
             {
-                strncpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText), 254);
+                strncpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText), 2049);
                 *file_Not_Exist = false;
             }
             fileDialogState.SelectFilePressed = false;
