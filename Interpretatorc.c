@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "refalab.h"
 
-// <Put_Char S(N)C> ==
+// <Put_Char S(N).Char> ==
 static void put_char_(void)
 {
     const T_LINKCB *p = refal.preva->next;
@@ -30,7 +30,7 @@ char put_char_0[] = {Z0 'P', 'U', 'T', '_', 'C', 'H', 'A', 'R', (char)8};
 G_L_B uint8_t refalab_put_char = '\122';
 void (*put_char_1)(void) = put_char_;
 
-// <Get_Char> == S(/0/../255/)C
+// <Get_Char> == S(/0/../255/).Char
 static void get_char_(void)
 {
     if (refal.preva->next != refal.nexta)
