@@ -52,7 +52,7 @@ char gui_close_0[] = {Z1 'G', 'U', 'I', '_', 'C', 'L', 'O', 'S', 'E', (char)9};
 G_L_B uint8_t refalab_gui_close = '\122';
 void (*gui_close_1)(void) = gui_close_;
 
-// <Dialog_FileName> == E(O)F
+// <Dialog_FileName> == E(O).FileName
 static void dialog_filename_(void)
 {
     if (refal.preva->next != refal.nexta)
@@ -94,7 +94,7 @@ char dialog_file_not_exist_0[] = {Z5 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I'
 G_L_B uint8_t refalab_dialog_file_not_exist = '\122';
 void (*dialog_file_not_exist_1)(void) = dialog_file_not_exist_;
 
-// <Dialog_File_Not_Open V(O).Open_Error> ==
+// <Dialog_File_Not_Open E(O).Open_Error> ==
 static void dialog_file_not_open_(void)
 {
     return;
@@ -120,7 +120,7 @@ char view_errors_clear_0[] = {Z1 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R
 G_L_B uint8_t refalab_view_errors_clear = '\122';
 void (*view_errors_clear_1)(void) = view_errors_clear_;
 
-// <View_Errors_Add E(O)E> ==
+// <View_Errors_Add E(O).Error> ==
 static void view_errors_add_(void)
 {
     char error[256];
