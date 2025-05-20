@@ -89,8 +89,10 @@ bool dialog_FileName(char *fileName, const char *open_Error, T_FILE_STATUS *file
         DrawTextEx(cyrillicFont, TextFormat("''%s''", fileName), (Vector2){10.0f, 190.0f}, sizeCyrillicFont, 1.0f, GRAY);
         if (*file_Status == OK)
             DrawTextEx(cyrillicFont, "с кодом на языке программирования Brainfuck.", (Vector2){10.0f, 230.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
-        else
+        else if (*file_Status == NOT_EXIST)
             DrawTextEx(cyrillicFont, "не существует.", (Vector2){10.0f, 230.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
+        else
+            DrawTextEx(cyrillicFont, TextFormat("не открыт. %s", open_Error), (Vector2){10.0f, 230.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         DrawTextEx(cyrillicFont, "Запуск интерпретатора кода на языке программирования Brainfuck.", (Vector2){10.0f, 320.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         if (fileDialogState.windowActive)
             GuiLock();
