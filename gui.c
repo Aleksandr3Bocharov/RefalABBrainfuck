@@ -53,7 +53,7 @@ void gui_Close(void)
     CloseWindow();
 }
 
-bool dialog_FileName(char *fileName, bool *file_Not_Exist)
+bool dialog_FileName(char *fileName, const char *open_Error, T_FILE_STATUS *file_Status)
 {
     bool ok = false;
     bool exitWindow = false;
@@ -66,7 +66,7 @@ bool dialog_FileName(char *fileName, bool *file_Not_Exist)
             if (fileDialogState.fileNameText[0] != '\0')
             {
                 strncpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText), 256);
-                *file_Not_Exist = false;
+                *file_Status = OK;
             }
             fileDialogState.SelectFilePressed = false;
         }
@@ -82,12 +82,12 @@ bool dialog_FileName(char *fileName, bool *file_Not_Exist)
         ClearBackground(GetColor((unsigned int)GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
         DrawTextEx(cyrillicFont, "Программа ''RefalABBrainfuck'' интерпретирует код", (Vector2){10.0f, 20.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         DrawTextEx(cyrillicFont, "на  языке программирования Brainfuck из исходного файла.", (Vector2){10.0f, 60.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
-        if (!*file_Not_Exist)
+        if (*file_Status == OK)
             DrawTextEx(cyrillicFont, "Открытие исходного файла", (Vector2){10.0f, 150.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         else
             DrawTextEx(cyrillicFont, "Исходный файл", (Vector2){10.0f, 150.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         DrawTextEx(cyrillicFont, TextFormat("''%s''", fileName), (Vector2){10.0f, 190.0f}, sizeCyrillicFont, 1.0f, GRAY);
-        if (!*file_Not_Exist)
+        if (*file_Status == OK)
             DrawTextEx(cyrillicFont, "с кодом на языке программирования Brainfuck.", (Vector2){10.0f, 230.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
         else
             DrawTextEx(cyrillicFont, "не существует.", (Vector2){10.0f, 230.0f}, sizeCyrillicFont, 1.0f, DARKGRAY);
@@ -97,7 +97,7 @@ bool dialog_FileName(char *fileName, bool *file_Not_Exist)
         if (GuiButton((Rectangle){screenWidth / 2 - 250, 100, 500, 30}, GuiIconText(ICON_FILE_OPEN, "Открыть файл с исходником Brainfuck (Cntrl+O)")) || can_open)
             fileDialogState.windowActive = true;
         if (GuiButton((Rectangle){screenWidth / 2 - 230, 270, 460, 30}, "Запустить интерпретатор Brainfuck (Cntrl+R)") || can_run)
-            if (*fileName != '\0' && !*file_Not_Exist)
+            if (*fileName != '\0' && *file_Status == OK)
             {
                 ok = true;
                 exitWindow = true;
