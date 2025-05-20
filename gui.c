@@ -65,7 +65,7 @@ bool dialog_FileName(char *fileName, bool *file_Not_Exist)
         {
             if (fileDialogState.fileNameText[0] != '\0')
             {
-                strncpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText), 2049);
+                strncpy(fileName, TextFormat("%s" PATH_SEPERATOR "%s", fileDialogState.dirPathText, fileDialogState.fileNameText), 256);
                 *file_Not_Exist = false;
             }
             fileDialogState.SelectFilePressed = false;
