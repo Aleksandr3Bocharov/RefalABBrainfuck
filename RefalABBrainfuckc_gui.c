@@ -46,6 +46,7 @@ static void gui_close_(void)
         refal.upshot = 2;
         return;
     }
+    free(open_Error);
     gui_Close();
     return;
 }
@@ -98,6 +99,31 @@ void (*dialog_file_not_exist_1)(void) = dialog_file_not_exist_;
 // <Dialog_File_Not_Open E(O).Open_Error> ==
 static void dialog_file_not_open_(void)
 {
+    const T_LINKCB *p = refal.preva->next;
+    size_t i;
+    for (i = 0; p != refal.nexta; i++)
+    {
+        if (p->tag != TAGO)
+        {
+            refal.upshot = 2;
+            return;
+        }
+        p = p->next;
+    }
+    if (open_Error == NULL)
+        open_Error = (char *)malloc(i + 1);
+    else
+        open_Error = (char *)realloc(open_Error, i + 1);
+    if (open_Error == NULL)
+        rfabe("dialog_file_not_open: error");
+    p = refal.preva->next;
+    for (size_t j = 0; j < i; j++)
+    {
+        *(open_Error + j) = p->info.infoc;
+        p = p->next;
+    }
+    *(open_Error + i) = '\0';
+    file_Status = NOT_OPEN;
     return;
 }
 char dialog_file_not_open_0[] = {Z4 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', '_', 'N', 'O', 'T', '_', 'O', 'P', 'E', 'N', (char)20};
