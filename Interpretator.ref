@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-05-17
+* 2025-05-25
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -11,11 +11,14 @@
 
 Interpretator +
     START
+
     ENTRY Symbols, Tokenizer, Parser, Interpretator, Fails
     EXTRN Put_Char, Get_Char
     EXTRN P1, M1, Symb, Br, Dg, Map, Map_Accumulator, Del_Accumulator, Empty
     EMPTY Fails, Fails11, Fails12
     EMPTY Next, Prev, Inc, Dec, Write, Read
+
+    IMPL
 
 * <Symbols (E(O).Line)*> == (O.Symbol N.Row N.Column)*
 Symbols

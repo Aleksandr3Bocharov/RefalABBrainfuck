@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-05-17
+* 2025-05-25
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -21,12 +21,15 @@
 
 RefalABBrainfuck +
     START
+
     ENTRY Go
     EXTRN Symbols, Tokenizer, Parser, Interpretator, Fails
     EXTRN Prout, Br, Dg, Map, Load_File, Exist_File
     EXTRN Platform, System, Arg, Exit, Empty
     EXTRN Windows, True, False, NULL, FEOF, FError
     EMPTY Lines, Parsing_Tree
+
+    IMPL
 
 Go      = <chcp_UTF8 <Platform>> <Help> +
         <Args (<Arg /1/>) <Arg /2/>> +
