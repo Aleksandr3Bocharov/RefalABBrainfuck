@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-05-25
+* 2025-07-11
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -55,7 +55,7 @@ Open_File
 Open_File_Aux
     E.Open_Error /NULL/ +
         = <Dialog_File_Not_Open E.Open_Error> <bf_FileName <Dialog_FileName>>
-    E.Lines V(/FEOF/ /FError/).EOF E._ +
+    E.Lines S(/FEOF/ /FError/).EOF E._ +
         = <Br /Lines/ '=' E.Lines> +
 * Запуск лексического анализатора
         <If_Tokenizer <Tokenizer <Symbols <Dg /Lines/>>>>
