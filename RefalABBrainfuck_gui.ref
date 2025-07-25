@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-07-11
+* 2025-07-25
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -41,38 +41,38 @@ bf_FileName
         = <Open_File <Exist_File E.FileName> E.FileName>
 
 bf_FileName_Aux
-    /True/ +
+    &True +
         =
-    /False/ +
+    &False +
         = <bf_FileName <Dialog_FileName>>
 
 Open_File
-    /False/ E._ +
+    &False E._ +
         = <Dialog_File_Not_Exist> <bf_FileName <Dialog_FileName>>
-    /True/ E.FileName +
-        = <Open_File_Aux <Load_File /0/ E.FileName>>
+    &True E.FileName +
+        = <Open_File_Aux <Load_File 0 E.FileName>>
 
 Open_File_Aux
-    E.Open_Error /NULL/ +
+    E.Open_Error &NULL +
         = <Dialog_File_Not_Open E.Open_Error> <bf_FileName <Dialog_FileName>>
-    E.Lines S(/FEOF/ /FError/).EOF E._ +
-        = <Br /Lines/ '=' E.Lines> +
+    E.Lines S(&FEOF &FError).EOF E._ +
+        = <Br &Lines '=' E.Lines> +
 * Запуск лексического анализатора
-        <If_Tokenizer <Tokenizer <Symbols <Dg /Lines/>>>>
+        <If_Tokenizer <Tokenizer <Symbols <Dg &Lines>>>>
 
 If_Tokenizer
 * Если Fails, то вывод ошибок
-    /Fails/ E.Errors +
+    &Fails E.Errors +
         = <View_Errors_Add 'FATAL_ERROR (99): ' +
             'Имеется одна или больше ' +
             'синтаксических ошибок.'> +
-        <Map /Do_View_Errors_Add/ E.Errors> +
+        <Map &Do_View_Errors_Add E.Errors> +
         <Is_View_Errors_Show <View_Errors_Show>>
 * Запуск синтаксического анализатора 
     E.Tokens +
-        = <Br /Parsing_Tree/ '=' <Parser E.Tokens>> +
+        = <Br &Parsing_Tree '=' <Parser E.Tokens>> +
 * Запуск интерпретатора
-        <Prout> <Interpretator <Dg /Parsing_Tree/>> +
+        <Prout> <Interpretator <Dg &Parsing_Tree>> +
         <bf_FileName <Dialog_FileName>>
 
 Do_View_Errors_Add
@@ -80,15 +80,15 @@ Do_View_Errors_Add
         = <View_Errors_Add E.Error>
 
 Is_View_Errors_Show
-    /True/ +
+    &True +
         = <View_Errors_Clear> <bf_FileName <Dialog_FileName>>
-    /False/ +
+    &False +
         = <Is_View_Errors_Show_Aux <Dialog_Is_Exit>>
 
 Is_View_Errors_Show_Aux
-    /True/ +
+    &True +
         = <View_Errors_Clear>
-    /False/ +
+    &False +
         = <Is_View_Errors_Show <View_Errors_Show>>
 
     END
