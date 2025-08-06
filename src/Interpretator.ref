@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-07-25
+* 2025-08-07
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -52,9 +52,9 @@ Do_Tokenizer
         = <Br &Fails12 '=' <Dg &Fails12> +
             ('SYNTAX_ERROR(12): ' +
             'Не существует символа '']'' ' +
-            'для символа ''['' ' +
-            'на строке: ' <Symb S.Row> +
-            ' и колонке: ' <Symb S.Column> '.')> +
+            'для символа ''['': ' +
+            '[Строка ' <Symb S.Row> +
+            ', столбец ' <Symb S.Column> ']')> +
         '['
     (']' E.RowColumn) +
         = <Do_Tokenizer_Aux E.RowColumn <Dg &Fails12>>
@@ -66,9 +66,9 @@ Do_Tokenizer_Aux
     S.Row S.Column +
         = <Br &Fails11 '=' <Dg &Fails11> +
             ('SYNTAX_ERROR(11): ' +
-            'Неожиданный символ '']'' ' +
-            'на строке: ' <Symb S.Row> +
-            ' и колонке: ' <Symb S.Column> '.')>
+            'Неожиданный символ '']'': ' +
+            '[Строка ' <Symb S.Row> +
+            ', столбец ' <Symb S.Column> ']')>
     S.Row S.Column E.Fails12_B W.Fail12 +
         = <Br &Fails12 '=' E.Fails12_B> ']'
 
