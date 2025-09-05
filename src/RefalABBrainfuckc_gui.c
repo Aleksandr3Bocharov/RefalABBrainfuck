@@ -15,8 +15,6 @@
 #include "refalab.h"
 #include "gui.h"
 
-extern uint8_t refalab_true, refalab_false;
-
 static char fileName[257] = {'\0'};
 static T_FILE_STATUS file_Status = OK;
 static char *open_Error = NULL;
