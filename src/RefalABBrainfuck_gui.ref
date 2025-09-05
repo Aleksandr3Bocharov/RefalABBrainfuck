@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-07-25
+* 2025-09-05
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -27,13 +27,13 @@ RefalABBrainfuck_GUI +
     EXTRN GUI_Init, GUI_Close
     EXTRN Dialog_FileName, Dialog_Is_Exit, Dialog_File_Not_Exist, Dialog_File_Not_Open
     EXTRN View_Errors_Clear, View_Errors_Add, View_Errors_Show
-    EXTRN Prout, Br, Dg, Map, Load_File, Exist_File
+    EXTRN Prouts, Br, Dg, Map, Load_File, Exist_File
     EXTRN True, False, NULL, FEOF, FError
     EMPTY Lines, Parsing_Tree
 
     IMPL
 
-Go      = <GUI_Init> <bf_FileName <Dialog_FileName>> <Prout> <GUI_Close>
+Go      = <GUI_Init> <bf_FileName <Dialog_FileName>> <Prouts> <GUI_Close>
             
 bf_FileName
         = <bf_FileName_Aux <Dialog_Is_Exit>>
@@ -72,7 +72,7 @@ If_Tokenizer
     E.Tokens +
         = <Br &Parsing_Tree '=' <Parser E.Tokens>> +
 * Запуск интерпретатора
-        <Prout> <Interpretator <Dg &Parsing_Tree>> +
+        <Prouts> <Interpretator <Dg &Parsing_Tree>> +
         <bf_FileName <Dialog_FileName>>
 
 Do_View_Errors_Add
