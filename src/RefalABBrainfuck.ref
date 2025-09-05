@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-07-25
+* 2025-09-05
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -24,7 +24,7 @@ RefalABBrainfuck +
 
     ENTRY Go
     EXTRN Symbols, Tokenizer, Parser, Interpretator, Fails
-    EXTRN Prout, Br, Dg, Map, Load_File, Exist_File
+    EXTRN Prouts, Br, Dg, Map, Load_File, Exist_File
     EXTRN Platform, System, Arg, Exit, Empty
     EXTRN Windows, True, False, NULL, FEOF, FError
     EMPTY Lines, Parsing_Tree
@@ -43,7 +43,7 @@ chcp_UTF8
     E._ =
 
 * Вывод справки
-Help    = <Prout 'Интерпретатор языка ' +
+Help    = <Prouts 'Интерпретатор языка ' +
             'программирования Brainfuck на РефалАБ.\n\n' +
             'Программа "RefalABBrainfuck" ' + 
             'интерпретирует код на языке Brainfuck ' +
@@ -57,31 +57,31 @@ Args
         = <Open_File <Exist_File E.FileName> E.FileName>
 
 Args_Error
-        = <Prout 'FATAL_ERROR (9): ' +
+        = <Prouts 'FATAL_ERROR (9): ' +
             'Синтаксис - RefalABBrainfuck имя_файла'> +
         <Exit 9>
 
 Open_File
     &False E.FileName +
-        = <Prout 'FATAL_ERROR (19): ' +
+        = <Prouts 'FATAL_ERROR (19): ' +
             'Исходный файл "' E.FileName '" не существует.'> +
         <Exit 19>
     &True E.FileName +
-        = <Prout 'Открытие исходного файла "' E.FileName '" ' +
+        = <Prouts 'Открытие исходного файла "' E.FileName '" ' +
             'с кодом на языке программирования ' +
             'Brainfuck.\n'> +
         <Open_File_Aux <Load_File 0 E.FileName>>
 
 Open_File_Aux
     E.Open_Error &NULL +
-        = <Prout 'FATAL_ERROR (29): ' E.Open_Error> <Exit 29>
+        = <Prouts 'FATAL_ERROR (29): ' E.Open_Error> <Exit 29>
     E.Lines S(&FEOF &FError).EOF E._ +
         = <Br &Lines '=' E.Lines>
 
 If_Tokenizer
 * Если Fails, то завершение программы
     &Fails E.Errors +
-        = <Prout 'FATAL_ERROR (99): ' +
+        = <Prouts 'FATAL_ERROR (99): ' +
             'Имеется одна или больше ' +
             'синтаксических ошибок.'> +
         <Map &Do_Prout_Line E.Errors> +
@@ -90,12 +90,12 @@ If_Tokenizer
     E.Tokens +
         = <Br &Parsing_Tree '=' <Parser E.Tokens>> +
 * Запуск интерпретатора
-        <Prout 'Запуск интерпретатора кода ' +
+        <Prouts 'Запуск интерпретатора кода ' +
             'на языке программирования Brainfuck.'> +
-        <Interpretator <Dg &Parsing_Tree>> <Prout>
+        <Interpretator <Dg &Parsing_Tree>> <Prouts>
 
 Do_Prout_Line
     (E.Line) +
-        = <Prout E.Line>
+        = <Prouts E.Line>
 
     END
