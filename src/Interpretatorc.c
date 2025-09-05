@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-05-17
+// 2025-09-05
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -22,7 +22,8 @@ static void put_char_(void)
         return;
     }
     if (putchar((int)gcoden(p)) == EOF)
-        rfabe("put_char: error");
+        if (feof(stdout) != 0 || ferror(stdout) != 0)
+            rfabe("put_char: error");
     fflush(stdout);
     return;
 }
@@ -38,17 +39,15 @@ static void get_char_(void)
         refal.upshot = 2;
         return;
     }
-    T_LINKCB *p = refal.prevr;
-    if (!slins(p, 1))
-        return;
+    T_LINKCB *p = refal.preva;
     const int c = getchar();
-    p = p->next;
     p->tag = TAGN;
     p->info.codep = NULL;
     if (c != EOF)
         pcoden(p, (uint8_t)c);
     else
         clearerr(stdin);
+    rftpl(refal.prevr, p->prev, p->next);
     return;
 }
 char get_char_0[] = {Z0 'G', 'E', 'T', '_', 'C', 'H', 'A', 'R', (char)8};
