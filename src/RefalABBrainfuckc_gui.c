@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-05-17
+// 2025-09-05
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -63,18 +63,7 @@ static void dialog_filename_(void)
         return;
     }
     if (dialog_FileName(fileName, open_Error, &file_Status))
-    {
-        T_LINKCB *p = refal.prevr;
-        if (!slins(p, strlen(fileName)))
-            return;
-        for (size_t i = 0; fileName[i] != '\0'; i++)
-        {
-            p = p->next;
-            p->tag = TAGO;
-            p->info.codep = NULL;
-            p->info.infoc = fileName[i];
-        }
-    }
+        rfrstr(fileName);
     return;
 }
 char dialog_filename_0[] = {Z7 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', (char)15};
@@ -192,7 +181,7 @@ char view_errors_add_0[] = {Z7 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R',
 G_L_B uint8_t refalab_view_errors_add = '\122';
 void (*view_errors_add_1)(void) = view_errors_add_;
 
-// <View_Errors_Show> == /True/ | /False/
+// <View_Errors_Show> == &True | &False
 static void view_errors_show_(void)
 {
     if (refal.preva->next != refal.nexta)
@@ -200,22 +189,14 @@ static void view_errors_show_(void)
         refal.upshot = 2;
         return;
     }
-    T_LINKCB *p = refal.prevr;
-    if (!slins(p, 1))
-        return;
-    p = p->next;
-    p->tag = TAGF;
-    p->info.codep = NULL;
-    p->info.codef = &refalab_true;
-    if (!view_Errors_Show(errors))
-        p->info.codef = &refalab_false;
+    rfrbool(view_Errors_Show(errors), refal.preva);
     return;
 }
 char eview_errors_show_0[] = {Z0 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R', 'S', '_', 'S', 'H', 'O', 'W', (char)16};
 G_L_B uint8_t refalab_view_errors_show = '\122';
 void (*view_errors_show_1)(void) = view_errors_show_;
 
-// <Dialog_Is_Exit> == /True/ | /False/
+// <Dialog_Is_Exit> == &True | &False
 static void dialog_is_exit_(void)
 {
     if (refal.preva->next != refal.nexta)
@@ -223,15 +204,7 @@ static void dialog_is_exit_(void)
         refal.upshot = 2;
         return;
     }
-    T_LINKCB *p = refal.prevr;
-    if (!slins(p, 1))
-        return;
-    p = p->next;
-    p->tag = TAGF;
-    p->info.codep = NULL;
-    p->info.codef = &refalab_true;
-    if (!dialog_Is_Exit())
-        p->info.codef = &refalab_false;
+    rfrbool(dialog_Is_Exit(), refal.preva);
     return;
 }
 char dialog_is_exit_0[] = {Z6 'D', 'I', 'A', 'L', 'O', 'G', '_', 'I', 'S', '_', 'E', 'X', 'I', 'T', (char)14};
