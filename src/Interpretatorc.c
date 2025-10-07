@@ -25,7 +25,6 @@ static void put_char_(void)
         if (feof(stdout) != 0 || ferror(stdout) != 0)
             rfabe("put_char: error");
     fflush(stdout);
-    printf("\n%d\n", MAX_PATHFILENAME);
     return;
 }
 char put_char_0[] = {Z0 'P', 'U', 'T', '_', 'C', 'H', 'A', 'R', (char)8};
