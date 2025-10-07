@@ -92,7 +92,7 @@ void (*dialog_file_not_exist_1)(void) = dialog_file_not_exist_;
 // <Dialog_File_Not_Open V(O).Open_Error> ==
 static void dialog_file_not_open_(void)
 {
-    const T_LINKCB *p = refal.preva->next;
+    T_LINKCB *p = refal.preva->next;
     p = rfgstr(open_Error, 255, p);
     if (p != refal.nexta)
     {
@@ -126,7 +126,7 @@ void (*view_errors_clear_1)(void) = view_errors_clear_;
 // <View_Errors_Add V(O).Error> ==
 static void view_errors_add_(void)
 {
-    const T_LINKCB *p = refal.preva->next;
+    T_LINKCB *p = refal.preva->next;
     char error[256];
     p = rfgstr(error, 255, p);
     if (p != refal.nexta)
