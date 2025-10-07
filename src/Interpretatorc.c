@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-09-05
+// 2025-10-07
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -25,6 +25,7 @@ static void put_char_(void)
         if (feof(stdout) != 0 || ferror(stdout) != 0)
             rfabe("put_char: error");
     fflush(stdout);
+    printf("\n%d\n", MAX_PATHFILENAME);
     return;
 }
 char put_char_0[] = {Z0 'P', 'U', 'T', '_', 'C', 'H', 'A', 'R', (char)8};
@@ -47,7 +48,7 @@ static void get_char_(void)
         pcoden(p, (uint8_t)c);
     else
         clearerr(stdin);
-    rftpl(refal.prevr, p->prev, p->next);
+    rftpl(refal.prevr, refal.nextr, refal.nexta);
     return;
 }
 char get_char_0[] = {Z0 'G', 'E', 'T', '_', 'C', 'H', 'A', 'R', (char)8};
