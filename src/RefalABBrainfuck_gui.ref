@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-09-05
+* 2025-10-07
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -28,7 +28,7 @@ RefalABBrainfuck_GUI +
     EXTRN Dialog_FileName, Dialog_Is_Exit, Dialog_File_Not_Exist, Dialog_File_Not_Open
     EXTRN View_Errors_Clear, View_Errors_Add, View_Errors_Show
     EXTRN Prouts, Br, Dg, Map, Load_File, Exist_File
-    EXTRN True, False, NULL, FEOF, FError
+    EXTRN True, False, NULL, EOF
     EMPTY Lines, Parsing_Tree
 
     IMPL
@@ -55,7 +55,7 @@ Open_File
 Open_File_Aux
     E.Open_Error &NULL +
         = <Dialog_File_Not_Open E.Open_Error> <bf_FileName <Dialog_FileName>>
-    E.Lines S(&FEOF &FError).EOF E._ +
+    E.Lines S(:EOF:).EOF E._ +
         = <Br &Lines '=' E.Lines> +
 * Запуск лексического анализатора
         <If_Tokenizer <Tokenizer <Symbols <Dg &Lines>>>>
