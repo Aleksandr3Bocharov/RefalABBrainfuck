@@ -2,7 +2,7 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-09-05
+* 2025-10-07
 * https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 *====================================================================
@@ -26,7 +26,7 @@ RefalABBrainfuck +
     EXTRN Symbols, Tokenizer, Parser, Interpretator, Fails
     EXTRN Prouts, Br, Dg, Map, Load_File, Exist_File
     EXTRN Platform, System, Arg, Exit, Empty
-    EXTRN Windows, True, False, NULL, FEOF, FError
+    EXTRN Windows, True, False, NULL, EOF
     EMPTY Lines, Parsing_Tree
 
     IMPL
@@ -75,7 +75,7 @@ Open_File
 Open_File_Aux
     E.Open_Error &NULL +
         = <Prouts 'FATAL_ERROR (29): ' E.Open_Error> <Exit 29>
-    E.Lines S(&FEOF &FError).EOF E._ +
+    E.Lines S(:EOF:).EOF E._ +
         = <Br &Lines '=' E.Lines>
 
 If_Tokenizer
