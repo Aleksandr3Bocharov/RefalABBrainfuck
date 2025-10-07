@@ -88,7 +88,7 @@ char dialog_file_not_exist_0[] = {Z5 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I'
 G_L_B uint8_t refalab_dialog_file_not_exist = '\122';
 void (*dialog_file_not_exist_1)(void) = dialog_file_not_exist_;
 
-// <Dialog_File_Not_Open V(O).Open_Error> ==
+// <Dialog_File_Not_Open E(O).Open_Error> ==
 static void dialog_file_not_open_(void)
 {
     T_LINKCB *p = refal.preva->next;
@@ -122,7 +122,7 @@ char view_errors_clear_0[] = {Z1 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R
 G_L_B uint8_t refalab_view_errors_clear = '\122';
 void (*view_errors_clear_1)(void) = view_errors_clear_;
 
-// <View_Errors_Add V(O).Error> ==
+// <View_Errors_Add E(O).Error> ==
 static void view_errors_add_(void)
 {
     T_LINKCB *p = refal.preva->next;
