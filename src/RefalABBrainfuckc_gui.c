@@ -1,7 +1,7 @@
 // Copyright 2025 Aleksandr Bocharov
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt
-// 2025-09-05
+// 2025-10-07
 // https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
 
 //====================================================================
@@ -15,9 +15,11 @@
 #include "refalab.h"
 #include "gui.h"
 
+extern uint8_t refalab_true, refalab_false;
+
 static char fileName[257] = {'\0'};
 static T_FILE_STATUS file_Status = OK;
-static char *open_Error = NULL;
+static char open_Error[256] = {'\0'};
 static char *errors = NULL;
 
 // <GUI_Init> ==
@@ -30,6 +32,7 @@ static void gui_init_(void)
     }
     fileName[256] = '\0';
     gui_Init();
+    printf("\n%d\n", MAX_PATHFILENAME);
     return;
 }
 char gui_init_0[] = {Z0 'G', 'U', 'I', '_', 'I', 'N', 'I', 'T', (char)8};
@@ -44,7 +47,6 @@ static void gui_close_(void)
         refal.upshot = 2;
         return;
     }
-    free(open_Error);
     gui_Close();
     return;
 }
@@ -61,7 +63,11 @@ static void dialog_filename_(void)
         return;
     }
     if (dialog_FileName(fileName, open_Error, &file_Status))
-        rfrstr(fileName);
+        if (slins(refal.nextr, strlen(fileName) - 1))
+        {
+            rfrstr(fileName, refal.nextr);
+            rftpl(refal.prevr, refal.nextr, refal.nexta);
+        }
     return;
 }
 char dialog_filename_0[] = {Z7 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I', 'L', 'E', 'N', 'A', 'M', 'E', (char)15};
@@ -83,33 +89,16 @@ char dialog_file_not_exist_0[] = {Z5 'D', 'I', 'A', 'L', 'O', 'G', '_', 'F', 'I'
 G_L_B uint8_t refalab_dialog_file_not_exist = '\122';
 void (*dialog_file_not_exist_1)(void) = dialog_file_not_exist_;
 
-// <Dialog_File_Not_Open E(O).Open_Error> ==
+// <Dialog_File_Not_Open V(O).Open_Error> ==
 static void dialog_file_not_open_(void)
 {
     const T_LINKCB *p = refal.preva->next;
-    size_t i;
-    for (i = 0; p != refal.nexta; i++)
+    p = rfgstr(open_Error, 255, p);
+    if (p != refal.nexta)
     {
-        if (p->tag != TAGO)
-        {
-            refal.upshot = 2;
-            return;
-        }
-        p = p->next;
+        refal.upshot = 2;
+        return;
     }
-    if (open_Error == NULL)
-        open_Error = (char *)malloc(i + 1);
-    else
-        open_Error = (char *)realloc(open_Error, i + 1);
-    if (open_Error == NULL)
-        rfabe("dialog_file_not_open: error");
-    p = refal.preva->next;
-    for (size_t j = 0; j < i; j++)
-    {
-        *(open_Error + j) = p->info.infoc;
-        p = p->next;
-    }
-    *(open_Error + i) = '\0';
     file_Status = NOT_OPEN;
     return;
 }
@@ -134,45 +123,31 @@ char view_errors_clear_0[] = {Z1 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R
 G_L_B uint8_t refalab_view_errors_clear = '\122';
 void (*view_errors_clear_1)(void) = view_errors_clear_;
 
-// <View_Errors_Add E(O).Error> ==
+// <View_Errors_Add V(O).Error> ==
 static void view_errors_add_(void)
 {
-    char error[256];
     const T_LINKCB *p = refal.preva->next;
-    do
+    char error[256];
+    p = rfgstr(error, 255, p);
+    if (p != refal.nexta)
     {
-        bool neot = false;
-        size_t i;
-        for (i = 0; p != refal.nexta; i++)
-        {
-            if (p->tag != TAGO || i == 255)
-            {
-                neot = true;
-                break;
-            }
-            error[i] = p->info.infoc;
-            p = p->next;
-        }
-        if (neot)
-            break;
-        error[i] = '\0';
-        if (errors == NULL)
-        {
-            errors = (char *)malloc((strlen(error) + 1) * NMBL);
-            if (errors == NULL)
-                rfabe("view_errors_add: error");
-            strcpy(errors, error);
-        }
-        else
-        {
-            errors = (char *)realloc(errors, (strlen(errors) + strlen(error) + 2) * NMBL);
-            if (errors == NULL)
-                rfabe("view_errors_add: error");
-            strcat(strcat(errors, ";"), error);
-        }
+        refal.upshot = 2;
         return;
-    } while (false);
-    refal.upshot = 2;
+    }
+    if (errors == NULL)
+    {
+        errors = (char *)malloc((strlen(error) + 1) * NMBL);
+        if (errors == NULL)
+            rfabe("view_errors_add: error");
+        strcpy(errors, error);
+    }
+    else
+    {
+        errors = (char *)realloc(errors, (strlen(errors) + strlen(error) + 2) * NMBL);
+        if (errors == NULL)
+            rfabe("view_errors_add: error");
+        strcat(strcat(errors, ";"), error);
+    }
     return;
 }
 char view_errors_add_0[] = {Z7 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R', 'S', '_', 'A', 'D', 'D', (char)15};
@@ -187,7 +162,11 @@ static void view_errors_show_(void)
         refal.upshot = 2;
         return;
     }
-    rfrbool(view_Errors_Show(errors), refal.preva);
+    if (view_Errors_Show(errors))
+        refal.preva->info.codef = &refalab_true;
+    else
+        refal.preva->info.codef = &refalab_false;
+    rftpl(refal.prevr, refal.nextr, refal.nexta);
     return;
 }
 char eview_errors_show_0[] = {Z0 'V', 'I', 'E', 'W', '_', 'E', 'R', 'R', 'O', 'R', 'S', '_', 'S', 'H', 'O', 'W', (char)16};
@@ -202,7 +181,11 @@ static void dialog_is_exit_(void)
         refal.upshot = 2;
         return;
     }
-    rfrbool(dialog_Is_Exit(), refal.preva);
+    if (dialog_Is_Exit())
+        refal.preva->info.codef = &refalab_true;
+    else
+        refal.preva->info.codef = &refalab_false;
+    rftpl(refal.prevr, refal.nextr, refal.nexta);
     return;
 }
 char dialog_is_exit_0[] = {Z6 'D', 'I', 'A', 'L', 'O', 'G', '_', 'I', 'S', '_', 'E', 'X', 'I', 'T', (char)14};
