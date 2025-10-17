@@ -7,8 +7,8 @@
 # https://github.com/Aleksandr3Bocharov/refalabbrainfuck
 
 mkdir -p bin
-$REFALABBIN/refalab src/refalabbrainfuck -a,"-o refalabbrainfuck.o" > refalabbrainfuck.log
-$REFALABBIN/refalab src/interpretator -a,"-o interpretator.o" >> refalabbrainfuck.log
+$REFALABBIN/refalabc src/refalabbrainfuck -a,"-o src/refalabbrainfuck.o" > refalabbrainfuck.log
+$REFALABBIN/refalabc src/interpretator -a,"-o src/interpretator.o" >> refalabbrainfuck.log
 clang $REFALABCFLAGS -DPOSIX -I$REFALABINCLUDE -c src/interpretatorc.c -o src/interpretatorc.o >> refalabbrainfuck.log
 clang -o bin/refalabbrainfuck src/refalabbrainfuck.o src/interpretator.o src/interpretatorc.o $REFALABLIB/obj/mainrf.o -L$REFALABLIB -lrefalab >> refalabbrainfuck.log
 bin/refalabbrainfuck $1
