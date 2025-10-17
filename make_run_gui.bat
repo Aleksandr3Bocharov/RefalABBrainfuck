@@ -12,9 +12,7 @@ set RAYLIBLFLAGS=-L%RAYLIB%\lib -lraylib -lgdi32 -lwinmm
 
 if not exist bin mkdir bin
 %REFALABBIN%\refalabc src\refalabbrainfuck_gui -a,"-o src\refalabbrainfuck_gui.o" > refalabbrainfuck_gui.log
-as -o src\refalabbrainfuck_gui.o src\refalabbrainfuck_gui.s -a,"-o src\interpretator.o" >> refalabbrainfuck_gui.log
-%REFALABBIN%\refalabc src\interpretator >> refalabbrainfuck_gui.log
-as -o src\interpretator.o src\interpretator.s >> refalabbrainfuck_gui.log
+%REFALABBIN%\refalabc src\interpretator -a,"-o src\interpretator.o" >> refalabbrainfuck_gui.log
 clang %REFALABCFLAGS% -I%REFALABINCLUDE% -c src\interpretatorc.c -o src\interpretatorc.o >> refalabbrainfuck_gui.log
 clang %REFALABCFLAGS% -I%REFALABINCLUDE% -c src\refalabbrainfuckc_gui.c -o src\refalabbrainfuckc_gui.o >> refalabbrainfuck_gui.log
 clang %RAYLIBCFLAGS% -c src\gui.c -o src\gui.o >> refalabbrainfuck_gui.log
