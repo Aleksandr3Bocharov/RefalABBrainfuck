@@ -5,7 +5,7 @@
 // https://github.com/Aleksandr3Bocharov/refalabbrainfuck
 
 //====================================================================
-// Модуль "RefalABBrainfuckc" (GUI версия)
+// Модуль "refalabbrainfuckc" (GUI версия)
 //====================================================================
 
 #include <stdlib.h>

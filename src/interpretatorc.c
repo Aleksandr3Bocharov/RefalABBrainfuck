@@ -5,7 +5,7 @@
 // https://github.com/Aleksandr3Bocharov/refalabbrainfuck
 
 //====================================================================
-// Модуль "Interpretatorc"
+// Модуль "interpretatorc"
 //====================================================================
 
 #include <stdio.h>
