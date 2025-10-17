@@ -3,14 +3,14 @@
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
 * 2025-10-07
-* https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
+* https://github.com/Aleksandr3Bocharov/refalabbrainfuck
 
 *====================================================================
 * RefalABBrainfuck (GUI версия)
 *
 * Программа "RefalABBrainfuck" написана
 * на языке программирования РефалАБ.
-* https://github.com/Aleksandr3Bocharov/RefalAB
+* https://github.com/Aleksandr3Bocharov/refalab
 *
 * Интерпретатор языка программирования Brainfuck
 * на РефалАБ.

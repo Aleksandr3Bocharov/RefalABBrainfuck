@@ -2,15 +2,15 @@
 * Distributed under the Boost Software License, Version 1.0.
 * See accompanying file LICENSE_1_0.txt
 * or copy at http://www.boost.org/LICENSE_1_0.txt
-* 2025-10-07
-* https://github.com/Aleksandr3Bocharov/RefalABBrainfuck
+* 2025-10-17
+* https://github.com/Aleksandr3Bocharov/refalabbrainfuck
 
 *====================================================================
 * RefalABBrainfuck
 *
 * Программа "RefalABBrainfuck" написана
 * на языке программирования РефалАБ.
-* https://github.com/Aleksandr3Bocharov/RefalAB
+* https://github.com/Aleksandr3Bocharov/refalab
 *
 * Интерпретатор языка программирования Brainfuck
 * на РефалАБ.
@@ -58,7 +58,7 @@ Args
 
 Args_Error
         = <Prouts 'FATAL_ERROR (9): ' +
-            'Синтаксис - RefalABBrainfuck имя_файла'> +
+            'Синтаксис - refalabbrainfuck имя_файла'> +
         <Exit 9>
 
 Open_File
